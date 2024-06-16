@@ -1,0 +1,14 @@
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/bin/Debug/net8.0/Program
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/bin/Debug/net8.0/Program.deps.json
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/bin/Debug/net8.0/Program.runtimeconfig.json
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/bin/Debug/net8.0/Program.dll
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/bin/Debug/net8.0/Program.pdb
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.AssemblyInfoInputs.cache
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.AssemblyInfo.cs
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.csproj.CoreCompileInputs.cache
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.dll
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/refint/Program.dll
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.pdb
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.genruntimeconfig.cache
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/ref/Program.dll
