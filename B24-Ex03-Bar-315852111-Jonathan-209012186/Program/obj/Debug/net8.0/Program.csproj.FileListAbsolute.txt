@@ -12,3 +12,4 @@
 /Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.pdb
 /Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.genruntimeconfig.cache
 /Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/ref/Program.dll
+/Users/jonathanporan/Documents/GitHub/MTA/Second Year/B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186/B24-Ex03-Bar-315852111-Jonathan-209012186/Program/obj/Debug/net8.0/Program.sourcelink.json
