@@ -1,4 +1,4 @@
-﻿namespace Program.Vehicles
+﻿namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck
     {

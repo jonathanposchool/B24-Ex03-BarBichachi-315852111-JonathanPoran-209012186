@@ -1,6 +1,6 @@
-﻿using static Program.Utils.Enums;
+﻿using static Ex03.GarageLogic.Utils.Enums;
 
-namespace Program.VehicleComponents
+namespace Ex03.GarageLogic.VehicleComponents
 {
     internal class Wheel
     {

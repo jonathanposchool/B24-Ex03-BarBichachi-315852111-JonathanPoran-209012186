@@ -1,7 +1,7 @@
-﻿using Program.VehicleComponents;
-using static Program.Utils.Enums;
+﻿using Ex03.GarageLogic.VehicleComponents;
+using static Ex03.GarageLogic.Utils.Enums;
 
-namespace Program.Vehicles
+namespace Ex03.GarageLogic.Vehicles
 {
     internal abstract class Vehicle
     {

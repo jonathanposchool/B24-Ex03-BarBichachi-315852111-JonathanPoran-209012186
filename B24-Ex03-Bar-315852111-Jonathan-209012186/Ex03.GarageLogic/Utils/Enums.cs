@@ -1,4 +1,4 @@
-﻿namespace Program.Utils
+﻿namespace Ex03.GarageLogic.Utils
 {
     public class Enums
     {
