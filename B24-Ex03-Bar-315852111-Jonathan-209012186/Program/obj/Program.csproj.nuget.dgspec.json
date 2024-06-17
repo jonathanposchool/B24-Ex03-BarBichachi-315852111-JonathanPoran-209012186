@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\BARBIC\\source\\repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\BARBIC\\source\\repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj",
         "packagesPath": "C:\\Users\\BARBIC\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\BARBIC\\source\\repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\obj\\",
+=======
+    "C:\\Users\\BARBIC\\Source\\Repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\BARBIC\\Source\\Repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\BARBIC\\Source\\Repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj",
+        "projectName": "Program",
+        "projectPath": "C:\\Users\\BARBIC\\Source\\Repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\Program.csproj",
+        "packagesPath": "C:\\Users\\BARBIC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\BARBIC\\Source\\Repos\\B24-Ex03-BarBichachi-315852111-JonathanPoran-209012186\\B24-Ex03-Bar-315852111-Jonathan-209012186\\Program\\obj\\",
+>>>>>>> 931ef6f5de05f4b689e7e50354f1fcf21eee289f
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
