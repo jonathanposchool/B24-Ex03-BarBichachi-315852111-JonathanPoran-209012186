@@ -25,7 +25,7 @@ class Program
 
                         // TODO
                         // 3-7 with license number
-                        ConsoleUI.VehicleInGarageMenu();
+                        //ConsoleUI.VehicleInGarageMenu();
                         //Console.WriteLine("Your vehicle is in our garage and currently being repaired.");
                     }
                     else
