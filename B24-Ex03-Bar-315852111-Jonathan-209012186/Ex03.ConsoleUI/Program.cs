@@ -7,6 +7,9 @@ class Program
     static void Main()
     {
         Garage JBGarage = new Garage();
+        // TODO
+        // Maybe should be UI.PrintMenu...? 
+        char menuChoice = PrintMenuAndGetChoice();
 
         // TODO
         // Maybe should be UI.PrintMenu...? 
