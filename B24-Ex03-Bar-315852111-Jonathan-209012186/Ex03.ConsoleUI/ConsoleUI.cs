@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Reflection;
 using Ex03.GarageLogic;
 using Ex03.GarageLogic.Utils;
 
@@ -11,7 +6,7 @@ namespace Ex03.ConsoleUI
 {
     internal class ConsoleUI
     {
-        public static char PrintMenuAndGetChoice()
+        internal static int PrintMenuAndGetChoice()
         {
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!");
             Console.WriteLine("Please choose an option:\n"
@@ -22,65 +17,165 @@ namespace Ex03.ConsoleUI
                               + "5. Refuel a vehicle\n"
                               + "6. Charge an electric vehicle\n"
                               + "7. Show vehicle details by license number\n");
-            Console.Write("Please enter your choice: ");
-            string userChoice = Console.ReadLine();
 
-            while (!IsValidOptionChoice(userChoice, 7))
+            return GetValidOptionChoice(7);
+        }
+
+        internal static eVehicleTypes GetVehicleType()
+        {
+            return GetValidOptionChoiceByEnum<eVehicleTypes>("vehicle type");
+        }
+
+        internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage) where TEnum : Enum
+        {
+            int maximumChoice = Enum.GetValues(typeof(TEnum)).Length;
+
+            Console.WriteLine($"Please choose your {i_InputMessage} below:");
+
+            foreach (var option in Enum.GetValues(typeof(TEnum)))
             {
-                Console.WriteLine("Invalid choice. You can only choose between 1 and 7. Please try again.");
-                Console.Write("Please enter your choice: ");
-                userChoice = Console.ReadLine();
+                Console.WriteLine($"{(int)option}: {option}");
             }
 
-            return userChoice[0];
+            int userChoice = GetValidOptionChoice(maximumChoice);
+            TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
+
+            Console.WriteLine($"Your choice is: {selectedType}");
+
+            return selectedType;
         }
 
-        public static string GetVehicleLicenseNumber()
-        {
-            Console.Write("Please enter your vehicle license number: ");
-            return Console.ReadLine();
-        }
-
-        public static eVehicleTypes GetVehicleType()
-        {
-            List<eVehicleTypes> allVehicleTypes = Garage.GetAllVehicleTypes();
-            int maximumChoice = allVehicleTypes.Count;
-            int vehicleTypesNum = 0;
-
-            Console.WriteLine("Please choose one of the vehicle types:");
-
-            foreach (eVehicleTypes type in allVehicleTypes)
-            {
-                Console.WriteLine($"{++vehicleTypesNum}. {type}");
-            }
-
-            eVehicleTypes selectedType = allVehicleTypes[int.Parse(userChoice) - 1];
-            Console.WriteLine($"The chosen vehicle is: {selectedType}");
-        }
-
-        protected static bool IsValidOptionChoice(string choice, int maximumChoice)
+        internal static int GetValidOptionChoice(int i_MaximumChoice)
         {
             bool isValid = false;
+            int numericChoice;
 
             do
             {
                 Console.Write("Please enter your choice: ");
 
                 string userChoice = Console.ReadLine();
-
-                if (int.TryParse(userChoice, out int numericChoice))
+                
+                if (int.TryParse(userChoice, out numericChoice))
                 {
-                    isValid = numericChoice >= 1 && numericChoice <= maximumChoice;
+                    isValid = numericChoice >= 1 && numericChoice <= i_MaximumChoice;
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid choice. You can only choose between 1 and {i_MaximumChoice}. Please try again.");
+                }
+            } while (!isValid);
+
+            return numericChoice;
+        }
+
+        internal static string GetUserStringInputWithMessage(string i_Message)
+        {
+            Console.Write($"Please enter your {i_Message}: ");
+
+            return Console.ReadLine();
+        }
+
+        internal static T GetUserNumericInputWithMessage<T>(string i_Message)
+        {
+            if (typeof(T) != typeof(int) && typeof(T) != typeof(float))
+            {
+                throw new Exception("T must be either int or float");
+            }
+
+            bool isValid = false;
+            T numericChoice = default(T);
+
+            Console.Write($"Please enter your {i_Message}: ");
+
+            do
+            {
+                string userChoice = Console.ReadLine();
+
+                if (typeof(T) == typeof(int))
+                {
+                    isValid = int.TryParse(userChoice, out int intValue);
+                    numericChoice = (T)(object)intValue;
+                }
+                else if (typeof(T) == typeof(float))
+                {
+                    isValid = float.TryParse(userChoice, out float floatValue);
+                    numericChoice = (T)(object)floatValue;
                 }
 
                 if (!isValid)
                 {
-                    Console.WriteLine(
-                        $"Invalid choice. You can only choose between 1 and {maximumChoice}. Please try again.");
+                    Console.WriteLine($"Invalid input. Please enter a valid number.");
                 }
             } while (!isValid);
 
-            return isValid;
+            return numericChoice;
+        }
+
+        internal static float GetVehicleEnergy(eVehicleTypes selectedVehicleType)
+        {
+            string energyType = selectedVehicleType.ToString().Contains("Electric") ? "electricity" : "fuel";
+            string energyMessage = $"current {energyType} left";
+
+            float vehicleCurrentEnergy = GetUserNumericInputWithMessage<float>(energyMessage);
+
+            return vehicleCurrentEnergy;
+        }
+
+        internal static eLicenseTypes GetLicenseType()
+        {
+            return GetValidOptionChoiceByEnum<eLicenseTypes>("license type");
+        }
+
+        internal static int GetEngineVolume()
+        {
+            return GetUserNumericInputWithMessage<int>("engine volume");
+        }
+
+        internal static eCarColors GetVehicleColor()
+        {
+            return GetValidOptionChoiceByEnum<eCarColors>("car color");
+        }
+
+        internal static eCarDoors GetVehicleNumOfDoors()
+        {
+            return GetValidOptionChoiceByEnum<eCarDoors>("number of car doors");
+        }
+
+        internal static bool IsCarryingHazardousMaterials()
+        {
+            Console.WriteLine("Is the vehicle carrying hazardous materials?:\n" 
+                              + "1. Yes\n" 
+                              + "2. No\n");
+
+            return (GetValidOptionChoice(2) == 1);
+        }
+
+        internal static float GetCargoVolume()
+        {
+            return GetUserNumericInputWithMessage<float>("cargo volume");
+        }
+
+        internal static void VehicleCreationAttempt(bool i_IsVehicleCreated)
+        {
+            Console.WriteLine($"Vehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.");
+        }
+
+        internal static void PrintLicenseNumbersArray(string[] i_LicenseNumbersByFilter)
+        {
+            Console.WriteLine("License numbers for the selected filter:");
+            if (i_LicenseNumbersByFilter.Length == 0)
+            {
+                Console.WriteLine("No vehicles found for the selected filter.");
+            }
+            else
+            {
+                foreach (string licenseNumber in i_LicenseNumbersByFilter)
+                {
+                    Console.WriteLine(licenseNumber);
+                }
+            }
+
         }
     }
 }

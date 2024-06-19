@@ -4,7 +4,7 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
-        eLicenseType m_LicenseType;
+        eLicenseTypes m_LicenseTypes;
         int m_EngineVolume;
     }
 }

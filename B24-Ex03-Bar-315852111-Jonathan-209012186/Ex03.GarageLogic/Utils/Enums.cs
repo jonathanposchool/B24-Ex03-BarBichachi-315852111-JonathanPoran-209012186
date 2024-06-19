@@ -15,7 +15,7 @@
         Electricity
     }
 
-    public enum eLicenseType
+    public enum eLicenseTypes
     {
         A,
         A1,
@@ -33,7 +33,7 @@
 
     public enum eCarDoors
     {
-        TwoDoors = 2,
+        TwoDoors,
         ThreeDoors,
         FourDoors,
         FiveDoors
@@ -52,6 +52,7 @@
         ElectricMotorcycle,
         RegularCar,
         ElectricCar,
-        RegularTruck
+        RegularTruck,
+        AllTypes
     }
 }
