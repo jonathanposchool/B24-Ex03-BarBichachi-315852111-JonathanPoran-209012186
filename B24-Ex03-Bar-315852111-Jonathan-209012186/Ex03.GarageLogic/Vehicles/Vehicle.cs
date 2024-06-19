@@ -1,18 +1,17 @@
 ﻿using Ex03.GarageLogic.VehicleComponents;
-using static Ex03.GarageLogic.Utils.Enums;
+using Ex03.GarageLogic.Utils;
 
 namespace Ex03.GarageLogic.Vehicles
 {
     internal abstract class Vehicle
     {
-        string m_VehicleModel = string.Empty;
-        string m_LicenseNumber = string.Empty;
-        List<Wheel> m_VehicleWheels = new List<Wheel>();
-        Engine m_VehicleEngine = new Engine();
-        float m_MaxEnergyCapacity;
-        float m_CurrentEnergyAvailable;
-
-        public float m_CurrentEnergyPercentage
+        private string m_VehicleModel = string.Empty;
+        private string m_LicenseNumber = string.Empty;
+        private List<Wheel>? m_VehicleWheels = null;
+        private Engine? m_VehicleEngine = null;
+        private float m_MaxEnergyCapacity { get; set; }
+        private float m_CurrentEnergyAvailable { get; set; }
+        public float m_CurrentEnergyPercentage 
         {
             get
             {
@@ -23,8 +22,28 @@ namespace Ex03.GarageLogic.Vehicles
                     currentPercentage = m_CurrentEnergyAvailable / m_MaxEnergyCapacity * 100;
                 }
 
-                return currentPercentage;
+                return (float)Math.Round(currentPercentage, 2);
             }
+        }
+        public string VehicleModel
+        {
+            get { return m_VehicleModel; }
+            set { m_VehicleModel = value; }
+        }
+        public string LicenseNumber
+        {
+            get { return m_LicenseNumber; }
+            set { m_LicenseNumber = value; }
+        }
+        public List<Wheel> Wheels
+        {
+            get { return m_VehicleWheels; }
+            set { m_VehicleWheels = value; }
+        }
+        public Engine Engine
+        {
+            get { return m_VehicleEngine; }
+            set { m_VehicleEngine = value; }
         }
 
         public Vehicle()

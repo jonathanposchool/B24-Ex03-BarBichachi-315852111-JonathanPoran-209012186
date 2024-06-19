@@ -1,4 +1,4 @@
-﻿using static Ex03.GarageLogic.Utils.Enums;
+﻿using Ex03.GarageLogic.Utils;
 
 namespace Ex03.GarageLogic.VehicleComponents
 {
