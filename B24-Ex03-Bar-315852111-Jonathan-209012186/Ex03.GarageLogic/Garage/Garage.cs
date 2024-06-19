@@ -82,6 +82,18 @@ public class Garage
     {
         if(m_GarageDatabase.TryGetValue(i_LicenseNumber,out VehicleServiceInfo currentVehicleServiceInfo))
     }
+
+    public static List<eVehicleTypes> GetAllVehicleTypes()
+    {
+        List<eVehicleTypes> allVehicleTypes = new List<eVehicleTypes>();
+
+        foreach (eVehicleTypes type in Enum.GetValues(typeof(eVehicleTypes)))
+        {
+            allVehicleTypes.Add(type);
+        }
+
+        return allVehicleTypes;
+    }
 }
 
 

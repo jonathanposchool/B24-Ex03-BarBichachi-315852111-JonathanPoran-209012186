@@ -1,22 +1,5 @@
 ﻿namespace Ex03.GarageLogic.Utils
 {
-    public enum eGarageVehicleStatus
-    {
-        ServiceInProgress,
-        ServiceCompleted,
-        PaidAndReleased
-    }
-
-    // public enum eWheelManufacturers
-    // {
-    //     Tesla,
-    //     Toyota,
-    //     BYD,
-    //     Porsche,
-    //     MercedesBenz
-
-    // }
-
     public enum eEnergyType
     {
         Electric,
@@ -58,7 +41,7 @@
 
     public enum eGarageVehicleStatus
     {
-        SericeInProgress,
+        ServiceInProgress,
         ServiceCompleted,
         PaidAndReleased
     }
