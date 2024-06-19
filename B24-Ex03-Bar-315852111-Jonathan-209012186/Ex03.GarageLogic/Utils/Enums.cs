@@ -1,14 +1,11 @@
 ﻿namespace Ex03.GarageLogic.Utils
 {
-    // Need to be added to MIRO
-    // public enum eVehicleManufacturers
-    // {
-    //     Tesla,
-    //     Toyota,
-    //     BYD,
-    //     Porsche,
-    //     MercedesBenz
-    // }
+    public enum eGarageVehicleStatus
+    {
+        ServiceInProgress,
+        ServiceCompleted,
+        PaidAndReleased
+    }
 
     // public enum eWheelManufacturers
     // {
@@ -26,7 +23,7 @@
         Soler,
         Octan95,
         Octan96,
-        Octan98
+        Octan98,
     }
 
     public enum eEngineType

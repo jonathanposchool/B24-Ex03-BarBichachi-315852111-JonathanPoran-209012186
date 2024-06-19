@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic.Vehicles
             set { m_Model = value; }
         }
 
-        protected string LicenseNumber
+        public string LicenseNumber
         {
             get { return m_LicenseNumber; }
             set { m_LicenseNumber = value; }
