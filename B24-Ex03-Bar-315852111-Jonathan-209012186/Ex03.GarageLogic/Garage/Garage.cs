@@ -18,69 +18,121 @@ public class Garage
         return carIsNotKnownForGarge;
     }
 
-
-    public VehicleServiceInfo GetVehicleByLicenseNumber(string i_LicenseNumber)
+    internal VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
     {
-        if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo wantedVehicleServiceInfo))
+        VehicleServiceInfo wantedVehicleServiceInfo;
+        if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out wantedVehicleServiceInfo))
         {
-            return wantedVehicleServiceInfo;
+            //return wantedVehicleServiceInfo;
         }
         else
         {
-            // TODO to do to-do To-do To-Do ToDo 
-            throw new Exception("//Todo");
+            //todo throw Exception;
         }
+
+        return wantedVehicleServiceInfo;
+    }
+    private Vehicle getVehicleByLicenseNumber(string i_LicenseNumber)
+    {
+        return (GetVehicleServiceInfoByLicenseNumber(i_LicenseNumber)).OwnersVehicle;
     }
 
-    public Motorcycle CreateNewRegularMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, eLicenseType i_LicenseType, int i_EngineVolume)
+    public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, float i_TireAirPressure, eLicenseType i_LicenseType, int i_EngineVolume)
+    {
+        Motorcycle newMotorcycle = CreateNewMotorcycle(i_LicenseNumber, i_MotorcycleType, i_EnergyAvailable, i_TireAirPressure, i_LicenseType, i_EngineVolume);
+        VehicleServiceInfo newMotorcycleServiceInfo = new VehicleServiceInfo(newMotorcycle);
+
+        m_GarageDatabase.Add(i_LicenseNumber, newMotorcycleServiceInfo);
+    }
+
+    internal Motorcycle CreateNewMotorcycle(string i_LicenseNumber, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, float i_TireAirPressure, eLicenseType i_LicenseType, int i_EngineVolume)
     {
         int numOfTires = 2;
-        float maxRegularMotorcycleEnergyCapacity = 5.5f;
-        List<Tire> tires = createTires(numOfTires,i_TireAirPressure);
-        
-        Engine newMotorcycleEngine = new Engine(eEnergyType.Octan98, eEngineType.Combustion);
-        return new Motorcycle(i_LicenseNumber, i_VehicleTires, maxRegularMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
-    }
-    public Motorcycle CreateNewElectricMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, eLicenseType i_LicenseType, int i_EngineVolume)
-    {
-        int numOfTires = 2;
-        float maxElectricMotorcycleEnergyCapacity = 2.5f;
-        List<Tire> tires = createTires(numOfTires,i_TireAirPressure);
+        float maxMotorcycleTirePressure = 31;
+        float maxEnergyCapacity = i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? 5.5f : 2.5f;
 
-        Engine newMotorcycleEngine = new Engine(eEnergyType.Electric, eEngineType.Electricity);
-        return new Motorcycle(i_LicenseNumber, i_VehicleTires, maxElectricMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
+        if (i_TireAirPressure > maxMotorcycleTirePressure)
+        {
+            throw new ArgumentException("Tire air pressure exceeds maximum allowed for Motorcycle.");
+        }
+
+        List<Tire> tires = createTires(numOfTires, i_TireAirPressure, maxMotorcycleTirePressure);
+        Engine motorcycleEngine = new Engine
+        {
+            EngineType = i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? eEngineType.Combustion : eEngineType.Electricity,
+            EnergyType = i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? eEnergyType.Octan98 : eEnergyType.Electric
+        };
+
+        return new Motorcycle(i_LicenseNumber, tires, maxEnergyCapacity, motorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
     }
-    public Car CreateNewRegularCar(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
+
+
+    public void CreateAndInsertCarToGarage(string i_LicenseNumber, eVehicleTypes i_CarType, float i_EnergyAvailable, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
+    {
+        Car newCar = CreateNewCar(i_LicenseNumber, i_CarType, i_EnergyAvailable, i_TireAirPressure, i_Color, i_NumOfDoors);
+        VehicleServiceInfo newCarServiceInfo = new VehicleServiceInfo(newCar);
+
+        m_GarageDatabase.Add(i_LicenseNumber, newCarServiceInfo);
+    }
+
+    internal Car CreateNewCar(string i_LicenseNumber, eVehicleTypes i_CarType, float i_EnergyAvailable, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
         int numOfTires = 5;
-        float maxRegularCarEnergyCapacity = 45;
-        List<Tire> tires = createTires(numOfTires,i_TireAirPressure);
+        float maxCarTirePressure = 31;
+        float maxEnergyCapacity = (i_CarType == eVehicleTypes.RegularCar ? 45 : 3.5f);
 
-        Engine newCarEngine = new Engine(eEnergyType.Octan95, eEngineType.Combustion);
-        return new Car(i_LicenseNumber, i_VehicleTires, maxRegularCarEnergyCapacity, newCarEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
+        if (i_TireAirPressure > maxCarTirePressure)
+        {
+            throw new ArgumentException("Tire air pressure exceeds maximum allowed for Car.");
+        }
+
+        List<Tire> tires = createTires(numOfTires, i_TireAirPressure, maxCarTirePressure);
+        Engine carEngine = new Engine
+        {
+            EngineType = i_CarType == eVehicleTypes.RegularCar ? eEngineType.Combustion : eEngineType.Electricity,
+            EnergyType = i_CarType == eVehicleTypes.RegularCar ? eEnergyType.Octan95 : eEnergyType.Electric
+        };
+
+        return new Car(i_LicenseNumber, tires, maxEnergyCapacity, carEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
     }
-    public Car CreateNewElectricCar(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
+    public void CreateAndInsertTruckToGarage(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        int numOfTires = 5;
-        float maxElectricCarEnergyCapacity = 3.5f;
-        List<Tire> tires = createTires(numOfTires,i_TireAirPressure);
+        Truck newTruck = CreateNewTruck(i_LicenseNumber, i_EnergyAvailable, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
+        VehicleServiceInfo newTruckServiceInfo = new VehicleServiceInfo(newTruck);
 
-        Engine newCarEngine = new Engine(eEnergyType.Electric, eEngineType.Electricity);
-        return new Car(i_LicenseNumber, tires, maxElectricCarEnergyCapacity, newCarEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
-    }
-    public Truck CreateNewTruck(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
-    {
-        int numOfTires = 12;
-        float maxTruckEnergyCapacity = 120;
-        List<Tire> tires = createTires(numOfTires,i_TireAirPressure);
-
-        Engine newCarEngine = new Engine(eEnergyType.Soler, eEngineType.Combustion);
-        return new Truck(i_LicenseNumber, i_VehicleTires, maxTruckEnergyCapacity, newCarEngine, i_EnergyAvailable, i_IsCarryingHazardousMaterials, i_CargoVolume);
+        m_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
     }
 
-    public eGarageVehicleStatus ChangeVehicleStatus(string i_LicenseNumber)
+    internal Truck CreateNewTruck(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        if(m_GarageDatabase.TryGetValue(i_LicenseNumber,out VehicleServiceInfo currentVehicleServiceInfo))
+        int numOfTruckTires = 12;
+        float maxTruckTirePressure = 28;
+        float maxEnergyCapacity = 120;
+
+        if (i_TireAirPressure > maxTruckTirePressure)
+        {
+            throw new ArgumentException("Tire air pressure exceeds maximum allowed for Truck.");
+        }
+
+        List<Tire> tires = createTires(numOfTruckTires, i_TireAirPressure, maxTruckTirePressure);
+        Engine truckEngine = new Engine();
+        truckEngine.EngineType = eEngineType.Combustion;
+        truckEngine.EnergyType = eEnergyType.Soler;
+
+        return new Truck(i_LicenseNumber, tires, maxEnergyCapacity, truckEngine, i_EnergyAvailable, i_IsCarryingHazardousMaterials, i_CargoVolume);
+    }
+
+
+    public void ChangeVehicleStatus(string i_LicenseNumber, eGarageVehicleStatus i_NewStatus)
+    {
+        if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo currentVehicleServiceInfo))
+        {
+            currentVehicleServiceInfo.VehicleStatus = i_NewStatus;
+        }
+        else
+        {
+            //todo throw new ArgumentException("Vehicle with the provided license number does not exist in the database.");
+        }
     }
 
     public static List<eVehicleTypes> GetAllVehicleTypes()
@@ -94,14 +146,28 @@ public class Garage
 
         return allVehicleTypes;
     }
+
+    private List<Tire> createTires(int i_NumOfTires, float i_TireAirPressure, float i_MaxTirePressure)
+    {
+        List<Tire> tires = new List<Tire>();
+
+        for (int i = 0; i < i_NumOfTires; i++)
+        {
+            Tire tire = new Tire();
+            tire.m_TirePressure = i_TireAirPressure;
+            tire.m_MaxTirePressure = i_MaxTirePressure;
+            tires.Add(tire);
+        }
+
+        return tires;
+    }
 }
 
 
 
 /*
-        insert new car to Garage
-        show garge vehicle list status with filters
-        Garage change status
-        Garage -> fill up air wheel to max
-        garage -> fill uo fuel/electricity
+    
+    show garge vehicle list status with filters
+    Garage -> fill up air wheel to max
+    garage -> fill uo fuel/electricity
 */
