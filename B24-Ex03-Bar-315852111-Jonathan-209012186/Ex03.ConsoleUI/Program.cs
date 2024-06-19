@@ -7,8 +7,18 @@ class Program
 {
     static void Main()
     {
-        Garage ourGarage = new Garage();
-        Console.WriteLine("Hello, World!");
+        Garage JBGarage = new Garage();
+
+        Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!");
+        Console.Write("Please enter your vehicle license number: ");
+        string vehicleLicenseNumber = Console.ReadLine();
+
+        if (JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+        {
+            JBGarge.ChangeVehicleStatus
+            Console.WriteLine("Your vehicle is in our garage.");
+            Console.WriteLine($"Your status is ")
+        }
     }
 
     /*
@@ -30,9 +40,5 @@ class Program
         vehicle -> motorcycle
         vehicle -> car
         vehicle -> truck
-        
-        
-
-
     */
 }

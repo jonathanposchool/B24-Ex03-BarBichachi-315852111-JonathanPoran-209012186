@@ -2,7 +2,7 @@
 
 namespace Ex03.GarageLogic.Vehicles
 {
-    internal class Car
+    internal class Car : Vehicle
     {
         eCarDoors m_NumOfDoors;
         eCarColors m_Colors;

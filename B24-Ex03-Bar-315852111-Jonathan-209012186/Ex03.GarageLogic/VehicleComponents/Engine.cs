@@ -4,7 +4,7 @@ namespace Ex03.GarageLogic.VehicleComponents
 {
     internal class Engine
     {
-        eFuelType m_FuelType;
-        eEngineType m_EngineType;
+        public eEnergyType EnergyType { get; set; }
+        public eEngineType m_EngineType { get; set; }
     }
 }

@@ -21,8 +21,9 @@
     // }
 
 
-    public enum eFuelType
+    public enum eEnergyType
     {
+        Electric,
         Soler,
         Octan95,
         Octan96,
@@ -31,8 +32,7 @@
 
     public enum eEngineType
     {
-        Diesel,
-        Gasoline,
+        Combustion,
         Electricity
     }
 
