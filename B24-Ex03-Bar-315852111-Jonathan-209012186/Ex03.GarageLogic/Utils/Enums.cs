@@ -20,7 +20,6 @@
 
     // }
 
-
     public enum eEnergyType
     {
         Electric,
@@ -58,5 +57,21 @@
         ThreeDoors,
         FourDoors,
         FiveDoors
+    }
+
+    public enum eGarageVehicleStatus
+    {
+        SericeInProgress,
+        ServiceCompleted,
+        PaidAndReleased
+    }
+
+    public enum eVehicleTypes
+    {
+        RegularMotorcycle,
+        ElectricMotorcycle,
+        RegularCar,
+        ElectricCar,
+        RegularTruck
     }
 }
