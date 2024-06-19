@@ -2,7 +2,7 @@
 {
     internal class Truck
     {
-        bool m_HazardousMaterials;
+        bool m_IsCarryingHazardousMaterials;
         float m_CargoVolume;
     }
 }

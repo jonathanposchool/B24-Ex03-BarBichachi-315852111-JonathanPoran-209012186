@@ -12,7 +12,7 @@
             MercedesBenz
         }
 
-        public enum eEngineType
+        public enum eFuelType
         {
             Soler,
             Octan95,
@@ -20,7 +20,7 @@
             Octan98
         }
 
-        public enum eEnergyType
+        public enum eEngineType
         {
             Diesel,
             Gasoline,

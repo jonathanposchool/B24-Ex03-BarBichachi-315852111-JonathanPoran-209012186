@@ -6,7 +6,7 @@ namespace Ex03.GarageLogic.Vehicles
     internal abstract class Vehicle
     {
         string m_VehicleModel = string.Empty;
-        uint m_LicenseNumber; // DETERMINE IF UINT IS OKAY
+        string m_LicenseNumber = string.Empty;
         List<Wheel> m_VehicleWheels = new List<Wheel>();
         Engine m_VehicleEngine = new Engine();
         float m_MaxEnergyCapacity;
@@ -32,6 +32,6 @@ namespace Ex03.GarageLogic.Vehicles
 
         }
 
-        public abstract void FillUpVehicleEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electricity);
+        public abstract void FillUpVehicleEnergy(float i_EnergyToFill, eEngineType i_EngineType = eEngineType.Electricity);
     }
 }
