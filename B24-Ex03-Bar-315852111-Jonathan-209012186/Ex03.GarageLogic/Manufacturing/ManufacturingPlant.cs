@@ -6,39 +6,13 @@
 
     public class ManufacturingPlant
     {
-        readonly float r_MaxRegularMotorcycleEnergyCapacity = 5.5f;
-        readonly float r_MaxElectricMotorcycleEnergyCapacity = 2.5f;
-        readonly float r_MaxRegularCarEnergyCapacity = 45;
-        readonly float r_MaxElectricCarEnergyCapacity = 3.5f;
-        readonly float r_MaxTruckEnergyCapacity = 120;
+        readonly float maxRegularMotorcycleEnergyCapacity = 5.5f;
+        readonly float maxElectricMotorcycleEnergyCapacity = 2.5f;
+        readonly float maxRegularCarEnergyCapacity = 45;
+        readonly float maxElectricCarEnergyCapacity = 3.5f;
+        readonly float maxTruckEnergyCapacity = 120;
 
         
-        public static Motorcycle CreateNewRegularMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eLicenseType i_LicenseType, int i_EngineVolume)
-        {
-            float r_MaxRegularMotorcycleEnergyCapacity = 5.5f;
-            //*remainder in ctor of spec vehicle should check air pressure
-            Engine newMotorcycleEngine = new Engine(eEnergyType.Octan98, eEngineType.Combustion);
-            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxRegularMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
-        }
-        public Motorcycle CreateNewElectricMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eLicenseType i_LicenseType, int i_EngineVolume)
-        {
-            Engine newMotorcycleEngine = new Engine(eEnergyType.Electric, eEngineType.Electricity);
-            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxElectricMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
-        }
-        public Car CreateNewRegularCar(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eCarColors i_Color, eCarDoors i_NumOfDoors)
-        {
-            Engine newCarEngine = new Engine(eEnergyType.Octan95, eEngineType.Combustion);
-            return new Car(i_LicenseNumber, i_VehicleTires, r_MaxRegularCarEnergyCapacity, newCarEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
-        }
-        public Car CreateNewElectricCar(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eCarColors i_Color, eCarDoors i_NumOfDoors)
-        {
-            Engine newCarEngine = new Engine(eEnergyType.Electric, eEngineType.Electricity);
-            return new Car(i_LicenseNumber, i_VehicleTires, r_MaxElectricCarEnergyCapacity, newCarEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
-        }
-        public Truck CreateNewTruck(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
-        {
-            Engine newCarEngine = new Engine(eEnergyType.Soler, eEngineType.Combustion);
-            return new Truck(i_LicenseNumber, i_VehicleTires, r_MaxTruckEnergyCapacity, newCarEngine, i_EnergyAvailable, i_IsCarryingHazardousMaterials, i_CargoVolume);
-        }
+       
     }
 }

@@ -2,7 +2,7 @@
 using Ex03.GarageLogic.Vehicles;
 using Ex03.GarageLogic.Utils;
 
-internal class VehicleServiceInfo
+public class VehicleServiceInfo
 {
     private string m_OwnersVehicleName { get; set; }
     private string m_OwnersVehiclePhone { get; set; }
@@ -26,4 +26,5 @@ internal class VehicleServiceInfo
     {
         return m_OwnersVehicle;
     }
+    public
 }
