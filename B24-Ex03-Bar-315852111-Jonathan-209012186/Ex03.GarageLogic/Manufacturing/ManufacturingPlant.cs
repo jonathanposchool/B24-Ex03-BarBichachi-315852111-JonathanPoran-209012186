@@ -13,16 +13,17 @@
         readonly float r_MaxTruckEnergyCapacity = 120;
 
         
-        public Motorcycle CreateNewRegularMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires)
+        public static Motorcycle CreateNewRegularMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eLicenseType i_LicenseType, int i_EngineVolume)
         {
+            float r_MaxRegularMotorcycleEnergyCapacity = 5.5f;
             //*remainder in ctor of spec vehicle should check air pressure
             Engine newMotorcycleEngine = new Engine(eEnergyType.Octan98, eEngineType.Combustion);
-            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxRegularMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable);
+            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxRegularMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
         }
-        public Motorcycle CreateNewElectricMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires)
+        public Motorcycle CreateNewElectricMotorcycle(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eLicenseType i_LicenseType, int i_EngineVolume)
         {
             Engine newMotorcycleEngine = new Engine(eEnergyType.Electric, eEngineType.Electricity);
-            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxElectricMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable);
+            return new Motorcycle(i_LicenseNumber, i_VehicleTires, r_MaxElectricMotorcycleEnergyCapacity, newMotorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
         }
         public Car CreateNewRegularCar(string i_LicenseNumber, float i_EnergyAvailable, List<Tire> i_VehicleTires, eCarColors i_Color, eCarDoors i_NumOfDoors)
         {
