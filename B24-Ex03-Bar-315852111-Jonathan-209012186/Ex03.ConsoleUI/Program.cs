@@ -27,7 +27,6 @@ class Program
         factory list wheel ctor
         fill up air wheel by vale
 
-=
         vehicle -> motorcycle
         vehicle -> car
         vehicle -> truck

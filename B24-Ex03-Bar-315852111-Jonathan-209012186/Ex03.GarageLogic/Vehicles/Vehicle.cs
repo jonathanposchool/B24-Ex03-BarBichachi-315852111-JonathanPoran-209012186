@@ -46,11 +46,6 @@ namespace Ex03.GarageLogic.Vehicles
             set { m_VehicleEngine = value; }
         }
 
-        public Vehicle()
-        {
-
-        }
-
         public abstract void FillUpVehicleEnergy(float i_EnergyToFill, eEngineType i_EngineType = eEngineType.Electricity);
     }
 }
