@@ -68,7 +68,7 @@ namespace Ex03.GarageLogic.Vehicles
             }
             else
             {
-                throw new Exception($"Invalid energy type. Only {m_Engine.EnergyType.ToString()} is supported for this vehicle.");
+                throw new Exception($"Invalid energy type. Only {m_Engine.EnergyType} is supported for this vehicle.");
             }
         }
 
