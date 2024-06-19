@@ -3,11 +3,11 @@ using Ex03.GarageLogic.Utils;
 
 namespace Ex03.GarageLogic.Vehicles
 {
-    internal abstract class Vehicle
+    public abstract class Vehicle
     {
         private string m_VehicleModel = string.Empty;
         private string m_LicenseNumber = string.Empty;
-        private List<Wheel>? m_VehicleWheels = null;
+        private List<Tire>? m_VehicleTires = null;
         private Engine? m_VehicleEngine = null;
         private float m_MaxEnergyCapacity { get; set; }
         private float m_CurrentEnergyAvailable { get; set; }
@@ -35,10 +35,10 @@ namespace Ex03.GarageLogic.Vehicles
             get { return m_LicenseNumber; }
             set { m_LicenseNumber = value; }
         }
-        public List<Wheel> Wheels
+        public List<Tire> Wheels
         {
-            get { return m_VehicleWheels; }
-            set { m_VehicleWheels = value; }
+            get { return m_VehicleTires; }
+            set { m_VehicleTires = value; }
         }
         public Engine Engine
         {
