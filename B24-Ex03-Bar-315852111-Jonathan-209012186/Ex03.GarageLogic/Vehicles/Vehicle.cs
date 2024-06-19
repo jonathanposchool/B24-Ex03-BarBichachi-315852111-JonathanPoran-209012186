@@ -54,6 +54,7 @@ namespace Ex03.GarageLogic.Vehicles
         // Methods
         protected void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
         {
+
             if (m_Engine.EnergyType == i_EnergyType)
             {
                 if ((m_CurrentEnergyAvailable + i_EnergyToFill) <= m_MaxEnergyCapacity)
