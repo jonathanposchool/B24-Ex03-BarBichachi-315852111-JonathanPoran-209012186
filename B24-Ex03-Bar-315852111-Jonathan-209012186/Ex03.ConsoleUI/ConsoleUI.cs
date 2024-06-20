@@ -162,10 +162,10 @@ namespace Ex03.ConsoleUI
             Console.WriteLine($"Vehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.");
         }
 
-        internal static void PrintLicenseNumbersArray(string[] i_LicenseNumbersByFilter)
+        internal static void PrintLicenseNumbersArray(List<string> i_LicenseNumbersByFilter)
         {
             Console.WriteLine("License numbers for the selected filter:");
-            if (i_LicenseNumbersByFilter.Length == 0)
+            if (i_LicenseNumbersByFilter.Count == 0)
             {
                 Console.WriteLine("No vehicles found for the selected filter.");
             }
@@ -188,7 +188,7 @@ namespace Ex03.ConsoleUI
             return (GetValidOptionChoice(2) == 1);
         }
 
-        public static void PrintFullVehicleDetails(string i_FullVehicleDetails)
+        public static void PrintFullVehicleDetails(List<string> i_FullVehicleDetails)
         {
             Console.WriteLine("Here are the details for the requested license number:");
             Console.WriteLine(i_FullVehicleDetails);

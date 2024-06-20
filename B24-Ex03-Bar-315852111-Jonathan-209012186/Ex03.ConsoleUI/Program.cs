@@ -114,7 +114,7 @@ class Program
                 case 2:
                     {
                         eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type");
-                        string[] licenseNumbersByFilter = Garage.GetLicenseNumbersByFilter(vehicleStatusFilter);
+                        List<string> licenseNumbersByFilter = jbGarage.GetLicenseNumbersByFilter(vehicleStatusFilter);
                         ConsoleUI.PrintLicenseNumbersArray(licenseNumbersByFilter);
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
@@ -159,7 +159,7 @@ class Program
                 case 7:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        string fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
+                        List<string> fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
                         ConsoleUI.PrintFullVehicleDetails(fullVehicleDetails);
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }

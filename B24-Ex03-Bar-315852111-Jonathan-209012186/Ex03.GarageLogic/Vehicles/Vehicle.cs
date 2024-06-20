@@ -9,14 +9,14 @@ namespace Ex03.GarageLogic.Vehicles
         // Fields
         protected string? m_Model { get; set; }
         public string? m_LicenseNumber { get; set; }
-        protected List<Tire>? m_Tires { get; set; }
-        protected Engine? m_Engine { get; set; }
-        protected float m_MaxEnergyCapacity { get; set; }
-        protected float m_CurrentEnergyAvailable { get; set; }
+        internal List<Tire>? m_Tires { get; set; }
+        internal Engine? m_Engine { get; set; }
+        internal float m_MaxEnergyCapacity { get; set; }
+        internal float m_CurrentEnergyAvailable { get; set; }
         protected float m_CurrentEnergyPercentage = 0;
 
         // Properties
-        protected float CurrentEnergyPercentage
+        internal float CurrentEnergyPercentage
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Ex03.GarageLogic.Vehicles
         }
 
         // Methods
-        protected void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
+        internal void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
         {
 
             if (m_Engine.EnergyType == i_EnergyType)
@@ -51,19 +51,20 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        protected void FillTirePressure(float i_AirPressureToAdd)
-        {
-            if ((m_Tires.First().m_TirePressure + i_AirPressureToAdd) <= m_Tires.First().m_MaxTirePressure)
-            {
-                foreach (Tire tire in m_Tires)
-                {
-                    tire.FillTirePressure(i_AirPressureToAdd);
-                }
-            }
-            else
-            {
-                throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {m_Tires.First().m_MaxTirePressure} PSI.");
-            }
-        }
+        // internal void FillTiresPressure(float i_AirPressureToAdd)
+        // {
+        //     //NOTE - The method is suitable for vehicles having the same MAX pressure in all tires!
+        //     if ((Tires.First().m_TirePressure + i_AirPressureToAdd) <= Tires.First().m_MaxTirePressure)
+        //     {
+        //         foreach (Tire tire in Tires)
+        //         {
+        //             tire.FillTirePressure(i_AirPressureToAdd);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {Tires.First().m_MaxTirePressure} PSI.");
+        //     }
+        // }
     }
 }
