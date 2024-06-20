@@ -55,11 +55,4 @@
         RegularTruck,
         AllTypes
     }
-
-    public enum eAirPressureAnswer
-    {
-        NotFilledToMachPressure,
-        FillToMax,
-        FillButNotToMax
-    }
 }

@@ -90,7 +90,7 @@ class Program
             case 2:
                 {
                     eGarageVehicleStatus userChoice = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type");
-                    string[] licenseNumbersByFilter = Garage.GetLicenseNumbersByFilter(userChoice);
+                    List<string> licenseNumbersByFilter = Garage.GetLicenseNumbersByFilter(userChoice);
                     ConsoleUI.PrintLicenseNumbersArray(licenseNumbersByFilter);
                 }
 

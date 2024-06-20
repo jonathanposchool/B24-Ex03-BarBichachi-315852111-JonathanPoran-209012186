@@ -10,35 +10,47 @@ namespace Ex03.GarageLogic.Vehicles
         protected string m_LicenseNumber = string.Empty;
         protected List<Tire>? m_Tires = null;
         protected Engine? m_Engine = null;
-        protected float m_MaxEnergyCapacity { get; set; }
-        protected float m_CurrentEnergyAvailable { get; set; }
+        protected float m_MaxEnergyCapacity;
+        protected float m_CurrentEnergyAvailable;
         protected float m_CurrentEnergyPercentage = 0;
 
         // Properties
-        protected string Model
+        internal string Model
         {
             get { return m_Model; }
             set { m_Model = value; }
         }
 
-        public string LicenseNumber
+        internal string LicenseNumber
         {
             get { return m_LicenseNumber; }
             set { m_LicenseNumber = value; }
         }
 
-        protected List<Tire> Tires
+        internal List<Tire> Tires
         {
             get { return m_Tires; }
             set { m_Tires = value; }
         }
 
-        protected Engine Engine
+        internal Engine Engine
         {
             get { return m_Engine; }
             set { m_Engine = value; }
         }
-        protected float CurrentEnergyPercentage
+
+        internal float MaxEnergyCapacity
+        {
+            get { return m_MaxEnergyCapacity; }
+            set { m_MaxEnergyCapacity = value; }
+        }
+        
+        internal float CurrentEnergyAvailable
+        {
+            get { return m_CurrentEnergyAvailable; }
+            set { m_CurrentEnergyAvailable = value; }
+        }
+        interface float CurrentEnergyPercentage
         {
             get
             {
@@ -73,20 +85,20 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        internal void FillTiresPressure(float i_AirPressureToAdd)
-        {
-            //NOTE - The method is suitable for vehicles having the same MAX pressure in all tires!
-            if ((Tires.First().m_TirePressure + i_AirPressureToAdd) <= Tires.First().m_MaxTirePressure)
-            {
-                foreach (Tire tire in Tires)
-                {
-                    tire.FillTirePressure(i_AirPressureToAdd);
-                }
-            }
-            else
-            {
-                throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {Tires.First().m_MaxTirePressure} PSI.");
-            }
-        }
+        // internal void FillTiresPressure(float i_AirPressureToAdd)
+        // {
+        //     //NOTE - The method is suitable for vehicles having the same MAX pressure in all tires!
+        //     if ((Tires.First().m_TirePressure + i_AirPressureToAdd) <= Tires.First().m_MaxTirePressure)
+        //     {
+        //         foreach (Tire tire in Tires)
+        //         {
+        //             tire.FillTirePressure(i_AirPressureToAdd);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {Tires.First().m_MaxTirePressure} PSI.");
+        //     }
+        // }
     }
 }

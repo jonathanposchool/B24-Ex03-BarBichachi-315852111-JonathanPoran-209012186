@@ -134,11 +134,6 @@ public class Garage
         }
     }
 
-    public static string[] GetLicenseNumbersByFilter(eGarageVehicleStatus i_UserChoice)
-    {
-        throw new NotImplementedException();
-    }
-
     private List<Tire> createTires(int i_NumOfTires, float i_TireAirPressure, float i_MaxTirePressure)
     {
         List<Tire> tires = new List<Tire>();
@@ -154,7 +149,7 @@ public class Garage
         return tires;
     }
 
-    public List<string> ShowAllLicenseNumberVehicleWithStatus(eGarageVehicleStatus i_StatusFilter)
+    public List<string> GetLicenseNumbersByFilter(eGarageVehicleStatus i_StatusFilter)
     {
         List<string> listOfLicenseNumberVehicleWithStatusFilter = new List<string>();
         if(m_GarageDatabase != null)
@@ -173,22 +168,63 @@ public class Garage
         return listOfLicenseNumberVehicleWithStatusFilter;
     }
     
-    public void FillAirToVehicleByLicenseNumber(string i_LicenseNumber, float i_AirPressureToAdd)
-    {
-        Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_LicenseNumber);
-        vehicleToFillAirTires.FillTiresPressure(i_AirPressureToAdd);
-    } 
+    // public void FillAirToVehicleByLicenseNumber(string i_LicenseNumber, float i_AirPressureToAdd)
+    // {
+    //     Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_LicenseNumber);
+    //     vehicleToFillAirTires.FillTiresPressure(i_AirPressureToAdd);
+    // } 
 
     public void FillEnergyToVehicleByLicenseNumber(string i_LicenseNumber, float i_EnergyToAdd, eEnergyType i_EnergyType)
     {
         Vehicle vehicleToFillEnrgey = getVehicleByLicenseNumber(i_LicenseNumber);
         vehicleToFillEnrgey.FillEnergy(i_EnergyToAdd, i_EnergyType);
     }
+
+    public void FillTirePressureToMax(string i_VehicleLicenseNumber)
+    {
+        Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
+        List<Tire> currentVehicleTires = vehicleToFillAirTires.Tires;
+
+        foreach(Tire tire in currentVehicleTires)
+        {
+            float amountOfAirToReachMax = tire.MaxTirePressure - tire.TirePressure;
+            tire.FillTirePressure(amountOfAirToReachMax);
+        }
+        // {
+        //     throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {Tires.First().m_MaxTirePressure} PSI.");
+        // }
+    }
+
+    public void RefuelAVehicle(string i_VehicleLicenseNumber, eEnergyType i_VehicleEnergyType, float i_AmountToRefill)
+    {
+        Vehicle vehicleToFillEnergy = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
+        
+        if(vehicleToFillEnergy.Engine.EnergyType == i_VehicleEnergyType)
+        {
+            if ((vehicleToFillEnergy.CurrentEnergyAvailable + i_AmountToRefill) <= vehicleToFillEnergy.MaxEnergyCapacity)
+            {
+                vehicleToFillEnergy.FillEnergy(i_AmountToRefill,i_VehicleEnergyType);
+            }
+            else
+            {
+            string unit = (i_VehicleEnergyType == eEnergyType.Electric) ? "hours" : "liters";
+            throw new Exception($"Too much amount of {i_VehicleEnergyType}. The maximum capacity is: {vehicleToFillEnergy.MaxEnergyCapacity} {unit}");
+            }
+        }
+        else
+        {
+            throw new Exception($"Invalid energy type. Only {vehicleToFillEnergy.Engine.EnergyType} is supported for this vehicle.");
+        }
+    }
+
+    public string GetFullVehicleDetails(string i_VehicleLicenseNumber)
+    {
+        string message = "XXX";
+
+        // TODO
+        // I need the garage to prepare the string for me (it will be a message with \n)
+
+        return message;
+    }
+
 }
-
-
-
-/*
-    
-    garage -> fill uo fuel/electricity
-*/
