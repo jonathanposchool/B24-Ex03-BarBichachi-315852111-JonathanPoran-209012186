@@ -2,7 +2,6 @@
 using Vehicles;
 using VehicleComponents;
 using Utils;
-using System.Globalization;
 
 public class Garage
 {
@@ -32,6 +31,7 @@ public class Garage
 
         return wantedVehicleServiceInfo;
     }
+    
     private Vehicle getVehicleByLicenseNumber(string i_LicenseNumber)
     {
         return (GetVehicleServiceInfoByLicenseNumber(i_LicenseNumber)).OwnersVehicle;
@@ -66,7 +66,6 @@ public class Garage
         return new Motorcycle(i_LicenseNumber, tires, maxEnergyCapacity, motorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
     }
 
-
     public void CreateAndInsertCarToGarage(string i_LicenseNumber, eVehicleTypes i_CarType, float i_EnergyAvailable, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
         Car newCar = CreateNewCar(i_LicenseNumber, i_CarType, i_EnergyAvailable, i_TireAirPressure, i_Color, i_NumOfDoors);
@@ -95,6 +94,7 @@ public class Garage
 
         return new Car(i_LicenseNumber, tires, maxEnergyCapacity, carEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
     }
+    
     public void CreateAndInsertTruckToGarage(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
         Truck newTruck = CreateNewTruck(i_LicenseNumber, i_EnergyAvailable, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
@@ -102,7 +102,7 @@ public class Garage
 
         m_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
     }
-
+    
     internal Truck CreateNewTruck(string i_LicenseNumber, float i_EnergyAvailable, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
         int numOfTruckTires = 12;
@@ -121,7 +121,6 @@ public class Garage
 
         return new Truck(i_LicenseNumber, tires, maxEnergyCapacity, truckEngine, i_EnergyAvailable, i_IsCarryingHazardousMaterials, i_CargoVolume);
     }
-
 
     public void ChangeVehicleStatus(string i_LicenseNumber, eGarageVehicleStatus i_NewStatus)
     {
@@ -154,13 +153,42 @@ public class Garage
 
         return tires;
     }
+
+    public List<string> ShowAllLicenseNumberVehicleWithStatus(eGarageVehicleStatus i_StatusFilter)
+    {
+        List<string> listOfLicenseNumberVehicleWithStatusFilter = new List<string>();
+        if(m_GarageDatabase != null)
+        {
+            foreach (KeyValuePair<string, VehicleServiceInfo> element in m_GarageDatabase)
+            {
+                VehicleServiceInfo currentVehicleServiceInfo = element.Value;
+                string currentVehicleLicenseNumber = element.Key;
+                if(currentVehicleServiceInfo.VehicleStatus == i_StatusFilter)
+                {
+                        listOfLicenseNumberVehicleWithStatusFilter.Add(currentVehicleLicenseNumber);
+                }
+            }
+        }
+
+        return listOfLicenseNumberVehicleWithStatusFilter;
+    }
+    
+    public void FillAirToVehicleByLicenseNumber(string i_LicenseNumber, float i_AirPressureToAdd)
+    {
+        Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_LicenseNumber);
+        vehicleToFillAirTires.FillTiresPressure(i_AirPressureToAdd);
+    } 
+
+    public void FillEnergyToVehicleByLicenseNumber(string i_LicenseNumber, float i_EnergyToAdd, eEnergyType i_EnergyType)
+    {
+        Vehicle vehicleToFillEnrgey = getVehicleByLicenseNumber(i_LicenseNumber);
+        vehicleToFillEnrgey.FillEnergy(i_EnergyToAdd, i_EnergyType);
+    }
 }
 
 
 
 /*
     
-    show garge vehicle list status with filters
-    Garage -> fill up air wheel to max
     garage -> fill uo fuel/electricity
 */

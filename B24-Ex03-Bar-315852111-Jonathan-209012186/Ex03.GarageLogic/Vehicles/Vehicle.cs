@@ -52,7 +52,7 @@ namespace Ex03.GarageLogic.Vehicles
         }
 
         // Methods
-        protected void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
+        internal void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
         {
 
             if (m_Engine.EnergyType == i_EnergyType)
@@ -73,8 +73,9 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        protected void FillTirePressure(float i_AirPressureToAdd)
+        internal void FillTiresPressure(float i_AirPressureToAdd)
         {
+            //NOTE - The method is suitable for vehicles having the same MAX pressure in all tires!
             if ((Tires.First().m_TirePressure + i_AirPressureToAdd) <= Tires.First().m_MaxTirePressure)
             {
                 foreach (Tire tire in Tires)
