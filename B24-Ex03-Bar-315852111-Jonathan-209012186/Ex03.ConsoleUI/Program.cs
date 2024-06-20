@@ -11,6 +11,7 @@ using Ex03.GarageLogic.Utils;
  * unused get/sets
  * public/protected/internal/private
  * Exceptions
+ * Duplications of code (for example fill tire in vehicle and in tire)
  */
 
 class Program
@@ -18,7 +19,7 @@ class Program
     static void Main()
     {
         Garage jbGarage = new Garage();
-        bool isFinished = true;
+        bool isFinished = false;
 
         while (!isFinished)
         {
@@ -33,7 +34,7 @@ class Program
                         if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
                         {
                             jbGarage.ChangeVehicleStatus(vehicleLicenseNumber, eGarageVehicleStatus.ServiceInProgress);
-                            Console.WriteLine("Your vehicle is in our garage and currently being repaired.");
+                            ConsoleUI.VehicleIsAlreadyInGarage();
                         }
                         else
                         {
@@ -123,8 +124,17 @@ class Program
                 case 3:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status");
-                        jbGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
+
+                        if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
+                        {
+                            eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status");
+                            jbGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
+                        }
+                        else
+                        {
+                            ConsoleUI.VehicleIsNotInGarage();
+                        }
+
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
 
@@ -132,7 +142,16 @@ class Program
                 case 4:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        jbGarage.FillTirePressureToMax(vehicleLicenseNumber);
+
+                        if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
+                        {
+                            jbGarage.FillTirePressureToMax(vehicleLicenseNumber);
+                        }
+                        else
+                        {
+                            ConsoleUI.VehicleIsNotInGarage();
+                        }
+
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
 
@@ -140,9 +159,18 @@ class Program
                 case 5:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
-                        float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill (in liters)");
-                        jbGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
+
+                        if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
+                        {
+                            eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
+                            float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
+                            jbGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
+                        }
+                        else
+                        {
+                            ConsoleUI.VehicleIsNotInGarage();
+                        }
+
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
 
@@ -150,8 +178,17 @@ class Program
                 case 6:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill (in hours)");
-                        jbGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
+
+                        if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
+                        {
+                            float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
+                            jbGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
+                        }
+                        else
+                        {
+                            ConsoleUI.VehicleIsNotInGarage();
+                        }
+
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
 
@@ -159,8 +196,17 @@ class Program
                 case 7:
                     {
                         string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
-                        List<string> fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
-                        ConsoleUI.PrintFullVehicleDetails(fullVehicleDetails);
+
+                        if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
+                        {
+                            List<string> fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
+                            ConsoleUI.PrintFullVehicleDetails(fullVehicleDetails);
+                        }
+                        else
+                        {
+                            ConsoleUI.VehicleIsNotInGarage();
+                        }
+
                         isFinished = ConsoleUI.ReturnToMainMenu();
                     }
 

@@ -43,7 +43,8 @@
     {
         ServiceInProgress,
         ServiceCompleted,
-        PaidAndReleased
+        PaidAndReleased,
+        AllTypes
     }
 
     public enum eVehicleTypes

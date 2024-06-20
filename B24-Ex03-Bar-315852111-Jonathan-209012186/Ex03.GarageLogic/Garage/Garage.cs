@@ -9,12 +9,14 @@ public class Garage
     
     public bool IsVehicleInGarage(string i_LicenseNumber)
     {
-        bool carIsNotKnownForGarge = true;
+        bool isCarKnownForGarge = false;
+
         if (m_GarageDatabase.ContainsKey(i_LicenseNumber))
         {
-            carIsNotKnownForGarge = false;
+            isCarKnownForGarge = true;
         }
-        return carIsNotKnownForGarge;
+
+        return isCarKnownForGarge;
     }
 
     internal VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
@@ -152,15 +154,17 @@ public class Garage
     public List<string> GetLicenseNumbersByFilter(eGarageVehicleStatus i_StatusFilter)
     {
         List<string> listOfLicenseNumberVehicleWithStatusFilter = new List<string>();
-        if(m_GarageDatabase != null)
+
+        if (m_GarageDatabase != null)
         {
             foreach (KeyValuePair<string, VehicleServiceInfo> element in m_GarageDatabase)
             {
                 VehicleServiceInfo currentVehicleServiceInfo = element.Value;
                 string currentVehicleLicenseNumber = element.Key;
-                if(currentVehicleServiceInfo.VehicleStatus == i_StatusFilter)
+                if (currentVehicleServiceInfo.VehicleStatus == i_StatusFilter 
+                    || i_StatusFilter == eGarageVehicleStatus.AllTypes)
                 {
-                        listOfLicenseNumberVehicleWithStatusFilter.Add(currentVehicleLicenseNumber);
+                    listOfLicenseNumberVehicleWithStatusFilter.Add(currentVehicleLicenseNumber);
                 }
             }
         }
@@ -187,7 +191,7 @@ public class Garage
 
         foreach(Tire tire in currentVehicleTires)
         {
-            float amountOfAirToReachMax = tire.MaxTirePressure - tire.TirePressure;
+            float amountOfAirToReachMax = tire.m_MaxTirePressure - tire.m_TirePressure;
             tire.FillTirePressure(amountOfAirToReachMax);
         }
         // {

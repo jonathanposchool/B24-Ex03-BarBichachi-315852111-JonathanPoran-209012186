@@ -11,13 +11,13 @@ namespace Ex03.ConsoleUI
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!");
             Console.WriteLine("Please choose an option:\n"
-                              + "1. Enter a new vehicle into the garage\n"
-                              + "2. Show list of vehicles in the garage (with an option to filter)\n"
-                              + "3. Change the status of a vehicle in the garage\n"
-                              + "4. Fill vehicle tire pressure to maximum\n"
-                              + "5. Refuel a vehicle\n"
-                              + "6. Charge an electric vehicle\n"
-                              + "7. Show vehicle details by license number\n");
+                              + "1: Enter a new vehicle into the garage\n"
+                              + "2: Show list of vehicles in the garage (with an option to filter)\n"
+                              + "3: Change the status of a vehicle in the garage\n"
+                              + "4: Fill vehicle tire pressure to maximum\n"
+                              + "5: Refuel a vehicle\n"
+                              + "6: Charge an electric vehicle\n"
+                              + "7: Show vehicle details by license number\n");
 
             return GetValidOptionChoice(7);
         }
@@ -29,16 +29,16 @@ namespace Ex03.ConsoleUI
 
         internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage) where TEnum : Enum
         {
-            int maximumChoice = Enum.GetValues(typeof(TEnum)).Length;
+            int maximumChoice = Enum.GetValues(typeof(TEnum)).Length + 1;
 
             Console.WriteLine($"Please choose your {i_InputMessage} below:");
 
             foreach (var option in Enum.GetValues(typeof(TEnum)))
             {
-                Console.WriteLine($"{(int)option}: {option}");
+                Console.WriteLine($"{(int)option + 1}: {option}");
             }
 
-            int userChoice = GetValidOptionChoice(maximumChoice);
+            int userChoice = GetValidOptionChoice(maximumChoice) - 1;
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
             Console.WriteLine($"Your choice is: {selectedType}");
@@ -181,17 +181,27 @@ namespace Ex03.ConsoleUI
 
         public static bool ReturnToMainMenu()
         {
-            Console.WriteLine("Do you want to return to the main menu?:\n"
+            Console.WriteLine("\nDo you want to return to the main menu?:\n"
                               + "1. Yes\n"
                               + "2. No\n");
 
-            return (GetValidOptionChoice(2) == 1);
+            return (GetValidOptionChoice(2) == 2);
         }
 
         public static void PrintFullVehicleDetails(List<string> i_FullVehicleDetails)
         {
             Console.WriteLine("Here are the details for the requested license number:");
             Console.WriteLine(i_FullVehicleDetails);
+        }
+
+        internal static void VehicleIsAlreadyInGarage()
+        {
+            Console.WriteLine("The vehicle is in our garage and currently being repaired.");
+        }
+
+        public static void VehicleIsNotInGarage()
+        {
+            Console.WriteLine("The vehicle is not in the garage.");
         }
     }
 }
