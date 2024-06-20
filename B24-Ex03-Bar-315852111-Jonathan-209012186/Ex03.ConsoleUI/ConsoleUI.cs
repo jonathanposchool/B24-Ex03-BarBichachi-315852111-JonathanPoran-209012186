@@ -7,7 +7,8 @@ namespace Ex03.ConsoleUI
     internal class ConsoleUI
     {
         internal static int PrintMenuAndGetChoice()
-        {
+        { 
+            Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!");
             Console.WriteLine("Please choose an option:\n"
                               + "1. Enter a new vehicle into the garage\n"
@@ -84,7 +85,7 @@ namespace Ex03.ConsoleUI
             }
 
             bool isValid = false;
-            T numericChoice = default(T);
+            T? numericChoice = default;
 
             Console.Write($"Please enter your {i_Message}: ");
 
@@ -142,7 +143,7 @@ namespace Ex03.ConsoleUI
             return GetValidOptionChoiceByEnum<eCarDoors>("number of car doors");
         }
 
-        internal static bool IsCarryingHazardousMaterials()
+        internal static bool IsCarryingHazardous()
         {
             Console.WriteLine("Is the vehicle carrying hazardous materials?:\n" 
                               + "1. Yes\n" 
@@ -176,6 +177,21 @@ namespace Ex03.ConsoleUI
                 }
             }
 
+        }
+
+        public static bool ReturnToMainMenu()
+        {
+            Console.WriteLine("Do you want to return to the main menu?:\n"
+                              + "1. Yes\n"
+                              + "2. No\n");
+
+            return (GetValidOptionChoice(2) == 1);
+        }
+
+        public static void PrintFullVehicleDetails(string i_FullVehicleDetails)
+        {
+            Console.WriteLine("Here are the details for the requested license number:");
+            Console.WriteLine(i_FullVehicleDetails);
         }
     }
 }

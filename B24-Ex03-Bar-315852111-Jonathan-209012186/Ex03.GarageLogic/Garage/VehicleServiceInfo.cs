@@ -10,7 +10,7 @@ internal class VehicleServiceInfo
 
     public string OwnersLicenseNumber
     {
-        get { return m_OwnersVehicle.LicenseNumber; }
+        get { return m_OwnersVehicle.m_LicenseNumber; }
     }
     internal Vehicle OwnersVehicle
     {

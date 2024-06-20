@@ -1,10 +1,23 @@
 ﻿using Ex03.GarageLogic.Utils;
+using Ex03.GarageLogic.VehicleComponents;
 
 namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck : Vehicle
     {
-        bool m_IsCarryingHazardousMaterials;
-        float m_CargoVolume;
+        private bool m_IsCarryingHazardousMaterials { get; set; }
+        private float m_CargoVolume { get; set; }
+
+        public Truck(string i_LicenseNumber, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
+        {
+            // Model
+            m_LicenseNumber = i_LicenseNumber;
+            m_Tires = i_Tires;
+            m_MaxEnergyCapacity = i_MaxEnergyCapacity;
+            m_Engine = i_TruckEngine;
+            m_CurrentEnergyAvailable = i_EnergyAvailable;
+            m_IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
+            m_CargoVolume = i_CargoVolume;
+        }
     }
 }

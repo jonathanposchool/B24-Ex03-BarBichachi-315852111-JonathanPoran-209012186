@@ -135,11 +135,6 @@ public class Garage
         }
     }
 
-    public static string[] GetLicenseNumbersByFilter(eGarageVehicleStatus i_UserChoice)
-    {
-        throw new NotImplementedException();
-    }
-
     private List<Tire> createTires(int i_NumOfTires, float i_TireAirPressure, float i_MaxTirePressure)
     {
         List<Tire> tires = new List<Tire>();
@@ -153,6 +148,36 @@ public class Garage
         }
 
         return tires;
+    }
+
+    public static string[] GetLicenseNumbersByFilter(eGarageVehicleStatus i_UserChoice)
+    {
+        string[] result = new string[1];
+
+        // TODO
+
+        return result;
+    }
+
+    public void FillTirePressureToMax(string i_VehicleLicenseNumber)
+    {
+        // TODO
+    }
+
+    public void RefuelAVehicle(string i_VehicleLicenseNumber, eEnergyType i_VehicleEnergyType, float i_AmountToRefill)
+    {
+        // TODO
+        // Differentiate between electric energy type and combustion
+    }
+
+    public string GetFullVehicleDetails(string i_VehicleLicenseNumber)
+    {
+        string message = "XXX";
+
+        // TODO
+        // I need the garage to prepare the string for me (it will be a message with \n)
+
+        return message;
     }
 }
 
