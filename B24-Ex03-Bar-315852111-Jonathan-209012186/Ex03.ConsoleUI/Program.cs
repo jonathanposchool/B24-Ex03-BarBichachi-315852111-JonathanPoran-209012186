@@ -4,7 +4,7 @@ using Ex03.ConsoleUI;
 using Ex03.GarageLogic;
 using Ex03.GarageLogic.Utils;
 
-// TODO
+// TODO:
 /*
  * unused methods/functions
  * unused variables
