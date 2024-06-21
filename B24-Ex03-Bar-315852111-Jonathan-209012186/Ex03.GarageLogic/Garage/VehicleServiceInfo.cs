@@ -5,7 +5,7 @@ internal class VehicleServiceInfo
 {
     private string m_OwnersVehicleName;
     private string m_OwnersVehiclePhone;
-    private Vehicle m_OwnersVehicle;
+    private Vehicle m_OwnersVehicle; // TODO - What's that?
     internal eVehicleTypes m_VehicleType { get;}
     internal eGarageVehicleStatus m_VehicleStatus;
     internal string OwnersVehicleLicenseNumber
@@ -13,9 +13,9 @@ internal class VehicleServiceInfo
         get { return m_OwnersVehicle.m_LicenseNumber; }
     }
 
-    internal VehicleServiceInfo(Vehicle i_NewVehicle, eVehicleTypes i_VehicleType)
+    internal VehicleServiceInfo(string i_OwnersName, string i_OwnersPhone, Vehicle i_NewVehicle, eVehicleTypes i_VehicleType)
     {
-        m_OwnersVehicle = i_NewVehicle;
+        m_OwnersVehicle = i_NewVehicle; // TODO - What's that?
         m_VehicleType = i_VehicleType;
         m_VehicleStatus = eGarageVehicleStatus.ServiceInProgress;
         m_OwnersVehicleName = string.Empty;

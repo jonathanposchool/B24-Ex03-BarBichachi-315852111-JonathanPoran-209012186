@@ -27,15 +27,21 @@ namespace Ex03.ConsoleUI
             return GetValidOptionChoiceByEnum<eVehicleTypes>("vehicle type");
         }
 
-        internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage) where TEnum : Enum
+        internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage, bool i_IncludeLastOption = false) where TEnum : Enum
         {
-            int maximumChoice = Enum.GetValues(typeof(TEnum)).Length + 1;
+            int enumLength = Enum.GetValues(typeof(TEnum)).Length;
+            int maximumChoice = i_IncludeLastOption ? enumLength : enumLength - 1;
 
-            Console.WriteLine($"Please choose your {i_InputMessage} below:");
+            Console.WriteLine($"\nPlease choose your {i_InputMessage} below:");
 
             foreach (var option in Enum.GetValues(typeof(TEnum)))
             {
-                Console.WriteLine($"{(int)option + 1}: {option}");
+                int optionValue = (int)option + 1;
+
+                if (optionValue <= maximumChoice)
+                {
+                    Console.WriteLine($"{optionValue}: {option}");
+                }
             }
 
             int userChoice = GetValidOptionChoice(maximumChoice) - 1;
@@ -53,7 +59,7 @@ namespace Ex03.ConsoleUI
 
             do
             {
-                Console.Write("Please enter your choice: ");
+                Console.Write("\nPlease enter your choice: ");
 
                 string userChoice = Console.ReadLine();
                 
@@ -72,7 +78,7 @@ namespace Ex03.ConsoleUI
 
         internal static string GetUserStringInputWithMessage(string i_Message)
         {
-            Console.Write($"Please enter your {i_Message}: ");
+            Console.Write($"\nPlease enter your {i_Message}: ");
 
             return Console.ReadLine();
         }
@@ -87,7 +93,7 @@ namespace Ex03.ConsoleUI
             bool isValid = false;
             T? numericChoice = default;
 
-            Console.Write($"Please enter your {i_Message}: ");
+            Console.Write($"\nPlease enter your {i_Message}: ");
 
             do
             {
@@ -145,7 +151,7 @@ namespace Ex03.ConsoleUI
 
         internal static bool IsCarryingHazardous()
         {
-            Console.WriteLine("Is the vehicle carrying hazardous materials?:\n" 
+            Console.WriteLine("\nIs the vehicle carrying hazardous materials?:\n" 
                               + "1. Yes\n" 
                               + "2. No\n");
 
@@ -159,12 +165,12 @@ namespace Ex03.ConsoleUI
 
         internal static void VehicleCreationAttempt(bool i_IsVehicleCreated)
         {
-            Console.WriteLine($"Vehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.");
+            Console.WriteLine($"\nVehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.");
         }
 
         internal static void PrintLicenseNumbersArray(List<string> i_LicenseNumbersByFilter)
         {
-            Console.WriteLine("License numbers for the selected filter:");
+            Console.WriteLine("\nLicense numbers for the selected filter:");
             if (i_LicenseNumbersByFilter.Count == 0)
             {
                 Console.WriteLine("No vehicles found for the selected filter.");
@@ -188,20 +194,24 @@ namespace Ex03.ConsoleUI
             return (GetValidOptionChoice(2) == 2);
         }
 
-        public static void PrintFullVehicleDetails(List<string> i_FullVehicleDetails)
+        public static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
         {
             Console.WriteLine("Here are the details for the requested license number:");
-            Console.WriteLine(i_FullVehicleDetails);
+
+            foreach (KeyValuePair<string, string> detail in i_FullVehicleDetails)
+            {
+                Console.WriteLine($"{detail.Key}: {detail.Value}");
+            }
         }
 
         internal static void VehicleIsAlreadyInGarage()
         {
-            Console.WriteLine("The vehicle is in our garage and currently being repaired.");
+            Console.WriteLine("\nThe vehicle is in our garage and currently being repaired.");
         }
 
         public static void VehicleIsNotInGarage()
         {
-            Console.WriteLine("The vehicle is not in the garage.");
+            Console.WriteLine("\nThe vehicle is not in the garage.");
         }
     }
 }

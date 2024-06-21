@@ -7,12 +7,14 @@
         Octan95,
         Octan96,
         Octan98,
+        AllTypes
     }
 
     public enum eEngineType
     {
         Combustion,
-        Electricity
+        Electricity,
+        AllTypes
     }
 
     public enum eLicenseTypes
@@ -20,7 +22,8 @@
         A,
         A1,
         AA,
-        B1
+        B1,
+        AllTypes
     }
 
     public enum eCarColors
@@ -28,7 +31,8 @@
         Yellow,
         White,
         Red,
-        Black
+        Black,
+        AllTypes
     }
 
     public enum eCarDoors
@@ -36,7 +40,8 @@
         TwoDoors,
         ThreeDoors,
         FourDoors,
-        FiveDoors
+        FiveDoors,
+        AllTypes
     }
 
     public enum eGarageVehicleStatus

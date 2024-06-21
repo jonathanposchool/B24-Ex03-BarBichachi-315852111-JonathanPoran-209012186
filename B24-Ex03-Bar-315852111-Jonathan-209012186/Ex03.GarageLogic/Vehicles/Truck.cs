@@ -8,10 +8,10 @@ namespace Ex03.GarageLogic.Vehicles
         internal bool m_IsCarryingHazardousMaterials { get; set; }
         internal float m_CargoVolume { get; set; }
 
-        public Truck(string i_LicenseNumber, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
+        public Truck(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
         {
-            // Model
             m_LicenseNumber = i_LicenseNumber;
+            m_Model = i_Model;
             m_Tires = i_Tires;
             m_MaxEnergyCapacity = i_MaxEnergyCapacity;
             m_Engine = i_TruckEngine;

@@ -6,7 +6,6 @@ using Utils;
 public class Garage
 {
     private Dictionary<string, VehicleServiceInfo> m_GarageDatabase = new Dictionary<string, VehicleServiceInfo>();   
-    
 
     public bool IsVehicleInGarage(string i_LicenseNumber)
     {
@@ -40,26 +39,29 @@ public class Garage
         return (GetVehicleServiceInfoByLicenseNumber(i_LicenseNumber)).OwnersVehicle;
     }
 
-    public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
+    public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
-        Motorcycle newMotorcycle = VehicleCreator.CreateNewMotorcycle(i_LicenseNumber, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_LicenseType, i_EngineVolume);
-        VehicleServiceInfo newMotorcycleServiceInfo = new VehicleServiceInfo(newMotorcycle, i_MotorcycleType);
+        Motorcycle newMotorcycle = VehicleCreator.CreateNewMotorcycle(i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_LicenseType, i_EngineVolume);
+        VehicleServiceInfo newMotorcycleServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newMotorcycle, i_MotorcycleType);
 
         m_GarageDatabase.Add(i_LicenseNumber, newMotorcycleServiceInfo);
     }
 
-    public void CreateAndInsertCarToGarage(string i_LicenseNumber, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
+    public void CreateAndInsertCarToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
-        Car newCar = VehicleCreator.CreateNewCar(i_LicenseNumber, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_Color, i_NumOfDoors);
-        VehicleServiceInfo newCarServiceInfo = new VehicleServiceInfo(newCar, i_CarType);
+        Car newCar = VehicleCreator.CreateNewCar(i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_Color, i_NumOfDoors);
+        VehicleServiceInfo newCarServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newCar, i_CarType);
 
         m_GarageDatabase.Add(i_LicenseNumber, newCarServiceInfo);
     }
-    
-    public void CreateAndInsertTruckToGarage(string i_LicenseNumber, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
+    //vehicleLicenseNumber,
+    // vehicleModel,
+    // vehicleOwnerName,
+    // vehicleOwnerPhone,
+    public void CreateAndInsertTruckToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        Truck newTruck = VehicleCreator.CreateNewTruck(i_LicenseNumber, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
-        VehicleServiceInfo newTruckServiceInfo = new VehicleServiceInfo(newTruck, eVehicleTypes.RegularTruck);
+        Truck newTruck = VehicleCreator.CreateNewTruck(i_LicenseNumber, i_Model, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
+        VehicleServiceInfo newTruckServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newTruck, eVehicleTypes.RegularTruck);
 
         m_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
     }
@@ -146,46 +148,51 @@ public class Garage
     //     vehicleToFillAirTires.FillTiresPressure(i_AirPressureToAdd);
     // } 
     
-    public List<string> GetFullVehicleDetails(string i_VehicleLicenseNumber)
+    public Dictionary<string, string> GetFullVehicleDetails(string i_VehicleLicenseNumber)
     {
-        List<string> carInfoMessages = new List<string>();
+        Dictionary<string, string> carInfoMessages = new Dictionary<string, string>();
         VehicleServiceInfo wantedDetailsServiceInfo = GetVehicleServiceInfoByLicenseNumber(i_VehicleLicenseNumber);
 
         if(wantedDetailsServiceInfo != null)
         {
             Vehicle vehicleToExtractdetails = wantedDetailsServiceInfo.OwnersVehicle;
-            carInfoMessages.Add(vehicleToExtractdetails.m_LicenseNumber);
-            carInfoMessages.Add(vehicleToExtractdetails.m_Model);
-            carInfoMessages.Add(wantedDetailsServiceInfo.OwnersName);
-            carInfoMessages.Add((wantedDetailsServiceInfo.VehicleStatus).ToString());//TODO need to be string
-            carInfoMessages.Add(vehicleToExtractdetails.TiresManufacturer);
-            carInfoMessages.Add(TiresInfo(vehicleToExtractdetails.m_Tires));
+            carInfoMessages["License Number"] = vehicleToExtractdetails.m_LicenseNumber;
+            carInfoMessages["Model"] = vehicleToExtractdetails.m_Model;
+            carInfoMessages["Vehicle Type"] = wantedDetailsServiceInfo.m_VehicleType.ToString();
+            carInfoMessages["Owner's Name"] = wantedDetailsServiceInfo.OwnersName;
+            carInfoMessages["Owner's Phone"] = wantedDetailsServiceInfo.OwnersPhone;
+            carInfoMessages["Vehicle Status"] = wantedDetailsServiceInfo.VehicleStatus.ToString();
+            carInfoMessages["Tires Manufacturer"] = vehicleToExtractdetails.TiresManufacturer;
+            carInfoMessages["Tires Info"] = TiresInfo(vehicleToExtractdetails.m_Tires);
+
             if (vehicleToExtractdetails.m_Engine.EngineType == eEngineType.Combustion)
             {
-                carInfoMessages.Add(vehicleToExtractdetails.m_Engine.EnergyType.ToString());
+                carInfoMessages["Energy Type"] = vehicleToExtractdetails.m_Engine.EnergyType.ToString();
             }
-            carInfoMessages.Add(vehicleToExtractdetails.m_CurrentEnergyAvailable.ToString());//TODO wanted in %?
-            
+
+            carInfoMessages["Current Energy Available"] = vehicleToExtractdetails.CurrentEnergyPercentage + "%";
+
             //TODO i think we should change it to etch spesipic vehicle function that ui handel
             //adding spesipic vehicle type details:
             eVehicleTypes currentVehicleType = wantedDetailsServiceInfo.m_VehicleType;
-            if(currentVehicleType == eVehicleTypes.RegularMotorcycle || currentVehicleType == eVehicleTypes.ElectricMotorcycle)
+
+            if (currentVehicleType == eVehicleTypes.RegularMotorcycle || currentVehicleType == eVehicleTypes.ElectricMotorcycle)
             {
                 Motorcycle motorcycleToExtractdetails = vehicleToExtractdetails as Motorcycle;
-                carInfoMessages.Add(motorcycleToExtractdetails.m_LicenseType.ToString());
-                carInfoMessages.Add(motorcycleToExtractdetails.m_EngineVolume.ToString());
+                carInfoMessages["License Type"] = motorcycleToExtractdetails.m_LicenseType.ToString();
+                carInfoMessages["Engine Volume"] = motorcycleToExtractdetails.m_EngineVolume.ToString();
             }
-            else if(currentVehicleType == eVehicleTypes.RegularCar || currentVehicleType == eVehicleTypes.ElectricCar)
+            else if (currentVehicleType == eVehicleTypes.RegularCar || currentVehicleType == eVehicleTypes.ElectricCar)
             {
                 Car carToExtractdetails = vehicleToExtractdetails as Car;
-                carInfoMessages.Add(carToExtractdetails.m_Colors.ToString());
-                carInfoMessages.Add(carToExtractdetails.m_NumOfDoors.ToString());
+                carInfoMessages["Color"] = carToExtractdetails.m_Colors.ToString();
+                carInfoMessages["Number of Doors"] = carToExtractdetails.m_NumOfDoors.ToString();
             }
-            else if(currentVehicleType == eVehicleTypes.RegularTruck)
+            else if (currentVehicleType == eVehicleTypes.RegularTruck)
             {
                 Truck truckToExtractdetails = vehicleToExtractdetails as Truck;
-                carInfoMessages.Add(truckToExtractdetails.m_IsCarryingHazardousMaterials.ToString());
-                carInfoMessages.Add(truckToExtractdetails.m_CargoVolume.ToString());
+                carInfoMessages["Carrying Hazardous Materials"] = truckToExtractdetails.m_IsCarryingHazardousMaterials.ToString();
+                carInfoMessages["Cargo Volume"] = truckToExtractdetails.m_CargoVolume.ToString();
             }
         }
 
@@ -195,12 +202,11 @@ public class Garage
     private string TiresInfo(List<Tire> i_Tires)
     {
         string tiresInfo = string.Empty;
-        foreach( Tire tire in i_Tires)
+        for (int i = 0; i < i_Tires.Count; i++)
         {
-            tiresInfo += tire.m_TirePressure.ToString() + ' ';
+            tiresInfo += $"\nTire {i + 1}: Pressure = {i_Tires[i].m_TirePressure}";
         }
 
         return tiresInfo;
     }
-
 }

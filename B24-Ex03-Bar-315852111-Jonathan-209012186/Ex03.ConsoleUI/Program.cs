@@ -12,6 +12,7 @@ using Ex03.GarageLogic.Utils;
  * public/protected/internal/private
  * Exceptions
  * Duplications of code (for example fill tire in vehicle and in tire)
+ * usage of necessary things such as string format, etc
  */
 
 class Program
@@ -61,6 +62,9 @@ class Program
 
                                             jbGarage.CreateAndInsertMotorcycleToGarage(
                                                 vehicleLicenseNumber,
+                                                vehicleModel,
+                                                vehicleOwnerName,
+                                                vehicleOwnerPhone,
                                                 selectedVehicleType,
                                                 vehicleCurrentEnergy,
                                                 vehicleTiresManufacturer,
@@ -77,6 +81,9 @@ class Program
 
                                             jbGarage.CreateAndInsertCarToGarage(
                                                 vehicleLicenseNumber,
+                                                vehicleModel,
+                                                vehicleOwnerName,
+                                                vehicleOwnerPhone,
                                                 selectedVehicleType,
                                                 vehicleCurrentEnergy,
                                                 vehicleTiresManufacturer,
@@ -92,6 +99,9 @@ class Program
 
                                             jbGarage.CreateAndInsertTruckToGarage(
                                                 vehicleLicenseNumber,
+                                                vehicleModel,
+                                                vehicleOwnerName,
+                                                vehicleOwnerPhone,
                                                 vehicleCurrentEnergy,
                                                 vehicleTiresManufacturer,
                                                 vehicleCurrentTiresPressure,
@@ -117,7 +127,7 @@ class Program
                     break;
                 case 2:
                     {
-                        eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type");
+                        eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type", true);
                         List<string> licenseNumbersByFilter = jbGarage.GetLicenseNumbersByFilter(vehicleStatusFilter);
                         ConsoleUI.PrintLicenseNumbersArray(licenseNumbersByFilter);
                         isFinished = ConsoleUI.ReturnToMainMenu();
@@ -202,7 +212,7 @@ class Program
 
                         if (jbGarage.IsVehicleInGarage(vehicleLicenseNumber))
                         {
-                            List<string> fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
+                            Dictionary<string, string> fullVehicleDetails = jbGarage.GetFullVehicleDetails(vehicleLicenseNumber);
                             ConsoleUI.PrintFullVehicleDetails(fullVehicleDetails);
                         }
                         else

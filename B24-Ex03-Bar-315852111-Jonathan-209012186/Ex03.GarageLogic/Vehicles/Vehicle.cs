@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic.Vehicles
         internal Engine? m_Engine { get; set; }
         internal float m_MaxEnergyCapacity { get; set; }
         internal float m_CurrentEnergyAvailable { get; set; }
-        protected float m_CurrentEnergyPercentage = 0;
+        private float m_CurrentEnergyPercentage = 0;
 
         // Properties
         internal float CurrentEnergyPercentage
