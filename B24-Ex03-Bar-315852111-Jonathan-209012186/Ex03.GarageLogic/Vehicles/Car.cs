@@ -5,8 +5,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Car : Vehicle
     {
-        private eCarColors m_Colors { get; set; }
-        private eCarDoors m_NumOfDoors { get; set; }
+        internal eCarColors m_Colors { get; set; }
+        internal eCarDoors m_NumOfDoors { get; set; }
 
         public Car(string i_LicenseNumber, List<Tire> tires, float maxEnergyCapacity, Engine carEngine, float i_EnergyAvailable, eCarColors i_Color, eCarDoors i_NumOfDoors)
         {

@@ -5,8 +5,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck : Vehicle
     {
-        private bool m_IsCarryingHazardousMaterials { get; set; }
-        private float m_CargoVolume { get; set; }
+        internal bool m_IsCarryingHazardousMaterials { get; set; }
+        internal float m_CargoVolume { get; set; }
 
         public Truck(string i_LicenseNumber, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
         {

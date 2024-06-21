@@ -7,8 +7,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
-        private eLicenseTypes m_LicenseType { get; set; }
-        private int m_EngineVolume { get; set; }
+        internal eLicenseTypes m_LicenseType { get; set; }
+        internal int m_EngineVolume { get; set; }
 
         public Motorcycle(string i_LicenseNumber, List<Tire> tires, float maxEnergyCapacity, Engine motorcycleEngine, float i_EnergyAvailable, eLicenseTypes i_LicenseType, int i_EngineVolume)
         {

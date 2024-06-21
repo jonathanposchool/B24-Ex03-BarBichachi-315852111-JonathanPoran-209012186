@@ -2,20 +2,25 @@
 
 namespace Ex03.GarageLogic.VehicleComponents
 {
-    internal class Engine
+    internal class Engine //TODO make it stract?
     {
-        private eEnergyType m_EnergyType;
         private eEngineType m_EngineType;
+        private eEnergyType m_EnergyType;
         
+        internal Engine (eEngineType i_EngineType, eEnergyType i_EnergyType)
+        {
+            m_EngineType = i_EngineType;
+            m_EnergyType = i_EnergyType;
+        }
+
         public eEnergyType EnergyType
         {
             get { return m_EnergyType; }
-            set { m_EnergyType = value; }   
         }
+
         public eEngineType EngineType
         {
             get { return m_EngineType; }
-            set { m_EngineType = value; }   
         }  
     }
 }

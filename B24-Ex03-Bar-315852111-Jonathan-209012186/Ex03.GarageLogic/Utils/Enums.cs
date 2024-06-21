@@ -47,7 +47,7 @@
         AllTypes
     }
 
-    public enum eVehicleTypes
+    public enum eVehicleTypes 
     {
         RegularMotorcycle,
         ElectricMotorcycle,

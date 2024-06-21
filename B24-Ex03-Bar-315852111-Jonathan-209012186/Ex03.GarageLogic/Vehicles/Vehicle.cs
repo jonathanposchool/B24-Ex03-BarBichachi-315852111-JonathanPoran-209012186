@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic.Vehicles
     internal abstract class Vehicle
     {
         // Fields
-        protected string? m_Model { get; set; }
+        internal string? m_Model { get; set; }
         public string? m_LicenseNumber { get; set; }
         internal List<Tire>? m_Tires { get; set; }
         internal Engine? m_Engine { get; set; }
@@ -49,6 +49,12 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 throw new Exception($"Invalid energy type. Only {m_Engine.EnergyType} is supported for this vehicle.");
             }
+        }
+
+        internal string TiresManufacturer
+        {
+            //NOTE - The method is suitable for vehicles that has the same tirs! 
+            get { return m_Tires[0].m_TireManufacturer; }
         }
 
         // internal void FillTiresPressure(float i_AirPressureToAdd)
