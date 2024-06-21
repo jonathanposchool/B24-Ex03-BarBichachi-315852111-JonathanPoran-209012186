@@ -153,7 +153,7 @@ public class Garage
         Dictionary<string, string> carInfoMessages = new Dictionary<string, string>();
         VehicleServiceInfo wantedDetailsServiceInfo = GetVehicleServiceInfoByLicenseNumber(i_VehicleLicenseNumber);
 
-        if(wantedDetailsServiceInfo != null)
+        if (wantedDetailsServiceInfo != null)
         {
             Vehicle vehicleToExtractdetails = wantedDetailsServiceInfo.OwnersVehicle;
             carInfoMessages["License Number"] = vehicleToExtractdetails.m_LicenseNumber;

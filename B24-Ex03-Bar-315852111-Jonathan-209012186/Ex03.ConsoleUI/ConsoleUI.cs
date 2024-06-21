@@ -185,7 +185,7 @@ namespace Ex03.ConsoleUI
 
         }
 
-        public static bool ReturnToMainMenu()
+        public static bool IsReturningToMainMenu()
         {
             Console.WriteLine("\nDo you want to return to the main menu?:\n"
                               + "1. Yes\n"
