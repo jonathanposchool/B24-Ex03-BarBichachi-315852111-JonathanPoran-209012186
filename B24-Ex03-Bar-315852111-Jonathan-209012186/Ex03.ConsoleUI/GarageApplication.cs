@@ -26,6 +26,7 @@ namespace Ex03.ConsoleUI
             while (!m_ShouldExitMainLoop)
             {
                 int menuChoice = ConsoleUI.PrintMenuAndGetChoice();
+                ConsoleUI.PrintChosenAndClearScreen(menuChoice);
 
                 switch (menuChoice)
                 {
@@ -49,9 +50,6 @@ namespace Ex03.ConsoleUI
                         break;
                     case 7:
                         displayVehicleDetails();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
                         break;
                 }
             }

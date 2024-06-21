@@ -7,7 +7,7 @@ namespace Ex03.ConsoleUI
     internal class ConsoleUI
     {
         internal static int PrintMenuAndGetChoice()
-        { 
+        {
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!");
             Console.WriteLine("Please choose an option:\n"
@@ -22,6 +22,41 @@ namespace Ex03.ConsoleUI
             return GetValidOptionChoice(7);
         }
 
+        public static void PrintChosenAndClearScreen(int menuChoice)
+        {
+            Console.Clear();
+
+            switch (menuChoice)
+            {
+                case 1:
+                    Console.Write("You chose to enter a new vehicle into the garage");
+                    break;
+                case 2:
+                    Console.Write("You chose to show list of vehicles in the garage");
+                    break;
+                case 3:
+                    Console.Write("You chose to change the status of a vehicle in the garage");
+                    break;
+                case 4:
+                    Console.Write("You chose to fill vehicle tire pressure to maximum");
+                    break;
+                case 5:
+                    Console.Write("You chose to refuel a vehicle");
+                    break;
+                case 6:
+                    Console.Write("You chose to charge an electric vehicle");
+                    break;
+                case 7:
+                    Console.Write("You chose to show vehicle details by license number");
+                    break;
+                default:
+                    Console.Write("Invalid choice. Please try again.");
+                    break;
+            }
+
+            Thread.Sleep(3000);
+        }
+
         internal static eVehicleTypes GetVehicleType()
         {
             return GetValidOptionChoiceByEnum<eVehicleTypes>("vehicle type");
@@ -29,10 +64,12 @@ namespace Ex03.ConsoleUI
 
         internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage, bool i_IncludeLastOption = false) where TEnum : Enum
         {
+            Console.Clear();
+
             int enumLength = Enum.GetValues(typeof(TEnum)).Length;
             int maximumChoice = i_IncludeLastOption ? enumLength : enumLength - 1;
 
-            Console.WriteLine($"\nPlease choose your {i_InputMessage} below:");
+            Console.WriteLine($"Please choose your {i_InputMessage} below:");
 
             foreach (var option in Enum.GetValues(typeof(TEnum)))
             {
@@ -47,7 +84,8 @@ namespace Ex03.ConsoleUI
             int userChoice = GetValidOptionChoice(maximumChoice) - 1;
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
-            Console.WriteLine($"Your choice is: {selectedType}");
+            Console.Write($"Your choice is: {selectedType}");
+            Thread.Sleep(3000);
 
             return selectedType;
         }
@@ -59,7 +97,7 @@ namespace Ex03.ConsoleUI
 
             do
             {
-                Console.Write("\nPlease enter your choice: ");
+                Console.Write("Please enter your choice: ");
 
                 string userChoice = Console.ReadLine();
                 
@@ -67,7 +105,8 @@ namespace Ex03.ConsoleUI
                 {
                     isValid = numericChoice >= 1 && numericChoice <= i_MaximumChoice;
                 }
-                else
+                
+                if (!isValid)
                 {
                     Console.WriteLine($"Invalid choice. You can only choose between 1 and {i_MaximumChoice}. Please try again.");
                 }
@@ -78,13 +117,17 @@ namespace Ex03.ConsoleUI
 
         internal static string GetUserStringInputWithMessage(string i_Message)
         {
-            Console.Write($"\nPlease enter your {i_Message}: ");
+            Console.Clear();
+
+            Console.Write($"Please enter your {i_Message}: ");
 
             return Console.ReadLine();
         }
 
         internal static T GetUserNumericInputWithMessage<T>(string i_Message)
         {
+            Console.Clear();
+
             if (typeof(T) != typeof(int) && typeof(T) != typeof(float))
             {
                 throw new Exception("T must be either int or float");
@@ -93,7 +136,7 @@ namespace Ex03.ConsoleUI
             bool isValid = false;
             T? numericChoice = default;
 
-            Console.Write($"\nPlease enter your {i_Message}: ");
+            Console.Write($"Please enter your {i_Message}: ");
 
             do
             {
@@ -121,6 +164,8 @@ namespace Ex03.ConsoleUI
 
         internal static float GetVehicleEnergy(eVehicleTypes selectedVehicleType)
         {
+            Console.Clear();
+
             string energyType = selectedVehicleType.ToString().Contains("Electric") ? "electricity" : "fuel";
             string energyMessage = $"current {energyType} left";
 
@@ -151,7 +196,7 @@ namespace Ex03.ConsoleUI
 
         internal static bool IsCarryingHazardous()
         {
-            Console.WriteLine("\nIs the vehicle carrying hazardous materials?:\n" 
+            Console.WriteLine("Is the vehicle carrying hazardous materials?:\n" 
                               + "1. Yes\n" 
                               + "2. No\n");
 
@@ -165,12 +210,13 @@ namespace Ex03.ConsoleUI
 
         internal static void VehicleCreationAttempt(bool i_IsVehicleCreated)
         {
-            Console.WriteLine($"\nVehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.");
+            Console.Clear();
+            Console.WriteLine($"Vehicle created {(i_IsVehicleCreated ? "" : "un")}successfully.\n");
         }
 
         internal static void PrintLicenseNumbersArray(List<string> i_LicenseNumbersByFilter)
         {
-            Console.WriteLine("\nLicense numbers for the selected filter:");
+            Console.WriteLine("License numbers for the selected filter:");
             if (i_LicenseNumbersByFilter.Count == 0)
             {
                 Console.WriteLine("No vehicles found for the selected filter.");
@@ -187,11 +233,20 @@ namespace Ex03.ConsoleUI
 
         public static bool IsReturningToMainMenu()
         {
-            Console.WriteLine("\nDo you want to return to the main menu?:\n"
+            Console.WriteLine("Do you want to return to the main menu?:\n"
                               + "1. Yes\n"
                               + "2. No\n");
 
-            return (GetValidOptionChoice(2) == 2);
+            bool isExiting = (GetValidOptionChoice(2) == 2);
+
+            if (isExiting)
+            {
+                Console.Clear();
+                Console.WriteLine("You chose to exit the program, see you next time.");
+                Thread.Sleep(3000);
+            }
+
+            return isExiting;
         }
 
         public static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
@@ -206,12 +261,12 @@ namespace Ex03.ConsoleUI
 
         internal static void VehicleIsAlreadyInGarage()
         {
-            Console.WriteLine("\nThe vehicle is in our garage and currently being repaired.");
+            Console.WriteLine("The vehicle is in our garage and currently being repaired.");
         }
 
         public static void VehicleIsNotInGarage()
         {
-            Console.WriteLine("\nThe vehicle is not in the garage.");
+            Console.WriteLine("The vehicle is not in the garage.");
         }
     }
 }
