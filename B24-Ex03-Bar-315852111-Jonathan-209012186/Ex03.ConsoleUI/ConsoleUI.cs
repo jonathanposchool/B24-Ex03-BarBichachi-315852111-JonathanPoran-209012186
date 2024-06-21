@@ -84,7 +84,7 @@ namespace Ex03.ConsoleUI
             int userChoice = GetValidOptionChoice(maximumChoice) - 1;
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
-            Console.Write($"Your choice is: {selectedType}");
+            Console.Write($"\nYour choice is: {selectedType}");
             Thread.Sleep(3000);
 
             return selectedType;
@@ -251,12 +251,15 @@ namespace Ex03.ConsoleUI
 
         public static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
         {
+            Console.Clear();
             Console.WriteLine("Here are the details for the requested license number:");
 
             foreach (KeyValuePair<string, string> detail in i_FullVehicleDetails)
             {
                 Console.WriteLine($"{detail.Key}: {detail.Value}");
             }
+
+            Console.WriteLine();
         }
 
         internal static void VehicleIsAlreadyInGarage()
