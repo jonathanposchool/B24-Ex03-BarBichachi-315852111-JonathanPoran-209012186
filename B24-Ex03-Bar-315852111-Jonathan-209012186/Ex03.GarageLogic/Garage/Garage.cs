@@ -20,7 +20,7 @@ public class Garage
         return isCarKnownForGarge;
     }
 
-    internal VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
+    private VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
     {
         VehicleServiceInfo wantedVehicleServiceInfo;
         if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out wantedVehicleServiceInfo))

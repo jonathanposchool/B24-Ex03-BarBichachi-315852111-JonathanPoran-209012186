@@ -63,6 +63,7 @@ class Program
                                                 vehicleLicenseNumber,
                                                 selectedVehicleType,
                                                 vehicleCurrentEnergy,
+                                                vehicleTiresManufacturer,
                                                 vehicleCurrentTiresPressure,
                                                 licenseType,
                                                 engineVolume);
@@ -78,6 +79,7 @@ class Program
                                                 vehicleLicenseNumber,
                                                 selectedVehicleType,
                                                 vehicleCurrentEnergy,
+                                                vehicleTiresManufacturer,
                                                 vehicleCurrentTiresPressure,
                                                 carColor,
                                                 carNumOfDoors);
@@ -91,6 +93,7 @@ class Program
                                             jbGarage.CreateAndInsertTruckToGarage(
                                                 vehicleLicenseNumber,
                                                 vehicleCurrentEnergy,
+                                                vehicleTiresManufacturer,
                                                 vehicleCurrentTiresPressure,
                                                 isCarryingHazardous,
                                                 truckCargoVolume);
