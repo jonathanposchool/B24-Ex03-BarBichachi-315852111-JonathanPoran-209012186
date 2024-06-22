@@ -48,7 +48,7 @@
     {
         ServiceInProgress,
         ServiceCompleted,
-        PaidAndReleased,
+        PaidTheService,
         AllTypes
     }
 

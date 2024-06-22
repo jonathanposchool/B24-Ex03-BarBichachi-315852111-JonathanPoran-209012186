@@ -6,7 +6,8 @@ namespace Ex03.ConsoleUI
     {
         internal static int PrintMenuAndGetChoice()
         {
-            const int numberOfChoiceInManu = 7;
+            const int numOfMenuOptions = 7;
+
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
             Console.WriteLine("Please choose an option:\n"
@@ -18,7 +19,7 @@ namespace Ex03.ConsoleUI
                               + "6: Charge an electric vehicle\n"
                               + "7: Show vehicle details by license number\n");
 
-            return GetValidOptionChoice(numberOfChoiceInManu);
+            return GetValidOptionChoice(numOfMenuOptions);
         }
 
         public static void PrintChosenAndClearScreen(int menuChoice)
@@ -53,7 +54,7 @@ namespace Ex03.ConsoleUI
                     break;
             }
 
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
         }
 
         internal static eVehicleTypes GetVehicleType()
@@ -63,11 +64,10 @@ namespace Ex03.ConsoleUI
 
         internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage, bool i_IncludeLastOption = false) where TEnum : Enum
         {
-            Console.Clear();
-
             int enumLength = Enum.GetValues(typeof(TEnum)).Length;
             int maximumChoice = i_IncludeLastOption ? enumLength : enumLength - 1;
 
+            Console.Clear();
             Console.WriteLine($"Please choose your {i_InputMessage} below:");
 
             foreach (var option in Enum.GetValues(typeof(TEnum)))
@@ -84,14 +84,14 @@ namespace Ex03.ConsoleUI
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
             Console.WriteLine($"\nYour choice is: {selectedType}");
-            Thread.Sleep(3000);
+            Thread.Sleep(1500);
 
             return selectedType;
         }
 
         internal static int GetValidOptionChoice(int i_MaximumChoice)
         {
-            bool isValid = false;
+            bool isValid;
             int numericChoice;
 
             do
@@ -99,12 +99,14 @@ namespace Ex03.ConsoleUI
                 Console.Write("Please enter your choice: ");
 
                 string userChoice = Console.ReadLine();
-                
-                if (int.TryParse(userChoice, out numericChoice))
+
+                if (!int.TryParse(userChoice, out numericChoice))
                 {
-                    isValid = numericChoice >= 1 && numericChoice <= i_MaximumChoice;
+                    throw new FormatException("Invalid choice. Please enter a valid integer.");
                 }
-                
+
+                isValid = numericChoice >= 1 && numericChoice <= i_MaximumChoice;
+
                 if (!isValid)
                 {
                     Console.WriteLine($"Invalid choice. You can only choose between 1 and {i_MaximumChoice}. Please try again.");
@@ -117,7 +119,6 @@ namespace Ex03.ConsoleUI
         internal static string GetUserStringInputWithMessage(string i_Message)
         {
             Console.Clear();
-
             Console.Write($"Please enter your {i_Message}: ");
 
             return Console.ReadLine();
@@ -129,13 +130,13 @@ namespace Ex03.ConsoleUI
 
             if (typeof(T) != typeof(int) && typeof(T) != typeof(float))
             {
-                throw new Exception("T must be either int or float");
+                throw new FormatException("T must be either int or float");
             }
+
+            Console.Write($"Please enter your {i_Message}: ");
 
             bool isValid = false;
             T? numericChoice = default;
-
-            Console.Write($"Please enter your {i_Message}: ");
 
             do
             {
@@ -167,7 +168,6 @@ namespace Ex03.ConsoleUI
 
             string energyType = selectedVehicleType.ToString().Contains("Electric") ? "electricity" : "fuel";
             string energyMessage = $"current {energyType} left";
-
             float vehicleCurrentEnergy = GetUserNumericInputWithMessage<float>(energyMessage);
 
             return vehicleCurrentEnergy;
@@ -216,7 +216,9 @@ namespace Ex03.ConsoleUI
 
         internal static void PrintLicenseNumbersArray(List<string> i_LicenseNumbersByFilter)
         {
+            Console.Clear();
             Console.WriteLine("License numbers for the selected filter:");
+
             if (i_LicenseNumbersByFilter.Count == 0)
             {
                 Console.WriteLine("No vehicles found for the selected filter.");
@@ -227,9 +229,7 @@ namespace Ex03.ConsoleUI
                 {
                     Console.WriteLine(licenseNumber);
                 }
-                Console.WriteLine();//jonathan add, not sure if need this(need to check) TODO
             }
-
         }
 
         public static bool IsReturningToMainMenu()
@@ -271,6 +271,13 @@ namespace Ex03.ConsoleUI
         public static void VehicleIsNotInGarage()
         {
             Console.WriteLine("The vehicle is not in the garage.");
+        }
+
+        public static void PrintException(string i_ExMessage)
+        {
+            Console.WriteLine(i_ExMessage);
+            Thread.Sleep(3000);
+            Console.Clear();
         }
     }
 }

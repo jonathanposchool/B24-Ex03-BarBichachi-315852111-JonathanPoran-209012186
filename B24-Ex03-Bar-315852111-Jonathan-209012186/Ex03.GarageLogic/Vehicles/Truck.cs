@@ -1,5 +1,4 @@
-﻿using Ex03.GarageLogic.Utils;
-using Ex03.GarageLogic.VehicleComponents;
+﻿using Ex03.GarageLogic.VehicleComponents;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -8,7 +7,7 @@ namespace Ex03.GarageLogic.Vehicles
         internal bool m_IsCarryingHazardousMaterials { get; set; }
         internal float m_CargoVolume { get; set; }
 
-        public Truck(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
+        internal Truck(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_TruckEngine, float i_EnergyAvailable, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
         {
             m_LicenseNumber = i_LicenseNumber;
             m_Model = i_Model;

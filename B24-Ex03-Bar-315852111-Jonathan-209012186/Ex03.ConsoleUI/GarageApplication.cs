@@ -5,12 +5,12 @@ namespace Ex03.ConsoleUI
 {
     internal class GarageApplication
     {
-        private Garage m_JBGarage;
+        private readonly Garage r_JBGarage;
         private bool m_ShouldExitMainLoop;
 
         public GarageApplication()
         {
-            m_JBGarage = new Garage();
+            r_JBGarage = new Garage();
         }
 
         public void RunGarageManagementSystem()
@@ -19,32 +19,53 @@ namespace Ex03.ConsoleUI
 
             while (!m_ShouldExitMainLoop)
             {
-                int menuChoice = ConsoleUI.PrintMenuAndGetChoice();
-                ConsoleUI.PrintChosenAndClearScreen(menuChoice);
-
-                switch (menuChoice)
+                try
                 {
-                    case 1:
-                        handleVehicleEntry();
-                        break;
-                    case 2:
-                        handleVehicleFiltering();
-                        break;
-                    case 3:
-                        changeVehicleStatus();
-                        break;
-                    case 4:
-                        fillTiresToMax();
-                        break;
-                    case 5:
-                        refuelVehicle();
-                        break;
-                    case 6:
-                        chargeElectricVehicle();
-                        break;
-                    case 7:
-                        displayVehicleDetails();
-                        break;
+                    int menuChoice = ConsoleUI.PrintMenuAndGetChoice();
+                    ConsoleUI.PrintChosenAndClearScreen(menuChoice);
+
+                    switch (menuChoice)
+                    {
+                        case 1:
+                            handleVehicleEntry();
+                            break;
+                        case 2:
+                            handleVehicleFiltering();
+                            break;
+                        case 3:
+                            changeVehicleStatus();
+                            break;
+                        case 4:
+                            fillTiresToMax();
+                            break;
+                        case 5:
+                            refuelVehicle();
+                            break;
+                        case 6:
+                            chargeElectricVehicle();
+                            break;
+                        case 7:
+                            displayVehicleDetails();
+                            break;
+                        default:
+                            throw new ValueOutOfRangeException("Invalid menu choice", 1, 7);
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    ConsoleUI.PrintException($"Invalid format: {ex.Message}");
+                }
+                catch (ArgumentException ex)
+                {
+                    ConsoleUI.PrintException($"Argument error: {ex.Message}");
+                }
+                catch (ValueOutOfRangeException ex)
+                {
+                    ConsoleUI.PrintException($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
+                }
+                catch (Exception ex)
+                {
+                    ConsoleUI.PrintException($"An unexpected error occurred: {ex.Message}");
                 }
             }
         }
@@ -53,7 +74,7 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 handleExistingVehicle(vehicleLicenseNumber);
             }
@@ -67,7 +88,7 @@ namespace Ex03.ConsoleUI
 
         private void handleExistingVehicle(string vehicleLicenseNumber)
         {
-            m_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, eGarageVehicleStatus.ServiceInProgress);
+            r_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, eGarageVehicleStatus.ServiceInProgress);
             ConsoleUI.VehicleIsAlreadyInGarage();
         }
 
@@ -101,14 +122,27 @@ namespace Ex03.ConsoleUI
                             createAndInsertTruck(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy);
                             break;
                     }
+
                     isVehicleCreated = true;
+                }
+                catch (FormatException ex)
+                {
+                    ConsoleUI.PrintException($"Invalid format: {ex.Message}");
+                }
+                catch (ArgumentException ex)
+                {
+                    ConsoleUI.PrintException($"Argument error: {ex.Message}");
+                }
+                catch (ValueOutOfRangeException ex)
+                {
+                    ConsoleUI.PrintException($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ConsoleUI.PrintException($"Error creating vehicle: {ex.Message}");
                 }
 
-                ConsoleUI.VehicleCreationAttempt(isVehicleCreated);//TODO is it necessary? 
+                ConsoleUI.VehicleCreationAttempt(isVehicleCreated);
             } while (!isVehicleCreated);
         }
 
@@ -117,7 +151,7 @@ namespace Ex03.ConsoleUI
             eLicenseTypes licenseType = ConsoleUI.GetLicenseType();
             int engineVolume = ConsoleUI.GetEngineVolume();
 
-            m_JBGarage.CreateAndInsertMotorcycleToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
+            r_JBGarage.CreateAndInsertMotorcycleToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
                 selectedVehicleType, vehicleCurrentEnergy, vehicleTiresManufacturer, vehicleCurrentTiresPressure,
                 licenseType, engineVolume);
         }
@@ -127,7 +161,7 @@ namespace Ex03.ConsoleUI
             eCarColors carColor = ConsoleUI.GetVehicleColor();
             eCarDoors carNumOfDoors = ConsoleUI.GetVehicleNumOfDoors();
 
-            m_JBGarage.CreateAndInsertCarToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
+            r_JBGarage.CreateAndInsertCarToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
                 selectedVehicleType, vehicleCurrentEnergy, vehicleTiresManufacturer, vehicleCurrentTiresPressure,
                 carColor, carNumOfDoors);
         }
@@ -137,14 +171,15 @@ namespace Ex03.ConsoleUI
             bool isCarryingHazardous = ConsoleUI.IsCarryingHazardous();
             float truckCargoVolume = ConsoleUI.GetCargoVolume();
 
-            m_JBGarage.CreateAndInsertTruckToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
+            r_JBGarage.CreateAndInsertTruckToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
                 vehicleCurrentEnergy, vehicleTiresManufacturer, vehicleCurrentTiresPressure, isCarryingHazardous, truckCargoVolume);
         }
 
         private void handleVehicleFiltering()
         {
             eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type", true);
-            List<string> licenseNumbersByFilter = m_JBGarage.GetLicenseNumbersByFilter(vehicleStatusFilter);
+            List<string> licenseNumbersByFilter = r_JBGarage.GetLicenseNumbersByFilter(vehicleStatusFilter);
+
             ConsoleUI.PrintLicenseNumbersArray(licenseNumbersByFilter);
 
             m_ShouldExitMainLoop = ConsoleUI.IsReturningToMainMenu();
@@ -154,10 +189,10 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status");
-                m_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
+                r_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
             }
             else
             {
@@ -171,9 +206,9 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                m_JBGarage.FillTirePressureToMax(vehicleLicenseNumber);
+                r_JBGarage.FillTirePressureToMax(vehicleLicenseNumber);
             }
             else
             {
@@ -187,11 +222,12 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
                 float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
-                m_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
+
+                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
             }
             else
             {
@@ -205,10 +241,11 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
-                m_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
+
+                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
             }
             else
             {
@@ -222,9 +259,10 @@ namespace Ex03.ConsoleUI
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 
-            if (m_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
+            if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                Dictionary<string, string> fullVehicleDetails = m_JBGarage.GetFullVehicleDetails(vehicleLicenseNumber);
+                Dictionary<string, string> fullVehicleDetails = r_JBGarage.GetFullVehicleDetails(vehicleLicenseNumber);
+
                 ConsoleUI.PrintFullVehicleDetails(fullVehicleDetails);
             }
             else

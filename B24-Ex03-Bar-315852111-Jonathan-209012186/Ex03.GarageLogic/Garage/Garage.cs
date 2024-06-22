@@ -5,30 +5,18 @@ using Utils;
 
 public class Garage
 {
-    private Dictionary<string, VehicleServiceInfo> m_GarageDatabase = new Dictionary<string, VehicleServiceInfo>();   
+    private readonly Dictionary<string, VehicleServiceInfo> r_GarageDatabase = [];
 
     public bool IsVehicleInGarage(string i_LicenseNumber)
     {
-        bool isCarKnownForGarge = false;
-
-        if (m_GarageDatabase.ContainsKey(i_LicenseNumber))
-        {
-            isCarKnownForGarge = true;
-        }
-
-        return isCarKnownForGarge;
+        return r_GarageDatabase.ContainsKey(i_LicenseNumber);
     }
 
     private VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
     {
-        VehicleServiceInfo wantedVehicleServiceInfo;
-        if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out wantedVehicleServiceInfo))
+        if (!r_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo wantedVehicleServiceInfo))
         {
-            //return wantedVehicleServiceInfo;
-        }
-        else
-        {
-            //TODO throw Exception;
+            throw new ArgumentException("Vehicle with the provided license number does not exist in the database.");
         }
 
         return wantedVehicleServiceInfo;
@@ -42,52 +30,48 @@ public class Garage
     public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
         Motorcycle newMotorcycle = VehicleCreator.CreateNewMotorcycle(i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_LicenseType, i_EngineVolume);
-        VehicleServiceInfo newMotorcycleServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newMotorcycle, i_MotorcycleType);
+        VehicleServiceInfo newMotorcycleServiceInfo = new(i_OwnerName, i_OwnerPhone, newMotorcycle, i_MotorcycleType);
 
-        m_GarageDatabase.Add(i_LicenseNumber, newMotorcycleServiceInfo);
+        r_GarageDatabase.Add(i_LicenseNumber, newMotorcycleServiceInfo);
     }
 
     public void CreateAndInsertCarToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
         Car newCar = VehicleCreator.CreateNewCar(i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_Color, i_NumOfDoors);
-        VehicleServiceInfo newCarServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newCar, i_CarType);
+        VehicleServiceInfo newCarServiceInfo = new(i_OwnerName, i_OwnerPhone, newCar, i_CarType);
 
-        m_GarageDatabase.Add(i_LicenseNumber, newCarServiceInfo);
+        r_GarageDatabase.Add(i_LicenseNumber, newCarServiceInfo);
     }
-    //vehicleLicenseNumber,
-    // vehicleModel,
-    // vehicleOwnerName,
-    // vehicleOwnerPhone,
+
     public void CreateAndInsertTruckToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
         Truck newTruck = VehicleCreator.CreateNewTruck(i_LicenseNumber, i_Model, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
-        VehicleServiceInfo newTruckServiceInfo = new VehicleServiceInfo(i_OwnerName, i_OwnerPhone, newTruck, eVehicleTypes.RegularTruck);
+        VehicleServiceInfo newTruckServiceInfo = new(i_OwnerName, i_OwnerPhone, newTruck, eVehicleTypes.RegularTruck);
 
-        m_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
+        r_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
     }
-    
+
     public void ChangeVehicleStatus(string i_LicenseNumber, eGarageVehicleStatus i_NewStatus)
     {
-        if (m_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo currentVehicleServiceInfo))
+        if (!r_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo currentVehicleServiceInfo))
         {
-            currentVehicleServiceInfo.VehicleStatus = i_NewStatus;
+            throw new ArgumentException("Vehicle with the provided license number does not exist in the database.");
         }
-        else
-        {
-            //TODO throw new ArgumentException("Vehicle with the provided license number does not exist in the database.");
-        }
+
+        currentVehicleServiceInfo.VehicleStatus = i_NewStatus;
     }
 
     public List<string> GetLicenseNumbersByFilter(eGarageVehicleStatus i_StatusFilter)
     {
-        List<string> listOfLicenseNumberVehicleWithStatusFilter = new List<string>();
+        List<string> listOfLicenseNumberVehicleWithStatusFilter = [];
 
-        if (m_GarageDatabase != null)
+        if (r_GarageDatabase != null)
         {
-            foreach (KeyValuePair<string, VehicleServiceInfo> element in m_GarageDatabase)
+            foreach (KeyValuePair<string, VehicleServiceInfo> element in r_GarageDatabase)
             {
                 VehicleServiceInfo currentVehicleServiceInfo = element.Value;
                 string currentVehicleLicenseNumber = element.Key;
+
                 if (currentVehicleServiceInfo.VehicleStatus == i_StatusFilter 
                     || i_StatusFilter == eGarageVehicleStatus.AllTypes)
                 {
@@ -102,55 +86,35 @@ public class Garage
     public void RefuelAVehicle(string i_VehicleLicenseNumber, eEnergyType i_VehicleEnergyType, float i_AmountToRefill)
     {
         Vehicle vehicleToFillEnergy = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
-        
-        if(vehicleToFillEnergy.m_Engine.EnergyType == i_VehicleEnergyType)
+
+        if (vehicleToFillEnergy.m_Engine.m_EnergyType != i_VehicleEnergyType)
         {
-            if ((vehicleToFillEnergy.m_CurrentEnergyAvailable + i_AmountToRefill) <= vehicleToFillEnergy.m_MaxEnergyCapacity)
-            {
-                vehicleToFillEnergy.FillEnergy(i_AmountToRefill,i_VehicleEnergyType);
-            }
-            else
-            {
-            string unit = (i_VehicleEnergyType == eEnergyType.Electric) ? "hours" : "liters";
-            throw new Exception($"Too much amount of {i_VehicleEnergyType}. The maximum capacity is: {vehicleToFillEnergy.m_MaxEnergyCapacity} {unit}");
-            }
+            throw new ArgumentException($"Invalid energy type. Only {vehicleToFillEnergy.m_Engine.m_EnergyType} is supported for this vehicle.");
         }
-        else
+
+        if ((vehicleToFillEnergy.m_CurrentEnergyAvailable + i_AmountToRefill) > vehicleToFillEnergy.m_MaxEnergyCapacity)
         {
-            throw new Exception($"Invalid energy type. Only {vehicleToFillEnergy.m_Engine.EnergyType} is supported for this vehicle.");
+            throw new ValueOutOfRangeException("Too much amount of energy.", 0, vehicleToFillEnergy.m_MaxEnergyCapacity - vehicleToFillEnergy.m_CurrentEnergyAvailable);
         }
-    }
-    
-    public void FillEnergyToVehicleByLicenseNumber(string i_VehicleLicenseNumber, float i_EnergyToAdd, eEnergyType i_EnergyType)
-    {
-        Vehicle vehicleToFillEnrgey = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
-        vehicleToFillEnrgey.FillEnergy(i_EnergyToAdd, i_EnergyType);
+
+        vehicleToFillEnergy.FillEnergy(i_AmountToRefill, i_VehicleEnergyType);
     }
 
     public void FillTirePressureToMax(string i_VehicleLicenseNumber)
     {
         Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
         List<Tire> currentVehicleTires = vehicleToFillAirTires.m_Tires;
+        float amountOfAirToReachMax = currentVehicleTires.First().m_MaxTirePressure - currentVehicleTires.First().m_TirePressure;
 
-        foreach(Tire tire in currentVehicleTires)
+        foreach (Tire tire in currentVehicleTires)
         {
-            float amountOfAirToReachMax = tire.m_MaxTirePressure - tire.m_TirePressure;
             tire.FillTirePressure(amountOfAirToReachMax);
         }
-        // {
-        //     throw new Exception($"Adding {i_AirPressureToAdd} PSI would exceed the maximum tire pressure of {Tires.First().m_MaxTirePressure} PSI.");
-        // }
     }
-    
-    // public void FillAirToVehicleByLicenseNumber(string i_LicenseNumber, float i_AirPressureToAdd)
-    // {
-    //     Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_LicenseNumber);
-    //     vehicleToFillAirTires.FillTiresPressure(i_AirPressureToAdd);
-    // } 
-    
+
     public Dictionary<string, string> GetFullVehicleDetails(string i_VehicleLicenseNumber)
     {
-        Dictionary<string, string> carInfoMessages = new Dictionary<string, string>();
+        Dictionary<string, string> carInfoMessages = [];
         VehicleServiceInfo wantedDetailsServiceInfo = GetVehicleServiceInfoByLicenseNumber(i_VehicleLicenseNumber);
 
         if (wantedDetailsServiceInfo != null)
@@ -163,11 +127,11 @@ public class Garage
             carInfoMessages["Owner's Phone"] = wantedDetailsServiceInfo.OwnersPhone;
             carInfoMessages["Vehicle Status"] = wantedDetailsServiceInfo.VehicleStatus.ToString();
             carInfoMessages["Tires Manufacturer"] = vehicleToExtractdetails.TiresManufacturer;
-            carInfoMessages["Tires Info"] = TiresInfo(vehicleToExtractdetails.m_Tires);
+            carInfoMessages["Tires Info"] = tiresInfo(vehicleToExtractdetails.m_Tires);
 
-            if (vehicleToExtractdetails.m_Engine.EngineType == eEngineType.Combustion)
+            if (vehicleToExtractdetails.m_Engine.m_EngineType == eEngineType.Combustion)
             {
-                carInfoMessages["Energy Type"] = vehicleToExtractdetails.m_Engine.EnergyType.ToString();
+                carInfoMessages["Energy Type"] = vehicleToExtractdetails.m_Engine.m_EnergyType.ToString();
             }
 
             carInfoMessages["Current Energy Available"] = vehicleToExtractdetails.CurrentEnergyPercentage + "%";
@@ -199,7 +163,7 @@ public class Garage
         return carInfoMessages;
     }
 
-    private string TiresInfo(List<Tire> i_Tires)
+    private static string tiresInfo(List<Tire> i_Tires)
     {
         string tiresInfo = string.Empty;
         for (int i = 0; i < i_Tires.Count; i++)

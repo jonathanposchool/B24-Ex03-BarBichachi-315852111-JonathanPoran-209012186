@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-using Ex03.GarageLogic.Utils;
+﻿using Ex03.GarageLogic.Utils;
 using Ex03.GarageLogic.VehicleComponents;
 
 namespace Ex03.GarageLogic.Vehicles
@@ -10,7 +8,7 @@ namespace Ex03.GarageLogic.Vehicles
         internal eLicenseTypes m_LicenseType { get; set; }
         internal int m_EngineVolume { get; set; }
 
-        public Motorcycle(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_MotorcycleEngine, float i_EnergyAvailable, eLicenseTypes i_LicenseType, int i_EngineVolume)
+        internal Motorcycle(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_MotorcycleEngine, float i_EnergyAvailable, eLicenseTypes i_LicenseType, int i_EngineVolume)
         {
             m_LicenseNumber = i_LicenseNumber;
             m_Model = i_Model;
