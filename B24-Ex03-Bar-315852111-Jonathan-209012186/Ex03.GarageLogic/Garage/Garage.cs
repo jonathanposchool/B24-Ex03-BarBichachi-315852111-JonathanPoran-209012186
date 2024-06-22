@@ -121,9 +121,9 @@ public class Garage
         }
     }
     
-    public void FillEnergyToVehicleByLicenseNumber(string i_LicenseNumber, float i_EnergyToAdd, eEnergyType i_EnergyType)
+    public void FillEnergyToVehicleByLicenseNumber(string i_VehicleLicenseNumber, float i_EnergyToAdd, eEnergyType i_EnergyType)
     {
-        Vehicle vehicleToFillEnrgey = getVehicleByLicenseNumber(i_LicenseNumber);
+        Vehicle vehicleToFillEnrgey = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
         vehicleToFillEnrgey.FillEnergy(i_EnergyToAdd, i_EnergyType);
     }
 

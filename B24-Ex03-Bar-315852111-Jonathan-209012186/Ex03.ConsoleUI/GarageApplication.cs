@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Ex03.GarageLogic;
+﻿using Ex03.GarageLogic;
 using Ex03.GarageLogic.Utils;
 
 namespace Ex03.ConsoleUI
@@ -46,7 +40,7 @@ namespace Ex03.ConsoleUI
                         refuelVehicle();
                         break;
                     case 6:
-                        refuelElectricVehicle();
+                        chargeElectricVehicle();
                         break;
                     case 7:
                         displayVehicleDetails();
@@ -114,7 +108,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
 
-                ConsoleUI.VehicleCreationAttempt(isVehicleCreated);
+                ConsoleUI.VehicleCreationAttempt(isVehicleCreated);//TODO is it necessary? 
             } while (!isVehicleCreated);
         }
 
@@ -207,7 +201,7 @@ namespace Ex03.ConsoleUI
             m_ShouldExitMainLoop = ConsoleUI.IsReturningToMainMenu();
         }
 
-        private void refuelElectricVehicle()
+        private void chargeElectricVehicle()
         {
             string vehicleLicenseNumber = ConsoleUI.GetUserStringInputWithMessage("license number");
 

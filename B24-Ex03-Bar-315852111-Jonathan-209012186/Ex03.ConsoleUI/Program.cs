@@ -1,15 +1,11 @@
-﻿using System;
-using System.Data.Common;
-using Ex03.ConsoleUI;
-using Ex03.GarageLogic;
-using Ex03.GarageLogic.Utils;
+﻿using Ex03.ConsoleUI;
 
 // TODO:
 /*
  * unused methods/functions
  * unused variables
  * unused get/sets
- * public/protected/internal/private
+ * seald/public/protected/internal/private
  * Exceptions
  * Duplications of code (for example fill tire in vehicle and in tire)
  * usage of necessary things such as string format, etc

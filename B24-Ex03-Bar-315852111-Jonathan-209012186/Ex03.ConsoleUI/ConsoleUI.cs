@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Ex03.GarageLogic;
-using Ex03.GarageLogic.Utils;
+﻿using Ex03.GarageLogic.Utils;
 
 namespace Ex03.ConsoleUI
 {
@@ -8,6 +6,7 @@ namespace Ex03.ConsoleUI
     {
         internal static int PrintMenuAndGetChoice()
         {
+            const int numberOfChoiceInManu = 7;
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
             Console.WriteLine("Please choose an option:\n"
@@ -19,7 +18,7 @@ namespace Ex03.ConsoleUI
                               + "6: Charge an electric vehicle\n"
                               + "7: Show vehicle details by license number\n");
 
-            return GetValidOptionChoice(7);
+            return GetValidOptionChoice(numberOfChoiceInManu);
         }
 
         public static void PrintChosenAndClearScreen(int menuChoice)
@@ -84,7 +83,7 @@ namespace Ex03.ConsoleUI
             int userChoice = GetValidOptionChoice(maximumChoice) - 1;
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
-            Console.Write($"\nYour choice is: {selectedType}");
+            Console.WriteLine($"\nYour choice is: {selectedType}");
             Thread.Sleep(3000);
 
             return selectedType;
@@ -196,6 +195,7 @@ namespace Ex03.ConsoleUI
 
         internal static bool IsCarryingHazardous()
         {
+            Console.Clear();
             Console.WriteLine("Is the vehicle carrying hazardous materials?:\n" 
                               + "1. Yes\n" 
                               + "2. No\n");
@@ -227,13 +227,14 @@ namespace Ex03.ConsoleUI
                 {
                     Console.WriteLine(licenseNumber);
                 }
+                Console.WriteLine();//jonathan add, not sure if need this(need to check) TODO
             }
 
         }
 
         public static bool IsReturningToMainMenu()
         {
-            Console.WriteLine("Do you want to return to the main menu?:\n"
+            Console.WriteLine("\nDo you want to return to the main menu?:\n"
                               + "1. Yes\n"
                               + "2. No\n");
 
