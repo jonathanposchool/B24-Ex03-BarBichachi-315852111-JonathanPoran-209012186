@@ -8,12 +8,12 @@ namespace Ex03.ConsoleUI
         private readonly Garage r_JBGarage;
         private bool m_ShouldExitMainLoop;
 
-        public GarageApplication()
+        internal GarageApplication()
         {
             r_JBGarage = new Garage();
         }
 
-        public void RunGarageManagementSystem()
+        internal void RunGarageManagementSystem()
         {
             m_ShouldExitMainLoop = false;
             ConsoleUI.PrintWelcomeMessege();

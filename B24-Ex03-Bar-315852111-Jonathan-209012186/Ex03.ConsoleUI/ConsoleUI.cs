@@ -2,7 +2,7 @@
 
 namespace Ex03.ConsoleUI
 {
-    internal class ConsoleUI
+    internal static class ConsoleUI
     {
         internal static void PrintWelcomeMessege()
         {
@@ -29,7 +29,7 @@ namespace Ex03.ConsoleUI
             return GetValidOptionChoice(numOfMenuOptions);
         }
 
-        public static void PrintChosenAndClearScreen(int menuChoice)
+        internal static void PrintChosenAndClearScreen(int menuChoice)
         {
             Console.Clear();
 
@@ -242,7 +242,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static bool IsReturningToMainMenu()
+        internal static bool IsReturningToMainMenu()
         {
             Console.WriteLine("\nDo you want to return to the main menu?:\n"
                               + "1. Yes\n"
@@ -264,7 +264,7 @@ namespace Ex03.ConsoleUI
             Console.Clear();
             Console.WriteLine("You chose to exit the program, see you next time.");
         }
-        public static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
+        internal static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
         {
             Console.Clear();
             Console.WriteLine("Here are the details for the requested license number:");
@@ -282,7 +282,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("The vehicle is in our garage and currently being repaired.");
         }
 
-        public static void VehicleIsNotInGarage()
+        internal static void VehicleIsNotInGarage()
         {
             Console.WriteLine("The vehicle is not in the garage.");
         }
