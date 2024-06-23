@@ -2,12 +2,9 @@
 
 // TODO:
 /*
- * unused methods/functions
  * unused variables
  * unused get/sets
  * seald/public/protected/internal/private
- * Exceptions
- * Duplications of code (for example fill tire in vehicle and in tire)
  * usage of necessary things such as string format, etc
  */
 

@@ -47,6 +47,9 @@ namespace Ex03.ConsoleUI
                         case 7:
                             displayVehicleDetails();
                             break;
+                        case 8:
+                            m_ShouldExitMainLoop = true;
+                            break;
                         default:
                             throw new ValueOutOfRangeException("Invalid menu choice", 1, 7);
                     }

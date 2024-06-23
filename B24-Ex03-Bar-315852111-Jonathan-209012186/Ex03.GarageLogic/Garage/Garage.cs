@@ -7,11 +7,6 @@ public class Garage
 {
     private readonly Dictionary<string, VehicleServiceInfo> r_GarageDatabase = [];
 
-    public bool IsVehicleInGarage(string i_LicenseNumber)
-    {
-        return r_GarageDatabase.ContainsKey(i_LicenseNumber);
-    }
-
     private VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
     {
         if (!r_GarageDatabase.TryGetValue(i_LicenseNumber, out VehicleServiceInfo wantedVehicleServiceInfo))
@@ -25,6 +20,11 @@ public class Garage
     private Vehicle getVehicleByLicenseNumber(string i_LicenseNumber)
     {
         return (GetVehicleServiceInfoByLicenseNumber(i_LicenseNumber)).OwnersVehicle;
+    }
+
+    public bool IsVehicleInGarage(string i_LicenseNumber)
+    {
+        return r_GarageDatabase.ContainsKey(i_LicenseNumber);
     }
 
     public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
@@ -102,6 +102,7 @@ public class Garage
 
     public void FillTirePressureToMax(string i_VehicleLicenseNumber)
     {
+        // NOTE: This assumes that all tires of the vehicle have the air pressure.
         Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
         List<Tire> currentVehicleTires = vehicleToFillAirTires.m_Tires;
         float amountOfAirToReachMax = currentVehicleTires.First().m_MaxTirePressure - currentVehicleTires.First().m_TirePressure;
@@ -135,9 +136,6 @@ public class Garage
             }
 
             carInfoMessages["Current Energy Available"] = vehicleToExtractdetails.CurrentEnergyPercentage + "%";
-
-            //TODO i think we should change it to etch spesipic vehicle function that ui handel
-            //adding spesipic vehicle type details:
             eVehicleTypes currentVehicleType = wantedDetailsServiceInfo.m_VehicleType;
 
             if (currentVehicleType == eVehicleTypes.RegularMotorcycle || currentVehicleType == eVehicleTypes.ElectricMotorcycle)

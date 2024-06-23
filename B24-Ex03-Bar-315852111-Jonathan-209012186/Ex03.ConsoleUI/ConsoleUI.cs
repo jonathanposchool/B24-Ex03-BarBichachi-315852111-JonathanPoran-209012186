@@ -6,7 +6,7 @@ namespace Ex03.ConsoleUI
     {
         internal static int PrintMenuAndGetChoice()
         {
-            const int numOfMenuOptions = 7;
+            const int numOfMenuOptions = 8;
 
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
@@ -17,7 +17,8 @@ namespace Ex03.ConsoleUI
                               + "4: Fill vehicle tire pressure to maximum\n"
                               + "5: Refuel a vehicle\n"
                               + "6: Charge an electric vehicle\n"
-                              + "7: Show vehicle details by license number\n");
+                              + "7: Show vehicle details by license number\n"
+                              + "8: Exit the program");
 
             return GetValidOptionChoice(numOfMenuOptions);
         }
@@ -48,6 +49,9 @@ namespace Ex03.ConsoleUI
                     break;
                 case 7:
                     Console.Write("You chose to show vehicle details by license number");
+                    break;
+                case 8:
+                    exitProgramMessage();
                     break;
                 default:
                     Console.Write("Invalid choice. Please try again.");
@@ -242,14 +246,18 @@ namespace Ex03.ConsoleUI
 
             if (isExiting)
             {
-                Console.Clear();
-                Console.WriteLine("You chose to exit the program, see you next time.");
+                exitProgramMessage();
                 Thread.Sleep(3000);
             }
 
             return isExiting;
         }
 
+        private static void exitProgramMessage()
+        {
+            Console.Clear();
+            Console.WriteLine("You chose to exit the program, see you next time.");
+        }
         public static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
         {
             Console.Clear();

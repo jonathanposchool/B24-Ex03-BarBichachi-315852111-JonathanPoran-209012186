@@ -12,7 +12,6 @@ namespace Ex03.GarageLogic.Vehicles
         internal Engine m_Engine { get; set; }
         internal float m_MaxEnergyCapacity { get; set; }
         internal float m_CurrentEnergyAvailable { get; set; }
-        private float m_CurrentEnergyPercentage = 0;
 
         internal float CurrentEnergyPercentage
         {
@@ -20,10 +19,12 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 if (m_MaxEnergyCapacity != 0)
                 {
-                    m_CurrentEnergyPercentage = (m_CurrentEnergyAvailable / m_MaxEnergyCapacity) * 100;
+                    return float.Parse(string.Format("{0:0.00}", (m_CurrentEnergyAvailable / m_MaxEnergyCapacity) * 100));
                 }
-
-                return float.Parse(string.Format("{0:0.00}", m_CurrentEnergyPercentage));
+                else
+                {
+                    return 0;
+                }
             }
         }
 
