@@ -4,12 +4,18 @@ namespace Ex03.ConsoleUI
 {
     internal class ConsoleUI
     {
+        internal static void PrintWelcomeMessege()
+        {
+            Console.Clear();
+            Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
+            Thread.Sleep(4000);
+        }
         internal static int PrintMenuAndGetChoice()
         {
             const int numOfMenuOptions = 8;
 
             Console.Clear();
-            Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
+            Console.WriteLine("====== Garage Menu ======\n");
             Console.WriteLine("Please choose an option:\n"
                               + "1: Enter a new vehicle into the garage\n"
                               + "2: Show list of vehicles in the garage (with an option to filter)\n"

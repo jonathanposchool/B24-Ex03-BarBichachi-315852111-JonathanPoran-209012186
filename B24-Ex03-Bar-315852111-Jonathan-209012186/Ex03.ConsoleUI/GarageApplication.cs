@@ -16,7 +16,7 @@ namespace Ex03.ConsoleUI
         public void RunGarageManagementSystem()
         {
             m_ShouldExitMainLoop = false;
-
+            ConsoleUI.PrintWelcomeMessege();
             while (!m_ShouldExitMainLoop)
             {
                 try
