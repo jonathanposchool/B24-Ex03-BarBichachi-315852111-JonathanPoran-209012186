@@ -4,12 +4,13 @@ namespace Ex03.ConsoleUI
 {
     internal static class ConsoleUI
     {
-        internal static void PrintWelcomeMessege()
+        internal static void PrintWelcomeMessage()
         {
             Console.Clear();
             Console.WriteLine("Hello and welcome to Jonathan & Bar Garage!\n");
             Thread.Sleep(4000);
         }
+
         internal static int PrintMenuAndGetChoice()
         {
             const int numOfMenuOptions = 8;
@@ -264,6 +265,7 @@ namespace Ex03.ConsoleUI
             Console.Clear();
             Console.WriteLine("You chose to exit the program, see you next time.");
         }
+
         internal static void PrintFullVehicleDetails(Dictionary<string, string> i_FullVehicleDetails)
         {
             Console.Clear();
@@ -287,9 +289,10 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("The vehicle is not in the garage.");
         }
 
-        public static void PrintException(string i_ExMessage)
+        public static void PrintFeedback(string i_FeedbackMessage)
         {
-            Console.WriteLine(i_ExMessage);
+            Console.Clear();
+            Console.WriteLine(i_FeedbackMessage);
             Thread.Sleep(3000);
             Console.Clear();
         }

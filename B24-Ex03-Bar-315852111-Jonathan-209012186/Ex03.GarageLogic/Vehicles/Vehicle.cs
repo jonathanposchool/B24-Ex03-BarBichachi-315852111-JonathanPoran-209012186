@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic.Vehicles
     {
         internal string? m_Model { get; set; }
         internal string? m_LicenseNumber { get; set; }
-        internal List<Tire> m_Tires { get; set; }
-        internal Engine m_Engine { get; set; }
+        internal List<Tire>? m_Tires { get; set; }
+        internal Engine? m_Engine { get; set; }
         internal float m_MaxEnergyCapacity { get; set; }
         internal float m_CurrentEnergyAvailable { get; set; }
 
@@ -28,6 +28,12 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
+        internal string TiresManufacturer
+        {
+            // NOTE: This assumes that all tires of the vehicle have the same manufacturer.
+            get { return m_Tires[0].m_TireManufacturer; }
+        }
+
         internal void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
         {
             if (m_Engine.m_EnergyType != i_EnergyType)
@@ -42,12 +48,6 @@ namespace Ex03.GarageLogic.Vehicles
             }
 
             m_CurrentEnergyAvailable += i_EnergyToFill;
-        }
-
-        internal string TiresManufacturer
-        {
-            // NOTE: This assumes that all tires of the vehicle have the same manufacturer.
-            get { return m_Tires[0].m_TireManufacturer; }
         }
     }
 }

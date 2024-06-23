@@ -16,7 +16,7 @@ namespace Ex03.ConsoleUI
         internal void RunGarageManagementSystem()
         {
             m_ShouldExitMainLoop = false;
-            ConsoleUI.PrintWelcomeMessege();
+            ConsoleUI.PrintWelcomeMessage();
             while (!m_ShouldExitMainLoop)
             {
                 try
@@ -56,19 +56,19 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException ex)
                 {
-                    ConsoleUI.PrintException($"Invalid format: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"Invalid format: {ex.Message}");
                 }
                 catch (ArgumentException ex)
                 {
-                    ConsoleUI.PrintException($"Argument error: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"Argument error: {ex.Message}");
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    ConsoleUI.PrintException($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
+                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
                 }
                 catch (Exception ex)
                 {
-                    ConsoleUI.PrintException($"An unexpected error occurred: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"An unexpected error occurred: {ex.Message}");
                 }
             }
         }
@@ -130,19 +130,19 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException ex)
                 {
-                    ConsoleUI.PrintException($"Invalid format: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"Invalid format: {ex.Message}");
                 }
                 catch (ArgumentException ex)
                 {
-                    ConsoleUI.PrintException($"Argument error: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"Argument error: {ex.Message}");
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    ConsoleUI.PrintException($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
+                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
                 }
                 catch (Exception ex)
                 {
-                    ConsoleUI.PrintException($"Error creating vehicle: {ex.Message}");
+                    ConsoleUI.PrintFeedback($"Error creating vehicle: {ex.Message}");
                 }
 
                 ConsoleUI.VehicleCreationAttempt(isVehicleCreated);
@@ -195,7 +195,9 @@ namespace Ex03.ConsoleUI
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status");
+
                 r_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
+                ConsoleUI.PrintFeedback("Updated vehicle status: " + newVehicleStatus);
             }
             else
             {
@@ -212,6 +214,7 @@ namespace Ex03.ConsoleUI
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 r_JBGarage.FillTirePressureToMax(vehicleLicenseNumber);
+                ConsoleUI.PrintFeedback("Tire pressure has been optimized to maximum levels.");
             }
             else
             {
@@ -229,8 +232,10 @@ namespace Ex03.ConsoleUI
             {
                 eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
                 float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
+                string unit = vehicleEnergyType == eEnergyType.Electric ? "hours" : "liters";
 
                 r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
+                ConsoleUI.PrintFeedback("Vehicle refueled with: " + amountToRefill + unit);
             }
             else
             {
@@ -249,6 +254,7 @@ namespace Ex03.ConsoleUI
                 float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
 
                 r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
+                ConsoleUI.PrintFeedback("Vehicle charged with: " + amountToRefill + "hours");
             }
             else
             {

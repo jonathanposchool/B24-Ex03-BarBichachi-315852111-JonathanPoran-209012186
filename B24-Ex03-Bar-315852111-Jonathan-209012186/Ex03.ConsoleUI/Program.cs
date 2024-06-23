@@ -19,7 +19,7 @@ class Program
         }
         catch (Exception ex)
         {
-            ConsoleUI.PrintException(ex.Message);
+            ConsoleUI.PrintFeedback(ex.Message);
         }
     }
 }
