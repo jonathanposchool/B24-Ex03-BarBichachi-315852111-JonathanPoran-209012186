@@ -6,65 +6,90 @@ internal static class VehicleCreator
 {
     internal static Motorcycle CreateNewMotorcycle(string i_LicenseNumber, string i_Model, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
-        const int numOfTires = 2;
-        const float maxTirePressure = 31;
-        float maxEnergyCapacity = i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? 5.5f : 2.5f;
+        const float maxTirePressure = 33;
+        
+        Motorcycle newMotorcycle = new Motorcycle();
+        newMotorcycle.MaxEnergyCapacity = i_MotorcycleType == eVehicleTypes.RegularCar? 5.5f: 2.5f;
+        newMotorcycle.LicenseNumber = i_LicenseNumber;
+        newMotorcycle.Model = i_Model;
 
-        validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
+        validateTirePrussure(i_TireAirPressure, maxTirePressure);
+        List<Tire> tires = createTires(newMotorcycle.NumOfTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
+        newMotorcycle.Tires = tires;
 
-        if (i_EngineVolume <= 0)
-        {
-            throw new ArgumentException("Engine volume must be a positive value.");
-        }
+        validateEnergyAmount(i_EnergyAvailable, newMotorcycle.MaxEnergyCapacity);
+        newMotorcycle.CurrentEnergyAvailable = i_EnergyAvailable;
 
-        List<Tire> tires = createTires(numOfTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
-        Engine motorcycleEngine = new(i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? eEngineType.Combustion : eEngineType.Electricity,
-            i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? eEnergyType.Octan98 : eEnergyType.Electric);
+        Engine motorcycleEngine = new(i_MotorcycleType == eVehicleTypes.RegularCar ? eEngineType.Combustion : eEngineType.Electricity,
+                                i_MotorcycleType == eVehicleTypes.RegularCar ? eEnergyType.Octan95 : eEnergyType.Electric);
+        newMotorcycle.Engine = motorcycleEngine;
 
-        return new Motorcycle(i_LicenseNumber, i_Model, tires, maxEnergyCapacity, motorcycleEngine, i_EnergyAvailable, i_LicenseType, i_EngineVolume);
+        newMotorcycle.LicenseType = i_LicenseType;
+        newMotorcycle.EngineVolume = i_EngineVolume;
+
+        return newMotorcycle;
     }
 
     internal static Car CreateNewCar(string i_LicenseNumber, string i_Model, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
-        const int numOfTires = 5;
         const float maxTirePressure = 31;
-        float maxEnergyCapacity = (i_CarType == eVehicleTypes.RegularCar ? 45 : 3.5f);
+        
+        Car newCar = new Car();
+        newCar.MaxEnergyCapacity = i_CarType == eVehicleTypes.RegularCar? 45f: 3.5f;
+        newCar.LicenseNumber = i_LicenseNumber;
+        newCar.Model = i_Model;
 
-        validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
+        validateTirePrussure(i_TireAirPressure, maxTirePressure);
+        List<Tire> tires = createTires(newCar.NumOfTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
+        newCar.Tires = tires;
 
-        List<Tire> tires = createTires(numOfTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
+        validateEnergyAmount(i_EnergyAvailable, newCar.MaxEnergyCapacity);
+        newCar.CurrentEnergyAvailable = i_EnergyAvailable;
+
         Engine carEngine = new(i_CarType == eVehicleTypes.RegularCar ? eEngineType.Combustion : eEngineType.Electricity,
-        i_CarType == eVehicleTypes.RegularCar ? eEnergyType.Octan95 : eEnergyType.Electric);
+                                i_CarType == eVehicleTypes.RegularCar ? eEnergyType.Octan95 : eEnergyType.Electric);
+        newCar.Engine = carEngine;
 
-        return new Car(i_LicenseNumber, i_Model, tires, maxEnergyCapacity, carEngine, i_EnergyAvailable, i_Color, i_NumOfDoors);
+        newCar.Colors = i_Color;
+        newCar.NumOfDoors = i_NumOfDoors;
+
+        return newCar;
     }
     
      internal static Truck CreateNewTruck(string i_LicenseNumber, string i_Model, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        const int numOfTruckTires = 12;
         const float maxTirePressure = 28;
-        float maxEnergyCapacity = 120;
 
-        validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
+        Truck newTruck = new Truck();        
+        newTruck.LicenseNumber = i_LicenseNumber;
+        newTruck.Model = i_Model;
+        
+        validateTirePrussure(i_TireAirPressure, maxTirePressure);
+        List<Tire> tires = createTires(newTruck.NumOfTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
+        newTruck.Tires = tires;
+        
+        validateEnergyAmount(i_EnergyAvailable, newTruck.MaxEnergyCapacity);
+        newTruck.CurrentEnergyAvailable = i_EnergyAvailable;
 
-        if (i_CargoVolume <= 0)
-        {
-            throw new ArgumentException("Cargo volume must be a positive value.");
-        }
-
-        List<Tire> tires = createTires(numOfTruckTires, i_TireManufacturer, i_TireAirPressure, maxTirePressure);
         Engine truckEngine = new(eEngineType.Combustion, eEnergyType.Soler);
+        newTruck.Engine = truckEngine;
 
-        return new Truck(i_LicenseNumber, i_Model, tires, maxEnergyCapacity, truckEngine, i_EnergyAvailable, i_IsCarryingHazardousMaterials, i_CargoVolume);
+        newTruck.CargoVolume = i_CargoVolume;
+        newTruck.IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
+
+        return newTruck;
     }
 
-    private static void validateTireAndEnergy(float i_TireAirPressure, float maxTirePressure, float i_EnergyAvailable, float maxEnergyCapacity)
+    private static void validateTirePrussure(float i_TireAirPressure, float maxTirePressure)
     {
         if (i_TireAirPressure > maxTirePressure)
         {
             throw new ValueOutOfRangeException("Tire air pressure exceeds maximum allowed.", 0, maxTirePressure);
         }
+    }
 
+    private static void validateEnergyAmount( float i_EnergyAvailable, float maxEnergyCapacity)
+    {
         if (i_EnergyAvailable > maxEnergyCapacity)
         {
             throw new ValueOutOfRangeException("Energy available exceeds maximum capacity.", 0, maxEnergyCapacity);
@@ -79,7 +104,7 @@ internal static class VehicleCreator
         {
             Tire tire = new(i_TireManufacturer, i_MaxTirePressure)
             {
-                m_TirePressure = i_TireAirPressure
+                TirePressure = i_TireAirPressure
             };
 
             tires.Add(tire);

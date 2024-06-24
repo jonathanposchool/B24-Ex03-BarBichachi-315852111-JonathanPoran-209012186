@@ -135,7 +135,7 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine();
         }
 
-        internal static T GetUserNumericInputWithMessage<T>(string i_Message)
+        internal static T GetUserNonNegativeNumericInputWithMessage<T>(string i_Message)
         {
             Console.Clear();
 
@@ -155,12 +155,12 @@ namespace Ex03.ConsoleUI
 
                 if (typeof(T) == typeof(int))
                 {
-                    isValid = int.TryParse(userChoice, out int intValue);
+                    isValid = int.TryParse(userChoice, out int intValue) && intValue >= 0;
                     numericChoice = (T)(object)intValue;
                 }
                 else if (typeof(T) == typeof(float))
                 {
-                    isValid = float.TryParse(userChoice, out float floatValue);
+                    isValid = float.TryParse(userChoice, out float floatValue) && floatValue >= 0;
                     numericChoice = (T)(object)floatValue;
                 }
 
@@ -179,7 +179,7 @@ namespace Ex03.ConsoleUI
 
             string energyType = selectedVehicleType.ToString().Contains("Electric") ? "electricity" : "fuel";
             string energyMessage = $"current {energyType} left";
-            float vehicleCurrentEnergy = GetUserNumericInputWithMessage<float>(energyMessage);
+            float vehicleCurrentEnergy = GetUserNonNegativeNumericInputWithMessage<float>(energyMessage);
 
             return vehicleCurrentEnergy;
         }
@@ -191,7 +191,7 @@ namespace Ex03.ConsoleUI
 
         internal static int GetEngineVolume()
         {
-            return GetUserNumericInputWithMessage<int>("engine volume");
+            return GetUserNonNegativeNumericInputWithMessage<int>("engine volume");
         }
 
         internal static eCarColors GetVehicleColor()
@@ -216,7 +216,7 @@ namespace Ex03.ConsoleUI
 
         internal static float GetCargoVolume()
         {
-            return GetUserNumericInputWithMessage<float>("cargo volume");
+            return GetUserNonNegativeNumericInputWithMessage<float>("cargo volume");
         }
 
         internal static void VehicleCreationAttempt(bool i_IsVehicleCreated)
@@ -270,6 +270,15 @@ namespace Ex03.ConsoleUI
         {
             Console.Clear();
             Console.WriteLine("Here are the details for the requested license number:");
+
+            if(i_FullVehicleDetails.ContainsKey("Current Fuel Available"))
+            {
+                i_FullVehicleDetails["Current Fuel Available"] += " %";
+            }
+            if(i_FullVehicleDetails.ContainsKey("Current Energy Available"))
+            {
+                i_FullVehicleDetails["Current Energy Available"] += " %";
+            }
 
             foreach (KeyValuePair<string, string> detail in i_FullVehicleDetails)
             {

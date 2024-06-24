@@ -5,7 +5,7 @@ using Utils;
 
 public class Garage
 {
-    private readonly Dictionary<string, VehicleServiceInfo> r_GarageDatabase = [];
+    private readonly Dictionary<string, VehicleServiceInfo> r_GarageDatabase = new Dictionary<string, VehicleServiceInfo>();
 
     private VehicleServiceInfo GetVehicleServiceInfoByLicenseNumber(string i_LicenseNumber)
     {
@@ -63,7 +63,7 @@ public class Garage
 
     public List<string> GetLicenseNumbersByFilter(eGarageVehicleStatus i_StatusFilter)
     {
-        List<string> listOfLicenseNumberVehicleWithStatusFilter = [];
+        List<string> listOfLicenseNumberVehicleWithStatusFilter = new List<string>();
 
         if (r_GarageDatabase != null)
         {
@@ -86,26 +86,26 @@ public class Garage
     public void RefuelAVehicle(string i_VehicleLicenseNumber, eEnergyType i_VehicleEnergyType, float i_AmountToRefill)
     {
         Vehicle vehicleToFillEnergy = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
-
-        if (vehicleToFillEnergy.m_Engine.m_EnergyType != i_VehicleEnergyType)
+        
+        if (vehicleToFillEnergy.Engine.EnergyType != i_VehicleEnergyType)
         {
-            throw new ArgumentException($"Invalid energy type. Only {vehicleToFillEnergy.m_Engine.m_EnergyType} is supported for this vehicle.");
+            throw new ArgumentException($"Invalid energy type. Only {vehicleToFillEnergy.Engine.EnergyType} is supported for this vehicle.");
         }
 
-        if ((vehicleToFillEnergy.m_CurrentEnergyAvailable + i_AmountToRefill) > vehicleToFillEnergy.m_MaxEnergyCapacity)
+        if ((vehicleToFillEnergy.CurrentEnergyAvailable + i_AmountToRefill) > vehicleToFillEnergy.MaxEnergyCapacity)
         {
-            throw new ValueOutOfRangeException("Too much amount of energy.", 0, vehicleToFillEnergy.m_MaxEnergyCapacity - vehicleToFillEnergy.m_CurrentEnergyAvailable);
+            throw new ValueOutOfRangeException("Too much amount of energy.", 0, vehicleToFillEnergy.MaxEnergyCapacity - vehicleToFillEnergy.CurrentEnergyAvailable);
         }
 
-        vehicleToFillEnergy.FillEnergy(i_AmountToRefill, i_VehicleEnergyType);
+        vehicleToFillEnergy.FillEnergy(i_AmountToRefill);
     }
 
     public void FillTirePressureToMax(string i_VehicleLicenseNumber)
     {
         // NOTE: This assumes that all tires of the vehicle have the air pressure.
         Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
-        List<Tire> currentVehicleTires = vehicleToFillAirTires.m_Tires;
-        float amountOfAirToReachMax = currentVehicleTires.First().m_MaxTirePressure - currentVehicleTires.First().m_TirePressure;
+        List<Tire> currentVehicleTires = vehicleToFillAirTires.Tires;
+        float amountOfAirToReachMax = currentVehicleTires.First().MaxTirePressure - currentVehicleTires.First().TirePressure;
 
         foreach (Tire tire in currentVehicleTires)
         {
@@ -115,46 +115,50 @@ public class Garage
 
     public Dictionary<string, string> GetFullVehicleDetails(string i_VehicleLicenseNumber)
     {
-        Dictionary<string, string> carInfoMessages = [];
+        Dictionary<string, string> carInfoMessages = new Dictionary<string, string>();
         VehicleServiceInfo wantedDetailsServiceInfo = GetVehicleServiceInfoByLicenseNumber(i_VehicleLicenseNumber);
 
         if (wantedDetailsServiceInfo != null)
         {
             Vehicle vehicleToExtractdetails = wantedDetailsServiceInfo.OwnersVehicle;
-            carInfoMessages["License Number"] = vehicleToExtractdetails.m_LicenseNumber;
-            carInfoMessages["Model"] = vehicleToExtractdetails.m_Model;
-            carInfoMessages["Vehicle Type"] = wantedDetailsServiceInfo.m_VehicleType.ToString();
-            carInfoMessages["Owner's Name"] = wantedDetailsServiceInfo.OwnersName;
-            carInfoMessages["Owner's Phone"] = wantedDetailsServiceInfo.OwnersPhone;
+            carInfoMessages["License Number"] = vehicleToExtractdetails.LicenseNumber;
+            carInfoMessages["Model"] = vehicleToExtractdetails.Model;
+            carInfoMessages["Vehicle Type"] = wantedDetailsServiceInfo.VehicleType.ToString();
+            carInfoMessages["Owner's Name"] = wantedDetailsServiceInfo.OwnersVehicleName;
+            carInfoMessages["Owner's Phone"] = wantedDetailsServiceInfo.OwnersVehiclePhone;
             carInfoMessages["Vehicle Status"] = wantedDetailsServiceInfo.VehicleStatus.ToString();
             carInfoMessages["Tires Manufacturer"] = vehicleToExtractdetails.TiresManufacturer;
-            carInfoMessages["Tires Info"] = tiresInfo(vehicleToExtractdetails.m_Tires);
+            carInfoMessages["Tires Info"] = tiresInfo(vehicleToExtractdetails.Tires);
 
-            if (vehicleToExtractdetails.m_Engine.m_EngineType == eEngineType.Combustion)
+            if (vehicleToExtractdetails.Engine.EngineType == eEngineType.Combustion)
             {
-                carInfoMessages["Energy Type"] = vehicleToExtractdetails.m_Engine.m_EnergyType.ToString();
+                carInfoMessages["Fuel Type"] = vehicleToExtractdetails.Engine.EnergyType.ToString();
+                carInfoMessages["Current Fuel Available"] = vehicleToExtractdetails.CurrentEnergyPercentage.ToString();
+            }
+            else
+            {
+                carInfoMessages["Current Energy Available"] = vehicleToExtractdetails.CurrentEnergyPercentage.ToString();
             }
 
-            carInfoMessages["Current Energy Available"] = vehicleToExtractdetails.CurrentEnergyPercentage + "%";
-            eVehicleTypes currentVehicleType = wantedDetailsServiceInfo.m_VehicleType;
+            eVehicleTypes currentVehicleType = wantedDetailsServiceInfo.VehicleType;
 
             if (currentVehicleType == eVehicleTypes.RegularMotorcycle || currentVehicleType == eVehicleTypes.ElectricMotorcycle)
             {
                 Motorcycle motorcycleToExtractdetails = vehicleToExtractdetails as Motorcycle;
-                carInfoMessages["License Type"] = motorcycleToExtractdetails.m_LicenseType.ToString();
-                carInfoMessages["Engine Volume"] = motorcycleToExtractdetails.m_EngineVolume.ToString();
+                carInfoMessages["License Type"] = motorcycleToExtractdetails.LicenseType.ToString();
+                carInfoMessages["Engine Volume"] = motorcycleToExtractdetails.EngineVolume.ToString();
             }
             else if (currentVehicleType == eVehicleTypes.RegularCar || currentVehicleType == eVehicleTypes.ElectricCar)
             {
                 Car carToExtractdetails = vehicleToExtractdetails as Car;
-                carInfoMessages["Color"] = carToExtractdetails.m_Colors.ToString();
-                carInfoMessages["Number of Doors"] = carToExtractdetails.m_NumOfDoors.ToString();
+                carInfoMessages["Color"] = carToExtractdetails.Colors.ToString();
+                carInfoMessages["Number of Doors"] = carToExtractdetails.NumOfDoors.ToString();
             }
             else if (currentVehicleType == eVehicleTypes.RegularTruck)
             {
                 Truck truckToExtractdetails = vehicleToExtractdetails as Truck;
-                carInfoMessages["Carrying Hazardous Materials"] = truckToExtractdetails.m_IsCarryingHazardousMaterials.ToString();
-                carInfoMessages["Cargo Volume"] = truckToExtractdetails.m_CargoVolume.ToString();
+                carInfoMessages["Carrying Hazardous Materials"] = truckToExtractdetails.IsCarryingHazardousMaterials.ToString();
+                carInfoMessages["Cargo Volume"] = truckToExtractdetails.CargoVolume.ToString();
             }
         }
 
@@ -163,10 +167,13 @@ public class Garage
 
     private static string tiresInfo(List<Tire> i_Tires)
     {
+        int numOfTire = 1;
         string tiresInfo = string.Empty;
-        for (int i = 0; i < i_Tires.Count; i++)
+        
+        foreach (Tire tire in i_Tires)
         {
-            tiresInfo += $"\nTire {i + 1}: Pressure = {i_Tires[i].m_TirePressure}";
+            tiresInfo += $"\nTire {numOfTire}: Pressure = {tire.TirePressure}";
+            numOfTire++;
         }
 
         return tiresInfo;

@@ -106,7 +106,7 @@ namespace Ex03.ConsoleUI
                 eVehicleTypes selectedVehicleType = ConsoleUI.GetVehicleType();
                 string vehicleModel = ConsoleUI.GetUserStringInputWithMessage("vehicle model");
                 string vehicleTiresManufacturer = ConsoleUI.GetUserStringInputWithMessage("tires manufacturer");
-                float vehicleCurrentTiresPressure = ConsoleUI.GetUserNumericInputWithMessage<float>("current tires PSI (air pressure)");
+                float vehicleCurrentTiresPressure = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("current tires PSI (air pressure)");
                 float vehicleCurrentEnergy = ConsoleUI.GetVehicleEnergy(selectedVehicleType);
 
                 try
@@ -115,14 +115,14 @@ namespace Ex03.ConsoleUI
                     {
                         case eVehicleTypes.RegularMotorcycle:
                         case eVehicleTypes.ElectricMotorcycle:
-                            createAndInsertMotorcycle(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
+                            insertMotorcycleToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
                             break;
                         case eVehicleTypes.RegularCar:
                         case eVehicleTypes.ElectricCar:
-                            createAndInsertCar(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
+                            insertCarToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
                             break;
                         case eVehicleTypes.RegularTruck:
-                            createAndInsertTruck(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy);
+                            insertTruckToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy);
                             break;
                     }
 
@@ -149,7 +149,7 @@ namespace Ex03.ConsoleUI
             } while (!isVehicleCreated);
         }
 
-        private void createAndInsertMotorcycle(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy, eVehicleTypes selectedVehicleType)
+        private void insertMotorcycleToGarage(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy, eVehicleTypes selectedVehicleType)
         {
             eLicenseTypes licenseType = ConsoleUI.GetLicenseType();
             int engineVolume = ConsoleUI.GetEngineVolume();
@@ -159,7 +159,7 @@ namespace Ex03.ConsoleUI
                 licenseType, engineVolume);
         }
 
-        private void createAndInsertCar(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy, eVehicleTypes selectedVehicleType)
+        private void insertCarToGarage(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy, eVehicleTypes selectedVehicleType)
         {
             eCarColors carColor = ConsoleUI.GetVehicleColor();
             eCarDoors carNumOfDoors = ConsoleUI.GetVehicleNumOfDoors();
@@ -169,7 +169,7 @@ namespace Ex03.ConsoleUI
                 carColor, carNumOfDoors);
         }
 
-        private void createAndInsertTruck(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy)
+        private void insertTruckToGarage(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy)
         {
             bool isCarryingHazardous = ConsoleUI.IsCarryingHazardous();
             float truckCargoVolume = ConsoleUI.GetCargoVolume();
@@ -231,7 +231,7 @@ namespace Ex03.ConsoleUI
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
                 eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
-                float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
+                float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
                 string unit = vehicleEnergyType == eEnergyType.Electric ? "hours" : "liters";
 
                 r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
@@ -251,7 +251,7 @@ namespace Ex03.ConsoleUI
 
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                float amountToRefill = ConsoleUI.GetUserNumericInputWithMessage<float>("desired amount to refill");
+                float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
 
                 r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
                 ConsoleUI.PrintFeedback("Vehicle charged with: " + amountToRefill + "hours");

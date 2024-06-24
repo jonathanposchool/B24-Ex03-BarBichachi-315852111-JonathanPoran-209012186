@@ -6,20 +6,21 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal abstract class Vehicle
     {
-        internal string? m_Model { get; set; }
-        internal string? m_LicenseNumber { get; set; }
-        internal List<Tire>? m_Tires { get; set; }
-        internal Engine? m_Engine { get; set; }
-        internal float m_MaxEnergyCapacity { get; set; }
-        internal float m_CurrentEnergyAvailable { get; set; }
+        internal string? Model { get; set; }
+        internal string? LicenseNumber { get; set; }
+        internal int NumOfTires { get; set;}
+        internal List<Tire>? Tires { get; set; }
+        internal Engine? Engine { get; set; }
+        internal float MaxEnergyCapacity { get; set; }
+        internal float CurrentEnergyAvailable { get; set; }
 
         internal float CurrentEnergyPercentage
         {
             get
             {
-                if (m_MaxEnergyCapacity != 0)
+                if (MaxEnergyCapacity != 0)
                 {
-                    return float.Parse(string.Format("{0:0.00}", (m_CurrentEnergyAvailable / m_MaxEnergyCapacity) * 100));
+                    return float.Parse(string.Format("{0:0.00}", (CurrentEnergyAvailable / MaxEnergyCapacity) * 100));
                 }
                 else
                 {
@@ -31,23 +32,18 @@ namespace Ex03.GarageLogic.Vehicles
         internal string TiresManufacturer
         {
             // NOTE: This assumes that all tires of the vehicle have the same manufacturer.
-            get { return m_Tires[0].m_TireManufacturer; }
+            get { return Tires.First().TireManufacturer; }
         }
 
-        internal void FillEnergy(float i_EnergyToFill, eEnergyType i_EnergyType = eEnergyType.Electric)
+        internal void FillEnergy(float i_EnergyToFill)
         {
-            if (m_Engine.m_EnergyType != i_EnergyType)
+            if ((CurrentEnergyAvailable + i_EnergyToFill) > MaxEnergyCapacity)
             {
-                throw new ArgumentException($"Invalid energy type. Only {m_Engine.m_EnergyType} is supported for this vehicle.");
+                string unit = (Engine.EnergyType == eEnergyType.Electric) ? "hours" : "liters";
+                throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {MaxEnergyCapacity} {unit}", 0, MaxEnergyCapacity);
             }
 
-            if ((m_CurrentEnergyAvailable + i_EnergyToFill) > m_MaxEnergyCapacity)
-            {
-                string unit = (i_EnergyType == eEnergyType.Electric) ? "hours" : "liters";
-                throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {m_MaxEnergyCapacity} {unit}", 0, m_MaxEnergyCapacity);
-            }
-
-            m_CurrentEnergyAvailable += i_EnergyToFill;
+            CurrentEnergyAvailable += i_EnergyToFill;
         }
     }
 }
