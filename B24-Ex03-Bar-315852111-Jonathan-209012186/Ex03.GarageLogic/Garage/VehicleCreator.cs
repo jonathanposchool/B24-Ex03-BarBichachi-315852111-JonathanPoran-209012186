@@ -6,8 +6,8 @@ internal static class VehicleCreator
 {
     internal static Motorcycle CreateNewMotorcycle(string i_LicenseNumber, string i_Model, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
-        int numOfTires = 2;
-        float maxTirePressure = 31;
+        const int numOfTires = 2;
+        const float maxTirePressure = 31;
         float maxEnergyCapacity = i_MotorcycleType == eVehicleTypes.RegularMotorcycle ? 5.5f : 2.5f;
 
         validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
@@ -26,8 +26,8 @@ internal static class VehicleCreator
 
     internal static Car CreateNewCar(string i_LicenseNumber, string i_Model, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
-        int numOfTires = 5;
-        float maxTirePressure = 31;
+        const int numOfTires = 5;
+        const float maxTirePressure = 31;
         float maxEnergyCapacity = (i_CarType == eVehicleTypes.RegularCar ? 45 : 3.5f);
 
         validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
@@ -41,8 +41,8 @@ internal static class VehicleCreator
     
      internal static Truck CreateNewTruck(string i_LicenseNumber, string i_Model, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        int numOfTruckTires = 12;
-        float maxTirePressure = 28;
+        const int numOfTruckTires = 12;
+        const float maxTirePressure = 28;
         float maxEnergyCapacity = 120;
 
         validateTireAndEnergy(i_TireAirPressure, maxTirePressure, i_EnergyAvailable, maxEnergyCapacity);
