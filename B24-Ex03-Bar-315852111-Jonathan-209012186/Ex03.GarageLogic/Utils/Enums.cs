@@ -2,7 +2,7 @@
 {
     public enum eEnergyType
     {
-        Electric,
+        ElectricalPower,
         Soler,
         Octan95,
         Octan96,
@@ -13,7 +13,7 @@
     public enum eEngineType
     {
         Combustion,
-        Electricity,
+        Electric,
         AllTypes
     }
 

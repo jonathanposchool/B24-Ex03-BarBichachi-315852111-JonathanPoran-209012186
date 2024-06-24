@@ -12,16 +12,5 @@ namespace Ex03.GarageLogic.Vehicles
         {
             NumOfTires = 2;
         }
-        internal Motorcycle(string i_LicenseNumber, string i_Model, List<Tire> i_Tires, float i_MaxEnergyCapacity, Engine i_MotorcycleEngine, float i_EnergyAvailable, eLicenseTypes i_LicenseType, int i_EngineVolume)
-        {
-            LicenseNumber = i_LicenseNumber;
-            Model = i_Model;
-            Tires = i_Tires;
-            MaxEnergyCapacity = i_MaxEnergyCapacity;
-            Engine = i_MotorcycleEngine;
-            CurrentEnergyAvailable = i_EnergyAvailable;
-            LicenseType = i_LicenseType;
-            EngineVolume = i_EngineVolume;
-        }
     }
 }

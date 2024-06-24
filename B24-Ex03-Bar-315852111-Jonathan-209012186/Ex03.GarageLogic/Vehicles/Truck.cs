@@ -9,11 +9,8 @@ namespace Ex03.GarageLogic.Vehicles
 
         internal Truck()
         {
-            const int numOfTruckTires = 12;
-            const float maxEnergyCapacity = 120;
-
-            MaxEnergyCapacity = maxEnergyCapacity;
-            NumOfTires = numOfTruckTires;
+            NumOfTires = 12;
+            MaxEnergyCapacity = 120;
         }
     }
 }

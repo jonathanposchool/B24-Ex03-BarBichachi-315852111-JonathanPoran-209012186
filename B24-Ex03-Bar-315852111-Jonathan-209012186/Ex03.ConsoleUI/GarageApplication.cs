@@ -232,7 +232,7 @@ namespace Ex03.ConsoleUI
             {
                 eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
                 float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
-                string unit = vehicleEnergyType == eEnergyType.Electric ? "hours" : "liters";
+                string unit = vehicleEnergyType == eEnergyType.ElectricalPower ? "hours" : "liters";
 
                 r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
                 ConsoleUI.PrintFeedback("Vehicle refueled with: " + amountToRefill + unit);
@@ -253,7 +253,7 @@ namespace Ex03.ConsoleUI
             {
                 float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
 
-                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.Electric, amountToRefill);
+                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.ElectricalPower, amountToRefill);
                 ConsoleUI.PrintFeedback("Vehicle charged with: " + amountToRefill + "hours");
             }
             else

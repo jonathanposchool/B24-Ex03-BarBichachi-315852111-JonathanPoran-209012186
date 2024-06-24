@@ -151,7 +151,7 @@ public class Garage
             else if (currentVehicleType == eVehicleTypes.RegularCar || currentVehicleType == eVehicleTypes.ElectricCar)
             {
                 Car carToExtractdetails = vehicleToExtractdetails as Car;
-                carInfoMessages["Color"] = carToExtractdetails.Colors.ToString();
+                carInfoMessages["Color"] = carToExtractdetails.Color.ToString();
                 carInfoMessages["Number of Doors"] = carToExtractdetails.NumOfDoors.ToString();
             }
             else if (currentVehicleType == eVehicleTypes.RegularTruck)

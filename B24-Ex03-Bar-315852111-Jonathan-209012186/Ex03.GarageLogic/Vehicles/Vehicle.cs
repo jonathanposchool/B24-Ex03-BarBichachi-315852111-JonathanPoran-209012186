@@ -32,14 +32,26 @@ namespace Ex03.GarageLogic.Vehicles
         internal string TiresManufacturer
         {
             // NOTE: This assumes that all tires of the vehicle have the same manufacturer.
-            get { return Tires.First().TireManufacturer; }
+            get {
+                if(Tires == null || Tires.Count == 0)
+                {
+                    //TODO check exception
+                    throw new Exception($"There is no tires exists!");
+                }
+                return Tires.First().TireManufacturer; 
+            }
         }
 
         internal void FillEnergy(float i_EnergyToFill)
         {
             if ((CurrentEnergyAvailable + i_EnergyToFill) > MaxEnergyCapacity)
             {
-                string unit = (Engine.EnergyType == eEnergyType.Electric) ? "hours" : "liters";
+                if(Engine == null)
+                {
+                    //TODO check exception
+                    throw new Exception($"There is no Engin exist!");
+                }
+                string unit = (Engine.EnergyType == eEnergyType.ElectricalPower) ? "hours" : "liters";
                 throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {MaxEnergyCapacity} {unit}", 0, MaxEnergyCapacity);
             }
 
