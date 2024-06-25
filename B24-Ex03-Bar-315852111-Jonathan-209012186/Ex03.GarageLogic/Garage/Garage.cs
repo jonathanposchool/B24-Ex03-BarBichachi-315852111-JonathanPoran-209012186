@@ -27,25 +27,25 @@ public class Garage
         return r_GarageDatabase.ContainsKey(i_LicenseNumber);
     }
 
-    public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
+    public void CreateAndInsertMotorcycleToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
-        Motorcycle newMotorcycle = VehicleCreator.CreateNewMotorcycle(i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_LicenseType, i_EngineVolume);
+        Motorcycle newMotorcycle = VehicleCreator.CreateNewMotorcycle(i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TiresManufacturer, i_TiresAirPressure, i_LicenseType, i_EngineVolume);
         VehicleServiceInfo newMotorcycleServiceInfo = new(i_OwnerName, i_OwnerPhone, newMotorcycle, i_MotorcycleType);
 
         r_GarageDatabase.Add(i_LicenseNumber, newMotorcycleServiceInfo);
     }
 
-    public void CreateAndInsertCarToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
+    public void CreateAndInsertCarToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
-        Car newCar = VehicleCreator.CreateNewCar(i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_Color, i_NumOfDoors);
+        Car newCar = VehicleCreator.CreateNewCar(i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TiresManufacturer, i_TiresAirPressure, i_Color, i_NumOfDoors);
         VehicleServiceInfo newCarServiceInfo = new(i_OwnerName, i_OwnerPhone, newCar, i_CarType);
 
         r_GarageDatabase.Add(i_LicenseNumber, newCarServiceInfo);
     }
 
-    public void CreateAndInsertTruckToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
+    public void CreateAndInsertTruckToGarage(string i_LicenseNumber, string i_Model, string i_OwnerName, string i_OwnerPhone, eVehicleTypes i_TruckType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
-        Truck newTruck = VehicleCreator.CreateNewTruck(i_LicenseNumber, i_Model, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
+        Truck newTruck = VehicleCreator.CreateNewTruck(i_LicenseNumber, i_Model, i_TruckType, i_EnergyAvailable, i_TiresManufacturer, i_TiresAirPressure, i_IsCarryingHazardousMaterials, i_CargoVolume);
         VehicleServiceInfo newTruckServiceInfo = new(i_OwnerName, i_OwnerPhone, newTruck, eVehicleTypes.RegularTruck);
 
         r_GarageDatabase.Add(i_LicenseNumber, newTruckServiceInfo);
@@ -100,17 +100,28 @@ public class Garage
         vehicleToFillEnergy.FillEnergy(i_AmountToRefill);
     }
 
-    public void FillTirePressureToMax(string i_VehicleLicenseNumber)
+    public void FillTiresPressureToMax(string i_VehicleLicenseNumber)
     {
         // NOTE: This assumes that all tires of the vehicle have the air pressure.
         Vehicle vehicleToFillAirTires = getVehicleByLicenseNumber(i_VehicleLicenseNumber);
+        if(vehicleToFillAirTires == null)
+        {
+            //TODO excption
+            throw new Exception ($"There is no such vehicle with this number license {i_VehicleLicenseNumber}");
+        }
+        else if(vehicleToFillAirTires.Tires == null )
+        {
+            //TODO excption
+            throw new Exception ($"The vehicle with number license {i_VehicleLicenseNumber} have no tires");
+        }
+
         List<Tire> currentVehicleTires = vehicleToFillAirTires.Tires;
         float amountOfAirToReachMax = currentVehicleTires.First().MaxTirePressure - currentVehicleTires.First().TirePressure;
 
-        fillTirePressure(currentVehicleTires, amountOfAirToReachMax);
+        fillTiresPressure(currentVehicleTires, amountOfAirToReachMax);  
     }
 
-    private void fillTirePressure(List<Tire> i_Tires, float i_AmountToFill)
+    private void fillTiresPressure(List<Tire> i_Tires, float i_AmountToFill)
     {
         float maxTirePressure = i_Tires.First().MaxTirePressure;
         float newTirePressure = i_Tires.First().TirePressure + i_AmountToFill;

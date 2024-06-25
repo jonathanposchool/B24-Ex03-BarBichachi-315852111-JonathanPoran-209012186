@@ -6,10 +6,5 @@ namespace Ex03.GarageLogic.Vehicles
     {
         internal eCarColors Color { get; set; }
         internal eCarDoors NumOfDoors { get; set; }
-
-        internal Car()
-        {
-            NumOfTires = 5;
-        }
     }
 }

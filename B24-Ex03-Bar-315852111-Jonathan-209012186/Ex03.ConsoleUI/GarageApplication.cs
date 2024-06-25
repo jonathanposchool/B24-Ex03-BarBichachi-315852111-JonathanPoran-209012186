@@ -122,7 +122,7 @@ namespace Ex03.ConsoleUI
                             insertCarToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
                             break;
                         case eVehicleTypes.RegularTruck:
-                            insertTruckToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy);
+                            insertTruckToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
                             break;
                     }
 
@@ -169,13 +169,13 @@ namespace Ex03.ConsoleUI
                 carColor, carNumOfDoors);
         }
 
-        private void insertTruckToGarage(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy)
+        private void insertTruckToGarage(string vehicleLicenseNumber, string vehicleOwnerName, string vehicleOwnerPhone, string vehicleModel, string vehicleTiresManufacturer, float vehicleCurrentTiresPressure, float vehicleCurrentEnergy, eVehicleTypes selectedVehicleType)
         {
             bool isCarryingHazardous = ConsoleUI.IsCarryingHazardous();
             float truckCargoVolume = ConsoleUI.GetCargoVolume();
 
             r_JBGarage.CreateAndInsertTruckToGarage(vehicleLicenseNumber, vehicleModel, vehicleOwnerName, vehicleOwnerPhone,
-                vehicleCurrentEnergy, vehicleTiresManufacturer, vehicleCurrentTiresPressure, isCarryingHazardous, truckCargoVolume);
+                selectedVehicleType, vehicleCurrentEnergy, vehicleTiresManufacturer, vehicleCurrentTiresPressure, isCarryingHazardous, truckCargoVolume);
         }
 
         private void handleVehicleFiltering()
@@ -213,8 +213,8 @@ namespace Ex03.ConsoleUI
 
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                r_JBGarage.FillTirePressureToMax(vehicleLicenseNumber);
-                ConsoleUI.PrintFeedback("Tire pressure has been optimized to maximum levels.");
+                r_JBGarage.FillTiresPressureToMax(vehicleLicenseNumber);
+                ConsoleUI.PrintFeedback("Tires pressure has been optimized to maximum levels.");
             }
             else
             {

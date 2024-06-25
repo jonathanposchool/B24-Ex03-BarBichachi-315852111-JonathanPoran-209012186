@@ -7,7 +7,6 @@ namespace Ex03.GarageLogic.Vehicles
     {
         internal string? Model { get; set; }
         internal string? LicenseNumber { get; set; }
-        internal int NumOfTires { get; set;}
         internal List<Tire>? Tires { get; set; }
         internal Engine? Engine { get; set; }
         internal float MaxEnergyCapacity { get; set; }

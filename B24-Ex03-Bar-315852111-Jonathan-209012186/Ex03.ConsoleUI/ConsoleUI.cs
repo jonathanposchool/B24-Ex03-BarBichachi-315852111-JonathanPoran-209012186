@@ -21,7 +21,7 @@ namespace Ex03.ConsoleUI
                               + "1: Enter a new vehicle into the garage\n"
                               + "2: Show list of vehicles in the garage (with an option to filter)\n"
                               + "3: Change the status of a vehicle in the garage\n"
-                              + "4: Fill vehicle tire pressure to maximum\n"
+                              + "4: Fill vehicle tires pressure to maximum\n"
                               + "5: Refuel a vehicle\n"
                               + "6: Charge an electric vehicle\n"
                               + "7: Show vehicle details by license number\n"
@@ -46,7 +46,7 @@ namespace Ex03.ConsoleUI
                     Console.Write("You chose to change the status of a vehicle in the garage");
                     break;
                 case 4:
-                    Console.Write("You chose to fill vehicle tire pressure to maximum");
+                    Console.Write("You chose to fill vehicle tires pressure to maximum");
                     break;
                 case 5:
                     Console.Write("You chose to refuel a vehicle");
