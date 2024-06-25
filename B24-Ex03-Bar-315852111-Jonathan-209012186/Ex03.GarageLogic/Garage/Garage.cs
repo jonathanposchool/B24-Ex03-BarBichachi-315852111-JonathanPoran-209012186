@@ -107,9 +107,22 @@ public class Garage
         List<Tire> currentVehicleTires = vehicleToFillAirTires.Tires;
         float amountOfAirToReachMax = currentVehicleTires.First().MaxTirePressure - currentVehicleTires.First().TirePressure;
 
-        foreach (Tire tire in currentVehicleTires)
+        fillTirePressure(currentVehicleTires, amountOfAirToReachMax);
+    }
+
+    private void fillTirePressure(List<Tire> i_Tires, float i_AmountToFill)
+    {
+        float maxTirePressure = i_Tires.First().MaxTirePressure;
+        float newTirePressure = i_Tires.First().TirePressure + i_AmountToFill;
+
+        if (newTirePressure > maxTirePressure)
         {
-            tire.FillTirePressure(amountOfAirToReachMax);
+            throw new ValueOutOfRangeException($"Filling the tire with {i_AmountToFill} PSI would exceed the maximum tire pressure of {maxTirePressure} PSI.", 0, maxTirePressure);
+        }
+
+        foreach (Tire tire in i_Tires)
+        {
+            tire.TirePressure += i_AmountToFill;
         }
     }
 

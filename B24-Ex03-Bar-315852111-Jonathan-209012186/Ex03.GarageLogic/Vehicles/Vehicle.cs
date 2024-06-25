@@ -45,13 +45,7 @@ namespace Ex03.GarageLogic.Vehicles
         {
             if ((CurrentEnergyAvailable + i_EnergyToFill) > MaxEnergyCapacity)
             {
-                if(Engine == null)
-                {
-                    //TODO check exception
-                    throw new Exception($"There is no Engin exist!");
-                }
-                string unit = (Engine.EnergyType == eEnergyType.ElectricalPower) ? "hours" : "liters";
-                throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {MaxEnergyCapacity} {unit}", 0, MaxEnergyCapacity);
+                throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {MaxEnergyCapacity}!", 0, MaxEnergyCapacity);
             }
 
             CurrentEnergyAvailable += i_EnergyToFill;

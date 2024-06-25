@@ -13,7 +13,7 @@ internal static class VehicleCreator
         newMotorcycle.LicenseNumber = i_LicenseNumber;
         newMotorcycle.Model = i_Model;
 
-        validateTirePrussure(i_TiresAirPressure, maxTirePressure);
+        validateTirePressure(i_TiresAirPressure, maxTirePressure);
         List<Tire> tires = createTiresSet(newMotorcycle.NumOfTires, i_TireManufacturer, i_TiresAirPressure, maxTirePressure);
         newMotorcycle.Tires = tires;
 
@@ -39,7 +39,7 @@ internal static class VehicleCreator
         newCar.LicenseNumber = i_LicenseNumber;
         newCar.Model = i_Model;
 
-        validateTirePrussure(i_TiresAirPressure, maxTirePressure);
+        validateTirePressure(i_TiresAirPressure, maxTirePressure);
         List<Tire> tires = createTiresSet(newCar.NumOfTires, i_TireManufacturer, i_TiresAirPressure, maxTirePressure);
         newCar.Tires = tires;
 
@@ -64,7 +64,7 @@ internal static class VehicleCreator
         newTruck.LicenseNumber = i_LicenseNumber;
         newTruck.Model = i_Model;
         
-        validateTirePrussure(i_TiresAirPressure, maxTirePressure);
+        validateTirePressure(i_TiresAirPressure, maxTirePressure);
         List<Tire> tires = createTiresSet(newTruck.NumOfTires, i_TireManufacturer, i_TiresAirPressure, maxTirePressure);
         newTruck.Tires = tires;
         
@@ -80,7 +80,7 @@ internal static class VehicleCreator
         return newTruck;
     }
 
-    private static void validateTirePrussure(float i_TireAirPressure, float maxTirePressure)
+    private static void validateTirePressure(float i_TireAirPressure, float maxTirePressure)
     {
         if (i_TireAirPressure > maxTirePressure)
         {
@@ -98,7 +98,7 @@ internal static class VehicleCreator
 
     private static List<Tire> createTiresSet(int i_NumOfTires, string i_TireManufacturer, float i_TiresAirPressure, float i_MaxTirePressure)
     {
-        List<Tire> tires = [];
+        List<Tire> tires = new List<Tire>();
 
         for (int i = 0; i < i_NumOfTires; i++)
         {
@@ -114,22 +114,24 @@ internal static class VehicleCreator
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private static void setVehicleBaseProprtiesByType(Vehicle i_currVehicle, string i_LicenseNumber, string i_Model, eVehicleTypes i_VehicleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure)
+    private static void setVehicleBasePropertiesByType(Vehicle i_CurrVehicle, string i_LicenseNumber, string i_Model, eVehicleTypes i_VehicleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure)
     {
-        i_currVehicle.LicenseNumber = i_LicenseNumber;
-        i_currVehicle.Model = i_Model;
-        i_currVehicle.MaxEnergyCapacity = setEnergyCapacityByVehicleType(i_VehicleType);
-        validateEnergyAmount(i_EnergyAvailable, i_currVehicle.MaxEnergyCapacity);
+        i_CurrVehicle.LicenseNumber = i_LicenseNumber;
+        i_CurrVehicle.Model = i_Model;
+        i_CurrVehicle.MaxEnergyCapacity = setEnergyCapacityByVehicleType(i_VehicleType);
         float maxTiresPressure = setMaxTirePressureByVehicleType(i_VehicleType);
-        validateTirePrussure(i_TiresAirPressure,maxTiresPressure);
-        i_currVehicle.Tires = createTiresSet(i_currVehicle.NumOfTires, i_TiresManufacturer, i_TiresAirPressure, maxTiresPressure);
-        i_currVehicle.Engine = createEngninByVehicleType(i_VehicleType);
+
+        validateEnergyAmount(i_EnergyAvailable, i_CurrVehicle.MaxEnergyCapacity);
+        validateTirePressure(i_TiresAirPressure,maxTiresPressure);
+
+        i_CurrVehicle.Tires = createTiresSet(i_CurrVehicle.NumOfTires, i_TiresManufacturer, i_TiresAirPressure, maxTiresPressure);
+        i_CurrVehicle.Engine = createEngineByVehicleType(i_VehicleType);
     }
 
     internal static Motorcycle CreateNewMotorcycle2(string i_LicenseNumber, string i_Model, eVehicleTypes i_MotorcycleType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eLicenseTypes i_LicenseType, int i_EngineVolume)
     {
         Motorcycle newMotorcycle = new Motorcycle();
-        setVehicleBaseProprtiesByType(newMotorcycle, i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
+        setVehicleBasePropertiesByType(newMotorcycle, i_LicenseNumber, i_Model, i_MotorcycleType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
         
         newMotorcycle.LicenseType = i_LicenseType;
         newMotorcycle.EngineVolume = i_EngineVolume;
@@ -140,7 +142,7 @@ internal static class VehicleCreator
     internal static Car CreateNewCar2(string i_LicenseNumber, string i_Model, eVehicleTypes i_CarType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, eCarColors i_Color, eCarDoors i_NumOfDoors)
     {
         Car newCar = new Car();
-        setVehicleBaseProprtiesByType(newCar, i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
+        setVehicleBasePropertiesByType(newCar, i_LicenseNumber, i_Model, i_CarType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
         
         newCar.Color = i_Color;
         newCar.NumOfDoors = i_NumOfDoors;
@@ -151,7 +153,7 @@ internal static class VehicleCreator
      internal static Truck CreateNewTruck2(string i_LicenseNumber, string i_Model, eVehicleTypes i_TruckType, float i_EnergyAvailable, string i_TireManufacturer, float i_TireAirPressure, bool i_IsCarryingHazardousMaterials, float i_CargoVolume)
     {
        Truck newTruck = new Truck();
-        setVehicleBaseProprtiesByType(newTruck, i_LicenseNumber, i_Model, i_TruckType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
+        setVehicleBasePropertiesByType(newTruck, i_LicenseNumber, i_Model, i_TruckType, i_EnergyAvailable, i_TireManufacturer, i_TireAirPressure);
         
         newTruck.IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
         newTruck.CargoVolume = i_CargoVolume;
@@ -161,8 +163,9 @@ internal static class VehicleCreator
 
     private static float setEnergyCapacityByVehicleType(eVehicleTypes i_VehicleType)
     {
-        //if ussing remove maxEnergyCapacity=120 form Truck
+        //TODO - if ussing remove maxEnergyCapacity=120 form Truck
         float maxEnergyCapacity;
+
         switch (i_VehicleType)
         {
             case eVehicleTypes.RegularMotorcycle:
@@ -216,7 +219,7 @@ internal static class VehicleCreator
         return maxTirePressure;
     }
 
-    private static Engine createEngninByVehicleType(eVehicleTypes i_VehicleType)
+    private static Engine createEngineByVehicleType(eVehicleTypes i_VehicleType)
     {
         Engine newEngine = null;
         switch (i_VehicleType)
