@@ -1,5 +1,4 @@
-﻿using Ex03.GarageLogic.Utils;
-using Ex03.GarageLogic.Vehicles.Components;
+﻿using Ex03.GarageLogic.Vehicles.Components;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -20,7 +19,7 @@ namespace Ex03.GarageLogic.Vehicles
 
                 if (MaxEnergyCapacity != 0)
                 {
-                    currentEnergyPercentage = (float)Math.Round((CurrentEnergyAvailable / MaxEnergyCapacity) * 100, 2) ;
+                    currentEnergyPercentage = (CurrentEnergyAvailable / MaxEnergyCapacity) * 100;
                 }
               
                 return currentEnergyPercentage;
@@ -30,24 +29,15 @@ namespace Ex03.GarageLogic.Vehicles
         internal string TiresManufacturer
         {
             // NOTE: This assumes that all tires of the vehicle have the same manufacturer.
-            get {
-                if(Tires == null || Tires.Count == 0)
-                {
-                    //TODO check exception
-                    throw new Exception($"There is no tires exists!");
-                }
-                return Tires.First().TireManufacturer; 
-            }
-        }
-
-        internal void FillEnergy(float i_EnergyToFill)
-        {
-            if ((CurrentEnergyAvailable + i_EnergyToFill) > MaxEnergyCapacity)
+            get
             {
-                throw new ValueOutOfRangeException($"Not enough capacity to fill up. The maximum capacity is: {MaxEnergyCapacity}!", 0, MaxEnergyCapacity);
-            }
+                if (Tires == null || Tires.Count == 0)
+                {
+                    throw new Exception($"Can't bring the tire manufacturer because the vehicle has no tires!");
+                }
 
-            CurrentEnergyAvailable += i_EnergyToFill;
+                return Tires.First().TireManufacturer;
+            }
         }
     }
 }

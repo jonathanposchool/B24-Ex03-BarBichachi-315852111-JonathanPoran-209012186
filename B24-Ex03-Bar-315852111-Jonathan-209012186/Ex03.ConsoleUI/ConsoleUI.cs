@@ -38,30 +38,39 @@ namespace Ex03.ConsoleUI
             {
                 case 1:
                     Console.Write("You chose to enter a new vehicle into the garage");
-                    break;
+
+                    break; ;
                 case 2:
                     Console.Write("You chose to show list of vehicles in the garage");
+
                     break;
                 case 3:
                     Console.Write("You chose to change the status of a vehicle in the garage");
+
                     break;
                 case 4:
                     Console.Write("You chose to fill vehicle tires pressure to maximum");
+
                     break;
                 case 5:
                     Console.Write("You chose to refuel a vehicle");
+
                     break;
                 case 6:
                     Console.Write("You chose to charge an electric vehicle");
+
                     break;
                 case 7:
                     Console.Write("You chose to show vehicle details by license number");
+
                     break;
                 case 8:
                     exitProgramMessage();
+
                     break;
                 default:
                     Console.Write("Invalid choice. Please try again.");
+
                     break;
             }
 
@@ -73,31 +82,53 @@ namespace Ex03.ConsoleUI
             return GetValidOptionChoiceByEnum<eVehicleTypes>("vehicle type");
         }
 
-        internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage, bool i_IncludeLastOption = false) where TEnum : Enum
+        internal static TEnum GetValidOptionChoiceByEnum<TEnum>(string i_InputMessage, int i_OptionsToExclude = 0) where TEnum : Enum
         {
             int enumLength = Enum.GetValues(typeof(TEnum)).Length;
-            int maximumChoice = i_IncludeLastOption ? enumLength : enumLength - 1;
+            int maximumChoice = enumLength - i_OptionsToExclude;
+            int optionNumber = 1;
 
             Console.Clear();
             Console.WriteLine($"Please choose your {i_InputMessage} below:");
 
             foreach (var option in Enum.GetValues(typeof(TEnum)))
             {
-                int optionValue = (int)option + 1;
-
-                if (optionValue <= maximumChoice)
+                if (optionNumber <= maximumChoice)
                 {
-                    Console.WriteLine($"{optionValue}: {option}");
+                    Console.WriteLine($"{optionNumber++}: {FormatStringToText(option.ToString())}");
                 }
             }
 
             int userChoice = GetValidOptionChoice(maximumChoice) - 1;
             TEnum selectedType = (TEnum)Enum.ToObject(typeof(TEnum), userChoice);
 
-            Console.WriteLine($"\nYour choice is: {selectedType}");
+            Console.WriteLine($"\nYour choice is: {FormatStringToText(selectedType.ToString())}");
             Thread.Sleep(1500);
 
             return selectedType;
+        }
+
+        internal static string FormatStringToText(string i_UnformattedString)
+        {
+            string formattedString = string.Empty;
+
+            formattedString += i_UnformattedString[0];
+
+            for (int i = 1; i < i_UnformattedString.Length; i++)
+            {
+                if (char.IsLower(i_UnformattedString[i - 1]) && char.IsUpper(i_UnformattedString[i]))
+                {
+                    formattedString += ' ';
+                    formattedString += char.ToLower(i_UnformattedString[i]);
+                }
+                else
+                {
+                    formattedString += i_UnformattedString[i];
+                }
+
+            }
+
+            return formattedString;
         }
 
         internal static int GetValidOptionChoice(int i_MaximumChoice)
@@ -282,18 +313,21 @@ namespace Ex03.ConsoleUI
             Console.Clear();
             Console.WriteLine("Here are the details for the requested license number:");
 
-            if(i_FullVehicleDetails.ContainsKey("Current Fuel Available"))
+            if (i_FullVehicleDetails.TryGetValue("Current Fuel Available", out string? fuelValue))
             {
-                i_FullVehicleDetails["Current Fuel Available"] += " %";
+                float currentFuel = float.Parse(fuelValue);
+                i_FullVehicleDetails["Current Fuel Available"] = String.Format("{0:F2} %", currentFuel);
             }
-            if(i_FullVehicleDetails.ContainsKey("Current Energy Available"))
+
+            if (i_FullVehicleDetails.TryGetValue("Current Energy Available", out string? energyValue))
             {
-                i_FullVehicleDetails["Current Energy Available"] += " %";
+                float currentEnergy = float.Parse(energyValue);
+                i_FullVehicleDetails["Current Energy Available"] = String.Format("{0:F2} %", currentEnergy);
             }
 
             foreach (KeyValuePair<string, string> detail in i_FullVehicleDetails)
             {
-                Console.WriteLine($"{detail.Key}: {detail.Value}");
+                Console.WriteLine($"{detail.Key}: {FormatStringToText(detail.Value)}");
             }
 
             Console.WriteLine();

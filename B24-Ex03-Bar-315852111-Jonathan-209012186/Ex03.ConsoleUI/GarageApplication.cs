@@ -1,4 +1,4 @@
-﻿using Ex03.GarageLogic;
+﻿using Ex03.GarageLogic.Garage;
 using Ex03.GarageLogic.Utils;
 
 namespace Ex03.ConsoleUI
@@ -7,6 +7,7 @@ namespace Ex03.ConsoleUI
     {
         private readonly Garage r_JBGarage;
         private bool m_ShouldExitMainLoop;
+        private const int k_RemoveLastEnumOption = 1;
 
         internal GarageApplication()
         {
@@ -28,27 +29,35 @@ namespace Ex03.ConsoleUI
                     {
                         case 1:
                             handleVehicleEntry();
+
                             break;
                         case 2:
                             handleVehicleFiltering();
+
                             break;
                         case 3:
                             changeVehicleStatus();
+
                             break;
                         case 4:
                             fillTiresToMax();
+
                             break;
                         case 5:
                             refuelVehicle();
+
                             break;
                         case 6:
                             chargeElectricVehicle();
+
                             break;
                         case 7:
                             displayVehicleDetails();
+
                             break;
                         case 8:
                             m_ShouldExitMainLoop = true;
+
                             break;
                         default:
                             throw new ValueOutOfRangeException("Invalid menu choice", 1, 7);
@@ -64,7 +73,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
+                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.MinValue} to {ex.MaxValue}.");
                 }
                 catch (Exception ex)
                 {
@@ -116,13 +125,16 @@ namespace Ex03.ConsoleUI
                         case eVehicleTypes.RegularMotorcycle:
                         case eVehicleTypes.ElectricMotorcycle:
                             insertMotorcycleToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
+
                             break;
                         case eVehicleTypes.RegularCar:
                         case eVehicleTypes.ElectricCar:
                             insertCarToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
+
                             break;
                         case eVehicleTypes.RegularTruck:
                             insertTruckToGarage(vehicleLicenseNumber, vehicleOwnerName, vehicleOwnerPhone, vehicleModel, vehicleTiresManufacturer, vehicleCurrentTiresPressure, vehicleCurrentEnergy, selectedVehicleType);
+
                             break;
                     }
 
@@ -138,7 +150,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.m_MinValue} to {ex.m_MaxValue}.");
+                    ConsoleUI.PrintFeedback($"Value out of range: {ex.Message}. Valid range is {ex.MinValue} to {ex.MaxValue}.");
                 }
                 catch (Exception ex)
                 {
@@ -180,7 +192,7 @@ namespace Ex03.ConsoleUI
 
         private void handleVehicleFiltering()
         {
-            eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type", true);
+            eGarageVehicleStatus vehicleStatusFilter = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle filter type");
             List<string> licenseNumbersByFilter = r_JBGarage.GetLicenseNumbersByFilter(vehicleStatusFilter);
 
             ConsoleUI.PrintLicenseNumbersArray(licenseNumbersByFilter);
@@ -194,10 +206,10 @@ namespace Ex03.ConsoleUI
 
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status");
+                eGarageVehicleStatus newVehicleStatus = ConsoleUI.GetValidOptionChoiceByEnum<eGarageVehicleStatus>("vehicle new status", k_RemoveLastEnumOption);
 
                 r_JBGarage.ChangeVehicleStatus(vehicleLicenseNumber, newVehicleStatus);
-                ConsoleUI.PrintFeedback("Updated vehicle status: " + newVehicleStatus);
+                ConsoleUI.PrintFeedback($"Updated vehicle status: {ConsoleUI.FormatStringToText(newVehicleStatus.ToString())}"); // TODO ENUM TO STRING
             }
             else
             {
@@ -230,12 +242,11 @@ namespace Ex03.ConsoleUI
 
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type");
+                eEnergyType vehicleEnergyType = ConsoleUI.GetValidOptionChoiceByEnum<eEnergyType>("vehicle energy type", k_RemoveLastEnumOption);
                 float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
-                string unit = vehicleEnergyType == eEnergyType.ElectricalPower ? "hours" : "liters";
 
-                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
-                ConsoleUI.PrintFeedback("Vehicle refueled with: " + amountToRefill + unit);
+                r_JBGarage.RefuelVehicle(vehicleLicenseNumber, vehicleEnergyType, amountToRefill);
+                ConsoleUI.PrintFeedback($"Vehicle refueled with: {amountToRefill} liters");
             }
             else
             {
@@ -251,10 +262,10 @@ namespace Ex03.ConsoleUI
 
             if (r_JBGarage.IsVehicleInGarage(vehicleLicenseNumber))
             {
-                float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired amount to refill");
+                float amountToRefill = ConsoleUI.GetUserNonNegativeNumericInputWithMessage<float>("desired minutes to charge");
 
-                r_JBGarage.RefuelAVehicle(vehicleLicenseNumber, eEnergyType.ElectricalPower, amountToRefill);
-                ConsoleUI.PrintFeedback("Vehicle charged with: " + amountToRefill + "hours");
+                r_JBGarage.ChargeVehicle(vehicleLicenseNumber, (amountToRefill / 60));
+                ConsoleUI.PrintFeedback($"Vehicle refueled with: {amountToRefill} minutes");
             }
             else
             {

@@ -4,7 +4,7 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
-        internal eLicenseTypes LicenseType { get; set; } = eLicenseTypes.AllTypes;
-        internal int EngineVolume { get; set; } = 0;
+        internal eLicenseTypes LicenseType { get; set; }
+        internal int EngineVolume { get; set; }
     }
 }
