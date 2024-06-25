@@ -4,8 +4,7 @@ using Vehicles.Components;
 using Utils;
 internal static class VehicleCreator
 {
-    //TODO choose setVehicleBasePropertiesByType
-    private static void setVehicleBasePropertiesByTypeInOne(Vehicle i_CurrVehicle, string i_LicenseNumber, string i_Model, eVehicleTypes i_VehicleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure)
+    private static void setVehicleBasePropertiesByType(Vehicle i_CurrVehicle, string i_LicenseNumber, string i_Model, eVehicleTypes i_VehicleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure)
     {
         i_CurrVehicle.LicenseNumber = i_LicenseNumber;
         i_CurrVehicle.Model = i_Model;
@@ -60,104 +59,6 @@ internal static class VehicleCreator
 
     }
     
-    private static void setVehicleBasePropertiesByType(Vehicle i_CurrVehicle, string i_LicenseNumber, string i_Model, eVehicleTypes i_VehicleType, float i_EnergyAvailable, string i_TiresManufacturer, float i_TiresAirPressure)
-    {
-        i_CurrVehicle.LicenseNumber = i_LicenseNumber;
-        i_CurrVehicle.Model = i_Model;
-        i_CurrVehicle.MaxEnergyCapacity = getEnergyCapacityByVehicleType(i_VehicleType);
-        float maxTiresPressure = getMaxTirePressureByVehicleType(i_VehicleType);
-        int numOfTiresToCreate = getNumberOfTiresByVehicleType(i_VehicleType);
-
-        validateEnergyAmount(i_EnergyAvailable, i_CurrVehicle.MaxEnergyCapacity);
-        validateTirePressure(i_TiresAirPressure,maxTiresPressure);
-
-        i_CurrVehicle.Tires = createTiresSet(numOfTiresToCreate, i_TiresManufacturer, i_TiresAirPressure, maxTiresPressure);
-        i_CurrVehicle.Engine = createEngineByVehicleType(i_VehicleType);
-    }
-
-    private static float getEnergyCapacityByVehicleType(eVehicleTypes i_VehicleType)
-    {
-        float maxEnergyCapacity;
-
-        switch (i_VehicleType)
-        {
-            case eVehicleTypes.RegularMotorcycle:
-                maxEnergyCapacity = 5.5f;
-                break;
-            case eVehicleTypes.ElectricMotorcycle:
-                maxEnergyCapacity = 2.5f;
-                break;
-            case eVehicleTypes.RegularCar:
-                maxEnergyCapacity = 45f;
-                break;
-            case eVehicleTypes.ElectricCar:
-                maxEnergyCapacity = 3.5f;
-                break;
-            case eVehicleTypes.RegularTruck:
-                maxEnergyCapacity = 120f;
-                break;
-            //todo check exception
-            case eVehicleTypes.AllTypes:
-                throw new Exception($"Hey programmer, you didn't set a type for the vehicle!");
-            default:
-                throw new Exception($"Hey programmer, you didn't set a maxEnergyCapacity for a {i_VehicleType} type!");
-        }
-
-        return maxEnergyCapacity;
-    }
-
-    private static float getMaxTirePressureByVehicleType(eVehicleTypes i_VehicleType)
-    {
-        float maxTirePressure;
-        switch (i_VehicleType)
-        {
-            case eVehicleTypes.RegularMotorcycle:
-            case eVehicleTypes.ElectricMotorcycle:
-                maxTirePressure = 33f;
-                break;
-            case eVehicleTypes.RegularCar:
-            case eVehicleTypes.ElectricCar:
-                maxTirePressure = 31f;
-                break;
-            case eVehicleTypes.RegularTruck:
-                maxTirePressure = 28f;
-                break;
-            //todo check exception
-            case eVehicleTypes.AllTypes:
-                throw new Exception($"Hey programmer, you didn't set a type for the vehicle!");
-            default:
-                throw new Exception($"Hey programmer, you didn't set a maxTirePressure for a {i_VehicleType} type!");
-        }
-
-        return maxTirePressure;
-    }
-
-    private static int getNumberOfTiresByVehicleType(eVehicleTypes i_VehicleType)
-    {
-        int numOfTires;
-        switch (i_VehicleType)
-        {
-            case eVehicleTypes.RegularMotorcycle:
-            case eVehicleTypes.ElectricMotorcycle:
-                numOfTires = 2;
-                break;
-            case eVehicleTypes.RegularCar:
-            case eVehicleTypes.ElectricCar:
-                numOfTires = 5;
-                break;
-            case eVehicleTypes.RegularTruck:
-                numOfTires = 12;
-                break;
-            //todo check exception
-            case eVehicleTypes.AllTypes:
-                throw new Exception($"Hey programmer, you didn't set a type for the vehicle!");
-            default:
-                throw new Exception($"Hey programmer, you didn't set a maxTirePressure for a {i_VehicleType} type!");
-        }
-
-        return numOfTires;
-    }
-
     private static void validateTirePressure(float i_TireAirPressure, float maxTirePressure)
     {
         if (i_TireAirPressure > maxTirePressure)
