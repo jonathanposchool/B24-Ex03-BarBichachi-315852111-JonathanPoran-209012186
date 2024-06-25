@@ -204,10 +204,7 @@ namespace Ex03.GarageLogic.Garage
             return carInfoMessages;
         }
 
-        private static void specificVehicleDetails(
-            eVehicleTypes i_CurrentVehicleType,
-            Vehicle i_VehicleToExtractDetails,
-            Dictionary<string, string> i_CarInfoMessages)
+        private static void specificVehicleDetails(eVehicleTypes i_CurrentVehicleType, Vehicle i_VehicleToExtractDetails, Dictionary<string, string> i_CarInfoMessages)
         {
             if (i_CurrentVehicleType == eVehicleTypes.RegularMotorcycle
                 || i_CurrentVehicleType == eVehicleTypes.ElectricMotorcycle)
