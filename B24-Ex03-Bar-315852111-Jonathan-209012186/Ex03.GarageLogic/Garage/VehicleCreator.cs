@@ -54,9 +54,9 @@ internal static class VehicleCreator
         validateEnergyAmount(i_EnergyAvailable, i_CurrVehicle.MaxEnergyCapacity);
         validateTirePressure(i_TiresAirPressure,maxTiresPressure);
 
+        i_CurrVehicle.CurrentEnergyAvailable = i_EnergyAvailable;
         i_CurrVehicle.Tires = createTiresSet(numOfTiresToCreate, i_TiresManufacturer, i_TiresAirPressure, maxTiresPressure);
         i_CurrVehicle.Engine = createEngineByVehicleType(i_VehicleType);
-
     }
     
     private static void validateTirePressure(float i_TireAirPressure, float maxTirePressure)

@@ -16,14 +16,14 @@ namespace Ex03.GarageLogic.Vehicles
         {
             get
             {
+                float currentEnergyPercentage = 0;
+
                 if (MaxEnergyCapacity != 0)
                 {
-                    return float.Parse(string.Format("{0:0.00}", (CurrentEnergyAvailable / MaxEnergyCapacity) * 100));
+                    currentEnergyPercentage = (float)Math.Round((CurrentEnergyAvailable / MaxEnergyCapacity) * 100, 2) ;
                 }
-                else
-                {
-                    return 0;
-                }
+              
+                return currentEnergyPercentage;
             }
         }
 
