@@ -1,6 +1,6 @@
 ﻿using Ex03.GarageLogic.Utils;
 
-namespace Ex03.GarageLogic.VehicleComponents
+namespace Ex03.GarageLogic.Vehicles.Components
 {
     internal class Tire
     {

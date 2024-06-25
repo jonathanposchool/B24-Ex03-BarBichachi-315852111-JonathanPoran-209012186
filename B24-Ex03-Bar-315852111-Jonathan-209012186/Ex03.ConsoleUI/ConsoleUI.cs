@@ -177,8 +177,19 @@ namespace Ex03.ConsoleUI
         {
             Console.Clear();
 
-            string energyType = selectedVehicleType.ToString().Contains("Electric") ? "electricity" : "fuel";
-            string energyMessage = $"current {energyType} left";
+            string energyType, unit;
+            if(selectedVehicleType.ToString().Contains("Electric"))
+            {
+                energyType = "electricity";
+                unit = "hours";
+            }
+            else
+            {
+                energyType = "fuel";
+                unit = "liters";
+            }
+            string energyMessage = $"current {energyType} left in {unit}";
+
             float vehicleCurrentEnergy = GetUserNonNegativeNumericInputWithMessage<float>(energyMessage);
 
             return vehicleCurrentEnergy;

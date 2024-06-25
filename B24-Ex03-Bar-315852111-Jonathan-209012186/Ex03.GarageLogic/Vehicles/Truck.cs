@@ -1,6 +1,4 @@
-﻿using Ex03.GarageLogic.VehicleComponents;
-
-namespace Ex03.GarageLogic.Vehicles
+﻿namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck : Vehicle
     {

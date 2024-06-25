@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic;
 using Vehicles;
-using VehicleComponents;
+using Vehicles.Components;
 using Utils;
 
 public class Garage
